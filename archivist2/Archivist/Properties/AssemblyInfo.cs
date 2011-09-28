@@ -1,0 +1,33 @@
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle("Archivist")]
+[assembly: AssemblyDescription("Archivist is a program for 'Magic the Gathering' developed by Richard Garfield. Magic: The Gathering® is a registered trademark owned by Wizards of the Coast, Inc., a subsidiary of Hasbro, Inc. THIS PRODUCT IS NOT PUBLISHED OR PRODUCED BY WIZARDS OF THE COAST, INC.")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("SPech.de")]
+[assembly: AssemblyProduct("Archivist")]
+[assembly: AssemblyCopyright("Copyright © Sebastian Pech")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("2aca3dc3-6ad1-41a2-a9bc-6ce252a05b48")]
+
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
