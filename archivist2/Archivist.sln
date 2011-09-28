@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist", "Archivist\Archivist.csproj", "{E3BD1824-0D95-4FC9-A05D-E7FDBD8BA9D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.Data", "Archivist.Data\Archivist.Data.csproj", "{56192FE2-E7B9-497C-BC27-2D6D87AD5965}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.UnitTests", "Archivist.UnitTests\Archivist.UnitTests.csproj", "{4446B124-D762-41E9-B402-C9AF96DC20AC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7} = {E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87CB40B6-09A3-4D1F-AD6C-6BB0FBD56E96}"
+	ProjectSection(SolutionItems) = preProject
+		Archivist.vsmdi = Archivist.vsmdi
+		Archivist1.vsmdi = Archivist1.vsmdi
+		Archivist2.vsmdi = Archivist2.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.MagicObjects", "Archivist.MagicObjects\Archivist.MagicObjects.csproj", "{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectFactory", "ObjectFactory\ObjectFactory.csproj", "{89E735A5-DD0A-4D56-B34B-31D6AB93031B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidatedPath", "ValidatedPath\ValidatedPath.csproj", "{E3B69E27-B768-4D14-AABF-12E590C8A9B2}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Archivist2.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3BD1824-0D95-4FC9-A05D-E7FDBD8BA9D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BD1824-0D95-4FC9-A05D-E7FDBD8BA9D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BD1824-0D95-4FC9-A05D-E7FDBD8BA9D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BD1824-0D95-4FC9-A05D-E7FDBD8BA9D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56192FE2-E7B9-497C-BC27-2D6D87AD5965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56192FE2-E7B9-497C-BC27-2D6D87AD5965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56192FE2-E7B9-497C-BC27-2D6D87AD5965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56192FE2-E7B9-497C-BC27-2D6D87AD5965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4446B124-D762-41E9-B402-C9AF96DC20AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4446B124-D762-41E9-B402-C9AF96DC20AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4446B124-D762-41E9-B402-C9AF96DC20AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4446B124-D762-41E9-B402-C9AF96DC20AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
