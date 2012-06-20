@@ -4,8 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87CB40B6-09A3-4D1F-AD6C-6BB0FBD56E96}"
 	ProjectSection(SolutionItems) = preProject
 		Archivist.vsmdi = Archivist.vsmdi
-		Archivist1.vsmdi = Archivist1.vsmdi
-		Archivist2.vsmdi = Archivist2.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
@@ -20,12 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.UnitTests", "Arch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.MagicObjects", "Archivist.MagicObjects\Archivist.MagicObjects.csproj", "{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectFactory", "ObjectFactory\ObjectFactory.csproj", "{89E735A5-DD0A-4D56-B34B-31D6AB93031B}"
-EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Archivist2.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -47,10 +40,6 @@ Global
 		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E627D3AD-3DBC-4D7D-A8F6-52CD9EAA25D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
