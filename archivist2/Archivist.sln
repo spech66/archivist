@@ -22,8 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.MagicObjects", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectFactory", "ObjectFactory\ObjectFactory.csproj", "{89E735A5-DD0A-4D56-B34B-31D6AB93031B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidatedPath", "ValidatedPath\ValidatedPath.csproj", "{E3B69E27-B768-4D14-AABF-12E590C8A9B2}"
-EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Archivist2.vsmdi
@@ -53,10 +51,6 @@ Global
 		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89E735A5-DD0A-4D56-B34B-31D6AB93031B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3B69E27-B768-4D14-AABF-12E590C8A9B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

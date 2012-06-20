@@ -3,7 +3,7 @@
    using log4net;
    using Spring.Context;
    using Spring.Context.Support;
-   using Archivist.IO;
+   using System.IO;
 
    /// <summary>
    /// Singleton for providing global access to objects within the Spring context.
@@ -59,7 +59,11 @@
       /// </summary>
       private void Initialise(string contextFilePath)
       {
-         contextFilePath = ValidatedPath.ExistingFilePath(contextFilePath);
+		  if (!File.Exists(contextFilePath))
+		  {
+			  throw new FileNotFoundException(string.Format("The file does not exist: {0}", contextFilePath), contextFilePath);
+		  }
+
          #region Instrumentation
          if (log.IsInfoEnabled)
          {
