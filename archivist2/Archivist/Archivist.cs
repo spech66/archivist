@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.Common;
 using Archivist.Data;
+using System.IO;
 
 namespace Archivist
 {
@@ -18,10 +19,8 @@ namespace Archivist
         public Archivist()
         {
             InitializeComponent();
-			dataDirectory = Application.StartupPath + "\\data";
-			imageDirectory = Application.StartupPath + "\\img";
-			//string userHomePath = Environment.GetFolderPath(Environment.SpecialFolder.Personal).ToString();
-			//string appUserHomePath = System.IO.Path.Combine(userHomePath, "Archivist");
+			dataDirectory = Path.Combine(Application.StartupPath, "data");
+			imageDirectory = Path.Combine(Application.StartupPath, "img");
 			
 			InitSearch();
 			UpdateCardList();
@@ -49,28 +48,30 @@ namespace Archivist
 
 			listBoxSearchExpansion.Items.Add("(All)"); listBoxSearchExpansion.SelectedIndex = 0;
             Database database = DatabaseCreatorFactory.CreateDatabase();
-            IDbConnection connection = database.CreateConnection();
+			IDbConnection connection = database.CreateConnection();
+			if (connection.State != ConnectionState.Open)
+			{
+				connection.Open();
+			}
 
             IDbCommand cmd = database.CreateCommand();
-            cmd.Connection = connection;			
-            cmd.CommandText = "SELECT NAME FROM EXTENSIONS ORDER BY NAME";
-            if (connection.State != ConnectionState.Open)
-            {
-                connection.Open();
-            }
+            cmd.Connection = connection;
+			cmd.CommandText = "SELECT NAME FROM EXTENSION ORDER BY NAME";
 			IDataReader reader = cmd.ExecuteReader();
 			while (reader.Read())
 				listBoxSearchExpansion.Items.Add(reader.GetString(0));
 			reader.Close();
 
 			listBoxSearchType.Items.Add("(All)"); listBoxSearchType.SelectedIndex = 0;
-			/*cmd.CommandText = "SELECT distinct(TYPE) as TYPE FROM CARDS ORDER BY TYPE";
+			cmd.CommandText = "SELECT distinct(TYPE) as TYPE FROM CARD ORDER BY TYPE";
 			reader = cmd.ExecuteReader();
 			while (reader.Read())
-				listBoxSearchType.Items.Add(reader.GetString(0));*/
+				listBoxSearchType.Items.Add(reader.GetString(0));
+			reader.Close();
 		}
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		#region Event handler
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -79,15 +80,44 @@ namespace Archivist
         {
             AboutBox aboutBox = new AboutBox();
             aboutBox.ShowDialog();
-        }
+		}
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            AboutBox aboutBox = new AboutBox();
-            aboutBox.ShowDialog();
-        }
+		private void button2_Click(object sender, EventArgs e)
+		{
+			InitSearch();
+			UpdateCardList();
+		}
 
-        private void UpdateCardList()
+		private void buttonSearch_Click(object sender, EventArgs e)
+		{
+			UpdateCardList();
+		}
+
+		private void libraryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void deckToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			UpdateDatabase ud = new UpdateDatabase();
+			ud.ShowDialog();
+			InitSearch();
+			UpdateCardList();
+		}
+
+		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ShowCard();
+		}
+		#endregion
+
+		private void UpdateCardList()
         {
 			listBox1.Items.Clear();
             Database database = DatabaseCreatorFactory.CreateDatabase();
@@ -95,7 +125,7 @@ namespace Archivist
 
             IDbCommand cmd = database.CreateCommand();
             cmd.Connection = connection;			
-			string sqlcmd = "SELECT NAME FROM CARDS";
+			string sqlcmd = "SELECT NAME FROM CARD";
 			if (textBoxSearchName.Text != "")
 			{
 				sqlcmd += " WHERE NAME LIKE ?";
@@ -119,23 +149,15 @@ namespace Archivist
 			}
         }
 
-        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UpdateDatabase ud = new UpdateDatabase();
-            ud.ShowDialog();
-			InitSearch();
-			UpdateCardList();
-        }
-
-		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+		private void ShowCard()
 		{
-            Database database = DatabaseCreatorFactory.CreateDatabase();
+			Database database = DatabaseCreatorFactory.CreateDatabase();
 			IDbCommand cmd = database.CreateCommand();
-            cmd.Connection = database.CreateOpenConnection();
+			cmd.Connection = database.CreateOpenConnection();
 			IDbDataParameter p1 = cmd.CreateParameter();
 			cmd.Parameters.Add(p1);
 			p1.Value = listBox1.Text;
-			cmd.CommandText = "SELECT NAME, COST, POWTGH, RULE, TYPE, ID FROM CARDS WHERE NAME = ?";
+			cmd.CommandText = "SELECT NAME, COST, POWTGH, RULE, TYPE, ID FROM CARD WHERE NAME = ?";
 			IDataReader reader = cmd.ExecuteReader();
 			while (reader.Read())
 			{
@@ -152,33 +174,18 @@ namespace Archivist
 					textBoxCardType.Text = reader.GetString(4);
 				else
 					textBoxCardType.Text = "";
-				if(!reader.IsDBNull(5))
+				if (!reader.IsDBNull(5))
 				{
 					//pictureBoxCard.ImageLocation = "http://resources.wizards.com/Magic/Cards/4e/en-us/Card" + reader.GetValue(5) + ".jpg";
 					pictureBoxCard.ImageLocation = "";
-				} else
+				}
+				else
 				{
 					pictureBoxCard.ImageLocation = "";
 				}
 			}
-				//("//edition");
-				//listBoxCardEdition.Items.Add(entry);
+			//("//edition");
+			//listBoxCardEdition.Items.Add(entry);
 		}
-
-		private void button2_Click(object sender, EventArgs e)
-		{
-			InitSearch();
-			UpdateCardList();
-		}
-
-		private void buttonSearch_Click(object sender, EventArgs e)
-		{
-			UpdateCardList();
-		}
-
-        private void pictureBoxCard_Click(object sender, EventArgs e)
-        {
-
-        }
-    }
+	}
 }
