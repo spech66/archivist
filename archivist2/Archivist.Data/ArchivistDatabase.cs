@@ -9,16 +9,16 @@ namespace Archivist.Data
     {
         public void LoadCards()
         {
-            using (IDbConnection connection = database.CreateOpenConnection())
+            /*using (IDbConnection connection = database.CreateOpenConnection())
             {
-                using (IDbCommand command = database.CreateCommand("SELECT * FROM FLOWERS", connection))
+                using (IDbCommand command = database.CreateCommand("SELECT * FROM X", connection))
                 {
                     using (IDataReader reader = command.ExecuteReader())
                     {
                         // read flowers and process ...
                     }
                 }
-            }
+            }*/
         }
 
         public void DeleteExtensions()
@@ -77,7 +77,7 @@ namespace Archivist.Data
                         //cardtypes.Add(cardtype);
                         //}
 
-                        MagicCard card = new MagicCard(MagicCardFactory.CardTypes(typename), true);
+                        MagicCard card = new MagicCard(true);
                         card.Name= reader["name"].ToString();
                         card.ManaCost = reader["cost"].ToString();
                         card.PowTgh = reader["PowTgh"].ToString();
@@ -93,18 +93,17 @@ namespace Archivist.Data
             string sparaCost = card.ManaCost;
             string sparaPowTgh = card.PowTgh;
             string sparaRulesText = card.Rule;
-            string sparaTypes = MagicCardFactory.CardTypesAsString(card.CardTypes);
             string sparaCardName2 = card.Name;
-            return InsertCard(sparaCardName, sparaCost, sparaPowTgh, sparaRulesText, sparaTypes, sparaCardName2);
+            return InsertCard(sparaCardName, sparaCost, sparaPowTgh, sparaRulesText, sparaCardName2);
             
         }
 
         
 
-        public string InsertCard(string sparaCardName, string sparaCost, string sparaPowTgh, string sparaRulesText, string sparaType, string sparaCardName2)
+        public string InsertCard(string sparaCardName, string sparaCost, string sparaPowTgh, string sparaRulesText, string sparaCardName2)
         {
-            string sqlcmd = "INSERT OR IGNORE INTO CARDS (NAME, COST, POWTGH, RULE, TYPE)" +
-                            " VALUES (?, ?, ?, ?, ?); SELECT ID FROM CARDS WHERE NAME = ?";
+            string sqlcmd = "INSERT OR IGNORE INTO CARDS (NAME, COST, POWTGH, RULE)" +
+                            " VALUES (?, ?, ?, ?); SELECT ID FROM CARDS WHERE NAME = ?";
 
             using (IDbConnection connection = database.CreateOpenConnection())
             {
@@ -114,7 +113,7 @@ namespace Archivist.Data
                     IDbDataParameter paraCost = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraCost); paraCost.Value = sparaCost;
                     IDbDataParameter paraPowTgh = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraPowTgh); paraPowTgh.Value = sparaPowTgh;
                     IDbDataParameter paraRulesText = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraRulesText); paraRulesText.Value = sparaRulesText;
-                    IDbDataParameter paraType = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraType); paraType.Value = sparaType;
+                    //IDbDataParameter paraType = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraType); paraType.Value = sparaType;
                     IDbDataParameter paraCardName2 = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraCardName2); paraCardName2.Value = sparaCardName2;
 
                     string cid = cmdCard.ExecuteScalar().ToString();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net; // WebClient Download
@@ -34,13 +35,13 @@ namespace Archivist
         {
 			UpdateListText("Checking directories...");
 			
-			dataDirectory = Application.StartupPath + "\\data";
-			imageDirectory = Application.StartupPath + "\\img";
-			tempDirectory = Application.StartupPath + "\\tmp";
+			dataDirectory = Path.Combine(Application.StartupPath, "data");
+			imageDirectory = Path.Combine(Application.StartupPath, "img");
+			tempDirectory = Path.Combine(Application.StartupPath, "tmp");
 
-			System.IO.Directory.CreateDirectory(dataDirectory);
-			System.IO.Directory.CreateDirectory(imageDirectory);
-			System.IO.Directory.CreateDirectory(tempDirectory);
+			Directory.CreateDirectory(dataDirectory);
+			Directory.CreateDirectory(imageDirectory);
+			Directory.CreateDirectory(tempDirectory);
 
             UpdateListText("Starting update...");
             System.Threading.Thread updThrad = new System.Threading.Thread(new System.Threading.ThreadStart(UpdateDB));
@@ -51,35 +52,9 @@ namespace Archivist
         {
             try
             {
-                WebClient client = new WebClient();
-				string downloadUrl;
+				List<string> setList = DownloadSetList().ToList();
 
-				// ------------------------------------------------------------
-				// Download set list
-				downloadUrl = "http://ww2.wizards.com/gatherer/";
-				UpdateListText("Downloading Set list...");
-				byte[] setlistBytes = client.DownloadData(downloadUrl);
-				UpdateTotalStatus(1, 100);
-
-				// ------------------------------------------------------------
-				// Parse download for setlist
-				UpdateListText("Analyzing file...");
-				UTF8Encoding utf8 = new UTF8Encoding();
-				string setlist = utf8.GetString(setlistBytes);
-
-				string subsetlist = setlist.Substring(setlist.IndexOf("<select name=\"_ddlFilterFormat\""));
-				subsetlist = subsetlist.Substring(subsetlist.IndexOf(">") + 1);
-				subsetlist = subsetlist.Substring(0, subsetlist.IndexOf("</select>"));
-
-				Regex r = new Regex("<option value=\"(?<id>[0-9]*)\">(?<name>.+)</option>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-				MatchCollection mcl = r.Matches(subsetlist);
-				ArrayList extlist = new ArrayList();
-				foreach (Match m in mcl)
-				{
-					if (m.Groups["id"].ToString() != "1")
-						extlist.Add(m.Groups["name"].ToString());
-				}
-				UpdateListText("Found " + extlist.Count + " Sets.");
+                /*
 
 				// ------------------------------------------------------------
 				// Download spoiler lists
@@ -206,7 +181,7 @@ namespace Archivist
                 // ------------------------------------------------------------
                 // We are done!
 				UpdateTotalStatus(100, 100);
-                UpdateListText("Update completed!", true);
+                UpdateListText("Update completed!", true);*/
             }
             catch (Exception e)
             {
@@ -214,6 +189,42 @@ namespace Archivist
                 UpdateListText(e.Message, true);
             }
         }
+
+		private IEnumerable<string> DownloadSetList()
+		{
+			WebClient client = new WebClient();
+			// ------------------------------------------------------------
+			// Download set list
+			string downloadUrl = "http://gatherer.wizards.com/Pages/Default.aspx";
+			UpdateListText("Downloading Set list...");
+			byte[] setlistBytes = client.DownloadData(downloadUrl);
+			UpdateTotalStatus(1, 100);
+
+			// ------------------------------------------------------------
+			// Parse download for setlist
+			UpdateListText("Analyzing file...");
+			UTF8Encoding utf8 = new UTF8Encoding();
+
+			string setlist = utf8.GetString(setlistBytes);
+
+			string subsetlist = setlist.Substring(setlist.IndexOf("<select name=\"ctl00$ctl00$MainContent$Content$SearchControls$setAddText\""));
+			subsetlist = subsetlist.Substring(subsetlist.IndexOf(">") + 1);
+			subsetlist = subsetlist.Substring(0, subsetlist.IndexOf("</select>"));
+
+			Regex r = new Regex("<option value=\"(?<id>.+)\">(?<name>.+)</option>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+			MatchCollection mcl = r.Matches(subsetlist);
+
+			List<string> extlist = new List<string>();
+			foreach (Match m in mcl)
+			{
+				if (m.Groups["id"].ToString() != "")
+					extlist.Add(m.Groups["name"].ToString());
+			}
+			UpdateListText(String.Format("Found {0} Sets.", extlist.Count));
+			return extlist;
+		}
+
+
 
 		private string ReadBlock(StreamReader reader)
 		{

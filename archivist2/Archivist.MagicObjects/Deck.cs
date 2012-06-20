@@ -16,10 +16,6 @@ namespace Archivist.MagicObjects
         /// </summary>
         public Deck()
         {
-            foreach (CardType cardType in Enum.GetValues(typeof(CardType)))
-            {
-                //cards.Add((Card)new MagicCard(cardType, true));
-            }
         }
 
         /// <summary>

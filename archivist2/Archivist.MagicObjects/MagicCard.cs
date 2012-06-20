@@ -8,7 +8,6 @@ namespace Archivist.MagicObjects
     public class MagicCard : Card
     {
             // Objects for card information
-            private readonly CardType[] cardTypes;
             private bool isCardUp;
             private string name;
             private string rule;
@@ -19,7 +18,6 @@ namespace Archivist.MagicObjects
             public string ManaCost { get { return manaCost; } set { manaCost = value; } }
             public string PowTgh { get {return powTgh;} set {powTgh = value; }}
             public string Name { get { return name; } set { name = value; } }
-            public CardType[] CardTypes { get { return cardTypes; } }
             public bool IsCardUp { get { return isCardUp; } set { isCardUp = value; } }
             
             /// <summary>
@@ -28,17 +26,15 @@ namespace Archivist.MagicObjects
             /// <param name="suit"></param>
             /// <param name="faceVal"></param>
             /// <param name="isCardUp"></param>
-            public MagicCard(CardType[] cardTypes, bool isCardUp)
+            public MagicCard(bool isCardUp)
             {
-                this.cardTypes = cardTypes;
                 this.isCardUp = isCardUp;
                 this.calculatedStats = new CalculatedStats(this);
             }
 
-            public MagicCard(string name, CardType[] cardTypes, bool isCardUp)
+            public MagicCard(string name, bool isCardUp)
             {
                 this.name = name;
-                this.cardTypes = cardTypes;
                 this.isCardUp = isCardUp;
                 this.calculatedStats = new CalculatedStats(this);
             }
@@ -51,6 +47,7 @@ namespace Archivist.MagicObjects
 
             public int CalculatedBasePower { get { return calculatedStats.CalculatedBasePower; } }
             public int CalculatedBaseToughness { get { return calculatedStats.CalculatedBaseToughness; } }
+
             /// <summary>
             /// Return the card as a string (i.e. "The Ace of Spades")
             /// </summary>
