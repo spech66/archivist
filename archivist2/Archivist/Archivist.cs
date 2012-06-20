@@ -22,9 +22,7 @@ namespace Archivist
 			imageDirectory = Application.StartupPath + "\\img";
 			//string userHomePath = Environment.GetFolderPath(Environment.SpecialFolder.Personal).ToString();
 			//string appUserHomePath = System.IO.Path.Combine(userHomePath, "Archivist");
-
-
-
+			
 			InitSearch();
 			UpdateCardList();
         }

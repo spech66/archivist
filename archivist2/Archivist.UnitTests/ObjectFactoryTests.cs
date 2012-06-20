@@ -3,9 +3,7 @@ using System.IO;
 
 namespace ArticleListings.ObjectFactory
 {
-    using ArticleListings.IO;
     using ArticleListings.ObjectFactory;
-    using Archivist.IO;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Archivist.ObjectFactory;
 

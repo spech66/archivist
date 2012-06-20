@@ -127,12 +127,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ValidatedPath\ValidatedPath.csproj">
-      <Project>{E3B69E27-B768-4D14-AABF-12E590C8A9B2}</Project>
-      <Name>ValidatedPath</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
