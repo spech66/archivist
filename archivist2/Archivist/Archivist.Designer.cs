@@ -56,6 +56,7 @@ namespace Archivist
 			this.textBoxCardText = new System.Windows.Forms.TextBox();
 			this.textBoxCardPowtgh = new System.Windows.Forms.TextBox();
 			this.listBoxCardEdition = new System.Windows.Forms.ListBox();
+			this.textBoxCostType = new System.Windows.Forms.TextBox();
 			this.groupBoxSearch = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -80,7 +81,6 @@ namespace Archivist
 			this.textBoxSearchFlavor = new System.Windows.Forms.TextBox();
 			this.listBoxSearchExpansion = new System.Windows.Forms.ListBox();
 			this.listBoxSearchType = new System.Windows.Forms.ListBox();
-			this.textBoxCostType = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -387,6 +387,15 @@ namespace Archivist
 			this.listBoxCardEdition.Sorted = true;
 			this.listBoxCardEdition.TabIndex = 5;
 			// 
+			// textBoxCostType
+			// 
+			this.textBoxCostType.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxCostType.Location = new System.Drawing.Point(3, 190);
+			this.textBoxCostType.Name = "textBoxCostType";
+			this.textBoxCostType.ReadOnly = true;
+			this.textBoxCostType.Size = new System.Drawing.Size(202, 20);
+			this.textBoxCostType.TabIndex = 6;
+			// 
 			// groupBoxSearch
 			// 
 			this.groupBoxSearch.Controls.Add(this.tableLayoutPanel2);
@@ -660,17 +669,9 @@ namespace Archivist
 			this.listBoxSearchType.FormattingEnabled = true;
 			this.listBoxSearchType.Location = new System.Drawing.Point(75, 382);
 			this.listBoxSearchType.Name = "listBoxSearchType";
+			this.listBoxSearchType.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.listBoxSearchType.Size = new System.Drawing.Size(210, 133);
 			this.listBoxSearchType.TabIndex = 21;
-			// 
-			// textBoxCostType
-			// 
-			this.textBoxCostType.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxCostType.Location = new System.Drawing.Point(3, 190);
-			this.textBoxCostType.Name = "textBoxCostType";
-			this.textBoxCostType.ReadOnly = true;
-			this.textBoxCostType.Size = new System.Drawing.Size(202, 20);
-			this.textBoxCostType.TabIndex = 6;
 			// 
 			// Archivist
 			// 
