@@ -181,10 +181,27 @@ namespace Archivist
 				whereclause += " AND TYPE IN (" + list + ")";
 			}
 
+			// Expansion
+			//listBoxSearchExpansion.Items.Clear();
+			if (listBoxSearchExpansion.SelectedIndex > 0)
+			{
+				/*SELECT * FROM CARD WHERE ID IN (
+					SELECT CARD_ID FROM CARD_EXTENSION
+					JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID
+					WHERE EXTENSION.NAME='Nemesis'
+				)*/
+				string list = "";
+				foreach (string sel in listBoxSearchExpansion.SelectedItems)
+				{
+					list += "'" + sel + "', ";
+				}
+				list = list.Remove(list.Length - 2, 2);
+				
+				whereclause += " AND ID IN (SELECT CARD_ID FROM CARD_EXTENSION JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE EXTENSION.NAME in ("+list+"))";
+			}
+
 			// Flavor text
-			/*
-			listBoxSearchExpansion.Items.Clear();
-			listBoxSearchType.Items.Clear();*/
+			// TODO: :)
 
 			if (!String.IsNullOrEmpty(whereclause))
 			{
@@ -211,6 +228,7 @@ namespace Archivist
 		private void ShowCard()
 		{
 			Database database = DatabaseCreatorFactory.CreateDatabase();
+
 			IDbCommand cmd = database.CreateCommand();
 			cmd.Connection = database.CreateOpenConnection();
 			IDbDataParameter p1 = cmd.CreateParameter();
@@ -243,8 +261,19 @@ namespace Archivist
 					pictureBoxCard.ImageLocation = "";
 				}
 			}
-			//("//edition");
-			//listBoxCardEdition.Items.Add(entry);
+
+			IDbCommand cmdEditon = database.CreateCommand();
+			cmdEditon.Connection = database.CreateOpenConnection();
+			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
+			cmdEditon.Parameters.Add(p1Editon);
+			p1Editon.Value = listBox1.Text;
+			cmdEditon.CommandText = "SELECT RARITY, EXTENSION.NAME FROM CARD JOIN CARD_EXTENSION ON CARD_EXTENSION.CARD_ID = CARD.ID JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE CARD.NAME = ?";
+			IDataReader readerEditon = cmdEditon.ExecuteReader();
+			listBoxCardEdition.Items.Clear();
+			while (readerEditon.Read())
+			{
+				listBoxCardEdition.Items.Add(String.Format("{1} ({0})", readerEditon.GetString(0), readerEditon.GetString(1)));
+			}
 		}
 	}
 }
