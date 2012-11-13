@@ -46,7 +46,9 @@ namespace Archivist
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxCards = new System.Windows.Forms.GroupBox();
-			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.dgCards = new System.Windows.Forms.DataGridView();
+			this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colCosts = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBoxImage = new System.Windows.Forms.GroupBox();
 			this.pictureBoxCard = new System.Windows.Forms.PictureBox();
 			this.groupBoxInformation = new System.Windows.Forms.GroupBox();
@@ -56,7 +58,7 @@ namespace Archivist
 			this.textBoxCardText = new System.Windows.Forms.TextBox();
 			this.textBoxCardPowtgh = new System.Windows.Forms.TextBox();
 			this.listBoxCardEdition = new System.Windows.Forms.ListBox();
-			this.textBoxCostType = new System.Windows.Forms.TextBox();
+			this.linkLabelGatherer = new System.Windows.Forms.LinkLabel();
 			this.groupBoxSearch = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -86,6 +88,7 @@ namespace Archivist
 			this.toolStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBoxCards.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
 			this.groupBoxImage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).BeginInit();
 			this.groupBoxInformation.SuspendLayout();
@@ -248,7 +251,7 @@ namespace Archivist
 			// 
 			this.tableLayoutPanel1.ColumnCount = 3;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
 			this.tableLayoutPanel1.Controls.Add(this.groupBoxCards, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.groupBoxImage, 1, 0);
@@ -265,33 +268,57 @@ namespace Archivist
 			// 
 			// groupBoxCards
 			// 
-			this.groupBoxCards.Controls.Add(this.listBox1);
+			this.groupBoxCards.Controls.Add(this.dgCards);
 			this.groupBoxCards.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxCards.Location = new System.Drawing.Point(3, 3);
 			this.groupBoxCards.Name = "groupBoxCards";
 			this.tableLayoutPanel1.SetRowSpan(this.groupBoxCards, 2);
-			this.groupBoxCards.Size = new System.Drawing.Size(308, 567);
+			this.groupBoxCards.Size = new System.Drawing.Size(278, 567);
 			this.groupBoxCards.TabIndex = 0;
 			this.groupBoxCards.TabStop = false;
 			this.groupBoxCards.Text = "Cards";
 			// 
-			// listBox1
+			// dgCards
 			// 
-			this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.Location = new System.Drawing.Point(3, 16);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(302, 537);
-			this.listBox1.TabIndex = 0;
-			this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+			this.dgCards.AllowUserToAddRows = false;
+			this.dgCards.AllowUserToDeleteRows = false;
+			this.dgCards.AllowUserToResizeRows = false;
+			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgCards.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colName,
+            this.colCosts});
+			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgCards.Location = new System.Drawing.Point(3, 16);
+			this.dgCards.Name = "dgCards";
+			this.dgCards.ReadOnly = true;
+			this.dgCards.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.dgCards.Size = new System.Drawing.Size(272, 548);
+			this.dgCards.TabIndex = 0;
+			this.dgCards.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgCards_CellFormatting);
+			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
+			// 
+			// colName
+			// 
+			this.colName.HeaderText = "Name";
+			this.colName.Name = "colName";
+			this.colName.ReadOnly = true;
+			this.colName.Width = 60;
+			// 
+			// colCosts
+			// 
+			this.colCosts.HeaderText = "Costs";
+			this.colCosts.Name = "colCosts";
+			this.colCosts.ReadOnly = true;
+			this.colCosts.Width = 58;
 			// 
 			// groupBoxImage
 			// 
 			this.groupBoxImage.Controls.Add(this.pictureBoxCard);
 			this.groupBoxImage.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxImage.Location = new System.Drawing.Point(317, 3);
+			this.groupBoxImage.Location = new System.Drawing.Point(287, 3);
 			this.groupBoxImage.Name = "groupBoxImage";
-			this.groupBoxImage.Size = new System.Drawing.Size(214, 334);
+			this.groupBoxImage.Size = new System.Drawing.Size(244, 334);
 			this.groupBoxImage.TabIndex = 1;
 			this.groupBoxImage.TabStop = false;
 			this.groupBoxImage.Text = "Image";
@@ -301,7 +328,7 @@ namespace Archivist
 			this.pictureBoxCard.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictureBoxCard.Location = new System.Drawing.Point(3, 16);
 			this.pictureBoxCard.Name = "pictureBoxCard";
-			this.pictureBoxCard.Size = new System.Drawing.Size(208, 315);
+			this.pictureBoxCard.Size = new System.Drawing.Size(238, 315);
 			this.pictureBoxCard.TabIndex = 0;
 			this.pictureBoxCard.TabStop = false;
 			// 
@@ -309,9 +336,9 @@ namespace Archivist
 			// 
 			this.groupBoxInformation.Controls.Add(this.tableLayoutPanel3);
 			this.groupBoxInformation.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxInformation.Location = new System.Drawing.Point(317, 343);
+			this.groupBoxInformation.Location = new System.Drawing.Point(287, 343);
 			this.groupBoxInformation.Name = "groupBoxInformation";
-			this.groupBoxInformation.Size = new System.Drawing.Size(214, 227);
+			this.groupBoxInformation.Size = new System.Drawing.Size(244, 227);
 			this.groupBoxInformation.TabIndex = 2;
 			this.groupBoxInformation.TabStop = false;
 			this.groupBoxInformation.Text = "Information";
@@ -325,7 +352,7 @@ namespace Archivist
 			this.tableLayoutPanel3.Controls.Add(this.textBoxCardText, 0, 2);
 			this.tableLayoutPanel3.Controls.Add(this.textBoxCardPowtgh, 0, 3);
 			this.tableLayoutPanel3.Controls.Add(this.listBoxCardEdition, 0, 4);
-			this.tableLayoutPanel3.Controls.Add(this.textBoxCostType, 0, 5);
+			this.tableLayoutPanel3.Controls.Add(this.linkLabelGatherer, 0, 5);
 			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -336,7 +363,7 @@ namespace Archivist
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(208, 208);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(238, 208);
 			this.tableLayoutPanel3.TabIndex = 0;
 			// 
 			// textBoxCardName
@@ -345,7 +372,7 @@ namespace Archivist
 			this.textBoxCardName.Location = new System.Drawing.Point(3, 3);
 			this.textBoxCardName.Name = "textBoxCardName";
 			this.textBoxCardName.ReadOnly = true;
-			this.textBoxCardName.Size = new System.Drawing.Size(202, 20);
+			this.textBoxCardName.Size = new System.Drawing.Size(232, 20);
 			this.textBoxCardName.TabIndex = 0;
 			// 
 			// textBoxCardType
@@ -354,7 +381,7 @@ namespace Archivist
 			this.textBoxCardType.Location = new System.Drawing.Point(3, 23);
 			this.textBoxCardType.Name = "textBoxCardType";
 			this.textBoxCardType.ReadOnly = true;
-			this.textBoxCardType.Size = new System.Drawing.Size(202, 20);
+			this.textBoxCardType.Size = new System.Drawing.Size(232, 20);
 			this.textBoxCardType.TabIndex = 1;
 			// 
 			// textBoxCardText
@@ -365,7 +392,7 @@ namespace Archivist
 			this.textBoxCardText.Name = "textBoxCardText";
 			this.textBoxCardText.ReadOnly = true;
 			this.textBoxCardText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxCardText.Size = new System.Drawing.Size(202, 83);
+			this.textBoxCardText.Size = new System.Drawing.Size(232, 83);
 			this.textBoxCardText.TabIndex = 2;
 			// 
 			// textBoxCardPowtgh
@@ -374,7 +401,7 @@ namespace Archivist
 			this.textBoxCardPowtgh.Location = new System.Drawing.Point(3, 132);
 			this.textBoxCardPowtgh.Name = "textBoxCardPowtgh";
 			this.textBoxCardPowtgh.ReadOnly = true;
-			this.textBoxCardPowtgh.Size = new System.Drawing.Size(202, 20);
+			this.textBoxCardPowtgh.Size = new System.Drawing.Size(232, 20);
 			this.textBoxCardPowtgh.TabIndex = 4;
 			// 
 			// listBoxCardEdition
@@ -383,18 +410,21 @@ namespace Archivist
 			this.listBoxCardEdition.FormattingEnabled = true;
 			this.listBoxCardEdition.Location = new System.Drawing.Point(3, 152);
 			this.listBoxCardEdition.Name = "listBoxCardEdition";
-			this.listBoxCardEdition.Size = new System.Drawing.Size(202, 32);
+			this.listBoxCardEdition.Size = new System.Drawing.Size(232, 32);
 			this.listBoxCardEdition.Sorted = true;
 			this.listBoxCardEdition.TabIndex = 5;
 			// 
-			// textBoxCostType
+			// linkLabelGatherer
 			// 
-			this.textBoxCostType.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxCostType.Location = new System.Drawing.Point(3, 190);
-			this.textBoxCostType.Name = "textBoxCostType";
-			this.textBoxCostType.ReadOnly = true;
-			this.textBoxCostType.Size = new System.Drawing.Size(202, 20);
-			this.textBoxCostType.TabIndex = 6;
+			this.linkLabelGatherer.AutoSize = true;
+			this.linkLabelGatherer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.linkLabelGatherer.Location = new System.Drawing.Point(3, 187);
+			this.linkLabelGatherer.Name = "linkLabelGatherer";
+			this.linkLabelGatherer.Size = new System.Drawing.Size(232, 21);
+			this.linkLabelGatherer.TabIndex = 6;
+			this.linkLabelGatherer.TabStop = true;
+			this.linkLabelGatherer.Text = "Gatherer online";
+			this.linkLabelGatherer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGatherer_LinkClicked);
 			// 
 			// groupBoxSearch
 			// 
@@ -693,6 +723,7 @@ namespace Archivist
 			this.toolStrip1.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBoxCards.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
 			this.groupBoxImage.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).EndInit();
 			this.groupBoxInformation.ResumeLayout(false);
@@ -723,8 +754,7 @@ namespace Archivist
         private System.Windows.Forms.GroupBox groupBoxCards;
         private System.Windows.Forms.GroupBox groupBoxImage;
         private System.Windows.Forms.GroupBox groupBoxInformation;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.ListBox listBox1;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.PictureBox pictureBoxCard;
         private System.Windows.Forms.TextBox textBoxCardName;
         private System.Windows.Forms.TextBox textBoxCardType;
@@ -764,8 +794,11 @@ namespace Archivist
         private System.Windows.Forms.ToolStripMenuItem deckToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem libraryToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-		private System.Windows.Forms.TextBox textBoxCostType;
+		private System.Windows.Forms.ToolStripButton toolStripButton3;
+		private System.Windows.Forms.DataGridView dgCards;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colCosts;
+		private System.Windows.Forms.LinkLabel linkLabelGatherer;
     }
 }
 

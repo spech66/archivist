@@ -66,7 +66,9 @@ namespace Archivist
 			cmd.CommandText = "SELECT distinct(TYPE) as TYPE FROM CARD ORDER BY TYPE";
 			reader = cmd.ExecuteReader();
 			while (reader.Read())
+			{
 				listBoxSearchType.Items.Add(reader.GetString(0));
+			}
 			reader.Close();
 		}
 
@@ -111,21 +113,28 @@ namespace Archivist
 			UpdateCardList();
 		}
 
-		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+		private void dgCards_SelectionChanged(object sender, EventArgs e)
 		{
 			ShowCard();
 		}
+
+		private void linkLabelGatherer_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
+		}
+
 		#endregion
 
 		private void UpdateCardList()
         {
-			listBox1.Items.Clear();
+			dgCards.Rows.Clear();
+
             Database database = DatabaseCreatorFactory.CreateDatabase();
             IDbConnection connection = database.CreateConnection();
 
             IDbCommand cmd = database.CreateCommand();
             cmd.Connection = connection;			
-			string sqlcmd = "SELECT NAME FROM CARD";
+			string sqlcmd = "SELECT NAME, COST FROM CARD";
 			string whereclause = "";
 
 			// Card name
@@ -215,7 +224,11 @@ namespace Archivist
             }
 			IDataReader reader = cmd.ExecuteReader();
 			while (reader.Read())
-				listBox1.Items.Add(reader.GetString(0));
+			{
+				//listBox1.Items.Add(reader.GetString(0));
+
+				dgCards.Rows.Add(reader.GetString(0), reader.GetString(1));
+			}
 
 			// Load image
 			string noneimg = System.IO.Path.Combine(imageDirectory, "none.jpg");
@@ -227,23 +240,28 @@ namespace Archivist
 
 		private void ShowCard()
 		{
+			if (dgCards.SelectedRows.Count < 1)
+				return;				
+
+			string cardName = dgCards.SelectedRows[0].Cells[0].Value.ToString();
+
 			Database database = DatabaseCreatorFactory.CreateDatabase();
 
 			IDbCommand cmd = database.CreateCommand();
 			cmd.Connection = database.CreateOpenConnection();
 			IDbDataParameter p1 = cmd.CreateParameter();
 			cmd.Parameters.Add(p1);
-			p1.Value = listBox1.Text;
-			cmd.CommandText = "SELECT NAME, COST, POWTGH, RULE, TYPE, ID FROM CARD WHERE NAME = ?";
+			p1.Value = cardName;
+			cmd.CommandText = "SELECT NAME, COST, POWTGH, RULE, TYPE, MULTIVERSEID FROM CARD WHERE NAME = ?";
 			IDataReader reader = cmd.ExecuteReader();
 			while (reader.Read())
 			{
 				textBoxCardName.Text = reader.GetString(0);
-				textBoxCostType.Text = reader.GetString(1);
+				//textBoxCostType.Text = reader.GetString(1);
 				textBoxCardPowtgh.Text = reader.GetString(2);
 
 				if (!reader.IsDBNull(3))
-					textBoxCardText.Text = reader.GetString(3);
+					textBoxCardText.Text = reader.GetString(3).Replace("\n", "\r\n");
 				else
 					textBoxCardText.Text = "";
 
@@ -251,10 +269,13 @@ namespace Archivist
 					textBoxCardType.Text = reader.GetString(4);
 				else
 					textBoxCardType.Text = "";
+
 				if (!reader.IsDBNull(5))
 				{
-					//pictureBoxCard.ImageLocation = "http://resources.wizards.com/Magic/Cards/4e/en-us/Card" + reader.GetValue(5) + ".jpg";
-					pictureBoxCard.ImageLocation = "";
+					DisplayImage(reader.GetValue(5).ToString());
+
+					linkLabelGatherer.Links.Clear();
+					linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + reader.GetValue(5));
 				}
 				else
 				{
@@ -266,7 +287,7 @@ namespace Archivist
 			cmdEditon.Connection = database.CreateOpenConnection();
 			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
 			cmdEditon.Parameters.Add(p1Editon);
-			p1Editon.Value = listBox1.Text;
+			p1Editon.Value = cardName;
 			cmdEditon.CommandText = "SELECT RARITY, EXTENSION.NAME FROM CARD JOIN CARD_EXTENSION ON CARD_EXTENSION.CARD_ID = CARD.ID JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE CARD.NAME = ?";
 			IDataReader readerEditon = cmdEditon.ExecuteReader();
 			listBoxCardEdition.Items.Clear();
@@ -274,6 +295,92 @@ namespace Archivist
 			{
 				listBoxCardEdition.Items.Add(String.Format("{1} ({0})", readerEditon.GetString(0), readerEditon.GetString(1)));
 			}
+		}
+
+		private void DisplayImage(string multiversid)
+		{
+			pictureBoxCard.ImageLocation = "";
+
+			string cardimg = Path.Combine(Application.StartupPath, "cardimg");
+			if (!Directory.Exists(cardimg))
+			{
+				Directory.CreateDirectory(cardimg);
+			}
+
+			string filename = Path.Combine(cardimg, multiversid + ".jpg");
+			if (File.Exists(filename))
+			{
+				pictureBoxCard.ImageLocation = filename;
+			}
+			else
+			{
+				try
+				{
+					using (System.Net.WebClient client = new System.Net.WebClient())
+					{
+						string downloadUrl = String.Format("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={0}&type=card", multiversid);
+						client.DownloadFile(downloadUrl, filename);
+					}
+					
+					pictureBoxCard.ImageLocation = filename;
+				}
+				catch (Exception e)
+				{
+					MessageBox.Show(e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+		}
+
+		private void dgCards_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			string costs = dgCards.Rows[e.RowIndex].Cells[1].Value.ToString();
+			int colorCount = 0;
+			string color = "";
+
+			string[] colors = { "U", "B", "W", "R", "G" };
+			foreach(string c in colors)
+			{
+				if (costs.Contains(c))
+				{
+					colorCount++;
+					color = c;
+				}
+			}
+
+			if (colorCount == 0) // Artifacts and lands, ...
+			{
+				dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Gray;
+			}
+			else if (colorCount == 1) // Mono color cards
+			{
+				if (color == "U")
+				{
+					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Blue;
+					dgCards.Rows[e.RowIndex].Cells[1].Style.ForeColor = Color.White;
+				}
+				else if (color == "W")
+				{
+					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.White;
+				}
+				else if (color == "R")
+				{
+					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Red;
+				}
+				else if (color == "G")
+				{
+					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.DarkGreen;
+					dgCards.Rows[e.RowIndex].Cells[1].Style.ForeColor = Color.White;
+				}
+				else if (color == "B")
+				{
+					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Black;
+					dgCards.Rows[e.RowIndex].Cells[1].Style.ForeColor = Color.White;
+				}
+			}
+			else // Multicolor cards
+			{
+				dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Gold;
+			}				
 		}
 	}
 }
