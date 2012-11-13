@@ -80,6 +80,7 @@ namespace Archivist
 			this.textBoxSearchFlavor = new System.Windows.Forms.TextBox();
 			this.listBoxSearchExpansion = new System.Windows.Forms.ListBox();
 			this.listBoxSearchType = new System.Windows.Forms.ListBox();
+			this.textBoxCostType = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -324,15 +325,17 @@ namespace Archivist
 			this.tableLayoutPanel3.Controls.Add(this.textBoxCardText, 0, 2);
 			this.tableLayoutPanel3.Controls.Add(this.textBoxCardPowtgh, 0, 3);
 			this.tableLayoutPanel3.Controls.Add(this.listBoxCardEdition, 0, 4);
+			this.tableLayoutPanel3.Controls.Add(this.textBoxCostType, 0, 5);
 			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 5;
+			this.tableLayoutPanel3.RowCount = 6;
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel3.Size = new System.Drawing.Size(208, 208);
 			this.tableLayoutPanel3.TabIndex = 0;
 			// 
@@ -362,13 +365,13 @@ namespace Archivist
 			this.textBoxCardText.Name = "textBoxCardText";
 			this.textBoxCardText.ReadOnly = true;
 			this.textBoxCardText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxCardText.Size = new System.Drawing.Size(202, 97);
+			this.textBoxCardText.Size = new System.Drawing.Size(202, 83);
 			this.textBoxCardText.TabIndex = 2;
 			// 
 			// textBoxCardPowtgh
 			// 
 			this.textBoxCardPowtgh.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxCardPowtgh.Location = new System.Drawing.Point(3, 146);
+			this.textBoxCardPowtgh.Location = new System.Drawing.Point(3, 132);
 			this.textBoxCardPowtgh.Name = "textBoxCardPowtgh";
 			this.textBoxCardPowtgh.ReadOnly = true;
 			this.textBoxCardPowtgh.Size = new System.Drawing.Size(202, 20);
@@ -378,9 +381,9 @@ namespace Archivist
 			// 
 			this.listBoxCardEdition.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listBoxCardEdition.FormattingEnabled = true;
-			this.listBoxCardEdition.Location = new System.Drawing.Point(3, 166);
+			this.listBoxCardEdition.Location = new System.Drawing.Point(3, 152);
 			this.listBoxCardEdition.Name = "listBoxCardEdition";
-			this.listBoxCardEdition.Size = new System.Drawing.Size(202, 39);
+			this.listBoxCardEdition.Size = new System.Drawing.Size(202, 32);
 			this.listBoxCardEdition.Sorted = true;
 			this.listBoxCardEdition.TabIndex = 5;
 			// 
@@ -460,6 +463,7 @@ namespace Archivist
 			this.label3.Size = new System.Drawing.Size(66, 30);
 			this.label3.TabIndex = 2;
 			this.label3.Text = "Flavor:";
+			this.label3.Visible = false;
 			// 
 			// label4
 			// 
@@ -578,6 +582,7 @@ namespace Archivist
 			this.comboBoxSearchU.Name = "comboBoxSearchU";
 			this.comboBoxSearchU.Size = new System.Drawing.Size(210, 21);
 			this.comboBoxSearchU.TabIndex = 13;
+			this.comboBoxSearchU.Tag = "U";
 			// 
 			// comboBoxSearchB
 			// 
@@ -588,6 +593,7 @@ namespace Archivist
 			this.comboBoxSearchB.Name = "comboBoxSearchB";
 			this.comboBoxSearchB.Size = new System.Drawing.Size(210, 21);
 			this.comboBoxSearchB.TabIndex = 14;
+			this.comboBoxSearchB.Tag = "B";
 			// 
 			// comboBoxSearchW
 			// 
@@ -598,6 +604,7 @@ namespace Archivist
 			this.comboBoxSearchW.Name = "comboBoxSearchW";
 			this.comboBoxSearchW.Size = new System.Drawing.Size(210, 21);
 			this.comboBoxSearchW.TabIndex = 15;
+			this.comboBoxSearchW.Tag = "W";
 			// 
 			// comboBoxSearchR
 			// 
@@ -608,6 +615,7 @@ namespace Archivist
 			this.comboBoxSearchR.Name = "comboBoxSearchR";
 			this.comboBoxSearchR.Size = new System.Drawing.Size(210, 21);
 			this.comboBoxSearchR.TabIndex = 16;
+			this.comboBoxSearchR.Tag = "R";
 			// 
 			// comboBoxSearchG
 			// 
@@ -618,6 +626,7 @@ namespace Archivist
 			this.comboBoxSearchG.Name = "comboBoxSearchG";
 			this.comboBoxSearchG.Size = new System.Drawing.Size(210, 21);
 			this.comboBoxSearchG.TabIndex = 17;
+			this.comboBoxSearchG.Tag = "G";
 			// 
 			// textBoxSearchText
 			// 
@@ -634,6 +643,7 @@ namespace Archivist
 			this.textBoxSearchFlavor.Name = "textBoxSearchFlavor";
 			this.textBoxSearchFlavor.Size = new System.Drawing.Size(210, 20);
 			this.textBoxSearchFlavor.TabIndex = 19;
+			this.textBoxSearchFlavor.Visible = false;
 			// 
 			// listBoxSearchExpansion
 			// 
@@ -652,6 +662,15 @@ namespace Archivist
 			this.listBoxSearchType.Name = "listBoxSearchType";
 			this.listBoxSearchType.Size = new System.Drawing.Size(210, 133);
 			this.listBoxSearchType.TabIndex = 21;
+			// 
+			// textBoxCostType
+			// 
+			this.textBoxCostType.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxCostType.Location = new System.Drawing.Point(3, 190);
+			this.textBoxCostType.Name = "textBoxCostType";
+			this.textBoxCostType.ReadOnly = true;
+			this.textBoxCostType.Size = new System.Drawing.Size(202, 20);
+			this.textBoxCostType.TabIndex = 6;
 			// 
 			// Archivist
 			// 
@@ -745,6 +764,7 @@ namespace Archivist
         private System.Windows.Forms.ToolStripMenuItem libraryToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
+		private System.Windows.Forms.TextBox textBoxCostType;
     }
 }
 

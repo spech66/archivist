@@ -126,13 +126,58 @@ namespace Archivist
             IDbCommand cmd = database.CreateCommand();
             cmd.Connection = connection;			
 			string sqlcmd = "SELECT NAME FROM CARD";
+			string whereclause = "";
+
+			// Card name
 			if (textBoxSearchName.Text != "")
 			{
-				sqlcmd += " WHERE NAME LIKE ?";
+				whereclause += " AND NAME LIKE ?";
 				IDbDataParameter p1 = cmd.CreateParameter();
 				cmd.Parameters.Add(p1);
 				p1.Value = "%" + textBoxSearchName.Text + "%";
 			}
+
+			// Rule text
+			if (textBoxSearchText.Text != "")
+			{
+				whereclause += " AND RULE LIKE ?";
+				IDbDataParameter p1 = cmd.CreateParameter();
+				cmd.Parameters.Add(p1);
+				p1.Value = "%" + textBoxSearchText.Text + "%";
+			}
+
+			// Card cost
+			object[] comboBoxes = { comboBoxSearchU, comboBoxSearchB, comboBoxSearchW, comboBoxSearchR, comboBoxSearchG };
+			foreach (ComboBox cb in comboBoxes)
+			{
+				string color = cb.Tag.ToString();
+
+				if (cb.Text == "Must")
+				{
+					whereclause += " AND COST LIKE ?";
+					IDbDataParameter p1 = cmd.CreateParameter();
+					cmd.Parameters.Add(p1);
+					p1.Value = "%" + color + "%";
+				}
+				else if (cb.Text == "Must not")
+				{
+					whereclause += " AND COST NOT LIKE ?";
+					IDbDataParameter p1 = cmd.CreateParameter();
+					cmd.Parameters.Add(p1);
+					p1.Value = "%" + color + "%";
+				}
+			}
+
+			// Flavor text
+			/*
+			listBoxSearchExpansion.Items.Clear();
+			listBoxSearchType.Items.Clear();*/
+
+			if (!String.IsNullOrEmpty(whereclause))
+			{
+				sqlcmd += " WHERE 1=1 " + whereclause;
+			}
+
 			cmd.CommandText = sqlcmd;
             if (connection.State != ConnectionState.Open)
             {
@@ -142,6 +187,7 @@ namespace Archivist
 			while (reader.Read())
 				listBox1.Items.Add(reader.GetString(0));
 
+			// Load image
 			string noneimg = System.IO.Path.Combine(imageDirectory, "none.jpg");
 			if (System.IO.File.Exists(noneimg))
 			{
@@ -162,7 +208,7 @@ namespace Archivist
 			while (reader.Read())
 			{
 				textBoxCardName.Text = reader.GetString(0);
-				//textBoxCostType.Text = reader.GetString(1);
+				textBoxCostType.Text = reader.GetString(1);
 				textBoxCardPowtgh.Text = reader.GetString(2);
 
 				if (!reader.IsDBNull(3))
