@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Archivist")]
+[assembly: AssemblyTitle("Archivist 2")]
 [assembly: AssemblyDescription("Archivist is a program for 'Magic the Gathering' developed by Richard Garfield. Magic: The Gathering® is a registered trademark owned by Wizards of the Coast, Inc., a subsidiary of Hasbro, Inc. THIS PRODUCT IS NOT PUBLISHED OR PRODUCED BY WIZARDS OF THE COAST, INC.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SPech.de")]
-[assembly: AssemblyProduct("Archivist")]
+[assembly: AssemblyProduct("Archivist 2")]
 [assembly: AssemblyCopyright("Copyright © Sebastian Pech")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
