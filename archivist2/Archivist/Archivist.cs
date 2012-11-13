@@ -168,6 +168,19 @@ namespace Archivist
 				}
 			}
 
+			// Type
+			if (listBoxSearchType.SelectedIndex > 0)
+			{
+				string list = "";
+				foreach(string sel in listBoxSearchType.SelectedItems)
+				{
+					list += "'" + sel + "', ";
+				}
+				list = list.Remove(list.Length - 2, 2);
+
+				whereclause += " AND TYPE IN (" + list + ")";
+			}
+
 			// Flavor text
 			/*
 			listBoxSearchExpansion.Items.Clear();
