@@ -12,12 +12,15 @@ namespace Archivist.MagicObjects
             private string name;
             private string rule;
             private string manaCost;
-            private string powTgh;
+			private string powTgh;
+			private string type;
             private CalculatedStats calculatedStats;
             public string Rule { get { return rule; } set { rule = value;} }
             public string ManaCost { get { return manaCost; } set { manaCost = value; } }
             public string PowTgh { get {return powTgh;} set {powTgh = value; }}
-            public string Name { get { return name; } set { name = value; } }
+			public string Name { get { return name; } set { name = value; } }
+			public string Type { get { return type; } set { type = value; } }
+			public int Multiverseid { get; set; }
             public bool IsCardUp { get { return isCardUp; } set { isCardUp = value; } }
             
             /// <summary>

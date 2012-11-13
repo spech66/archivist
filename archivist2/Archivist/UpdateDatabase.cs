@@ -53,56 +53,30 @@ namespace Archivist
             try
             {
 				List<string> setList = DownloadSetList().ToList();
-
-                /*
-
-				// ------------------------------------------------------------
-				// Download spoiler lists
-				int i = 0;
-				foreach (string ext in extlist)
-				{
-				    if (i < 10) { i++; continue; } // Skipping Standard, vintage, ... (types)
-					downloadUrl = "http://ww2.wizards.com/gatherer/Index.aspx?setfilter=" + ext.Replace(" ", "%20") + "&output=Text%20Spoiler";
-					string extoutfile = tempDirectory +  "\\" + System.Web.HttpUtility.UrlEncode(ext) + ".dat";
-					UpdateListText("Getting extension " + ext + "...");
-
-                    if (System.IO.File.Exists(extoutfile))
-                    {
-                        UpdateListText("Already downloaded. Skipping.");
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine("Getting extension " + ext + "...");
-                        client.DownloadFile(downloadUrl, extoutfile);
-                    }
-	
-					UpdateTaskStatus(i, extlist.Count);
-					UpdateTotalStatus(i + 1, 2 * extlist.Count + 2);
-					i++;
-				}
-
-
+				//DownloadSpoilerList(setList);
+								
 				// ------------------------------------------------------------
 				// Update extensions table
 				UpdateListText("Writing extensions to database...");
 				int id = 1;
-                ArchivistDatabase adb = new ArchivistDatabase();
-                adb.DeleteExtensions();
-				foreach (string ext in extlist)
+				ArchivistDatabase adb = new ArchivistDatabase();
+				adb.DeleteExtensions();
+				foreach (string ext in setList)
 				{
-					adb.InsertExtension(id,"", ext);
+					adb.InsertExtension(id,"", ext.Replace("&quot;", "\""));
 					id++;
 				}
-
-                // ------------------------------------------------------------
-                // Analyze spoiler lists and update db
-                string paraCardName = string.Empty, paraCost = string.Empty, paraPowTgh = string.Empty, paraRulesText = string.Empty, paraType = string.Empty, paraCardName2 = string.Empty;
-                string paraCardExtCID = string.Empty,  paraCardExtRar = string.Empty;
-                int paraCardExtEID;
+				
+				// ------------------------------------------------------------
+				// Analyze spoiler lists and update db
+				string currentCardName = string.Empty;
+				string paraCardName = string.Empty, paraCost = string.Empty, paraPowTgh = string.Empty, paraRulesText = string.Empty, paraType = string.Empty;
+				string paraCardExtCID = string.Empty, paraCardExtRar = string.Empty, paraMultiverseidString = string.Empty;
+				int paraCardExtEID, paraMultiverseid = 0;
 				id = 1;
-				foreach (string ext in extlist)
+				foreach (string ext in setList)
 				{
-                    string extoutfile = tempDirectory + "\\" + System.Web.HttpUtility.UrlEncode(ext) + ".dat";
+					string extoutfile = tempDirectory + "\\" + System.Web.HttpUtility.UrlEncode(ext) + ".dat";
 					UpdateListText("Analyzing extension file for " + ext + "...");
 
 					if (!System.IO.File.Exists(extoutfile))
@@ -111,77 +85,83 @@ namespace Archivist
 						continue;
 					}
 
-					string cardlist = utf8.GetString(File.ReadAllBytes(extoutfile));
+					HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
+					HtmlAgilityPack.HtmlDocument doc = web.Load(extoutfile);
+					HtmlAgilityPack.HtmlNode textspoilerNode = doc.DocumentNode.SelectSingleNode("//div[@class=\"textspoiler\"]/table");
 
-					string subcardlist = cardlist.Substring(cardlist.IndexOf("<table class=\"TextResultsTable\""));
-					subcardlist = subcardlist.Substring(subcardlist.IndexOf(">") + 1);
-					subcardlist = subcardlist.Substring(0, subcardlist.IndexOf("</table>"));
-
-					Regex cardregex = new Regex("<tr><td class=\"TextResultsRowHeader\">(?<key>.+?):</td><td class=\"TextResultsRowValue\">(?<value>.*?)</td></tr>", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
-					MatchCollection cardmcl = cardregex.Matches(subcardlist);
-					string cardSetRarity = "";
-					string currentCardName = "";
-					foreach (Match m in cardmcl)
+					foreach (HtmlAgilityPack.HtmlNode rows in textspoilerNode.SelectNodes("tr"))
 					{
-						if (m.Groups["key"].ToString() == "CardName" && paraCardName != null && paraCardName != currentCardName)
+						HtmlAgilityPack.HtmlNodeCollection cols = rows.SelectNodes("td");
+						if (cols.Count == 2)
 						{
-							currentCardName = paraCardName;
-							paraCardName2 = paraCardName;
-
-                            Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, MagicCardFactory.CardTypes(paraType));
-                            //string cid = adb.InsertCard(paraCardName,paraCost,paraPowTgh,paraRulesText,paraType,paraCardName2);
-                            string cid = adb.InsertCard(card);
-
-							string[] setrlist = cardSetRarity.Split(',');
-							foreach(string setr in setrlist)
+							string key = cols[0].InnerText.Replace(":", "").Trim();
+							string value = cols[1].InnerText.TrimStart().TrimEnd().Replace("—", "-");
+							if (key == "Name")
 							{
-								int split = setr.LastIndexOf(" ");
-                                if (split > 0)
-                                {
-                                    string set = setr.Substring(0, split).Trim();
-                                    string rarity = setr.Substring(split).Trim();
-                                    int eid = extlist.IndexOf(set);
-                                    paraCardExtCID = cid;
-                                    paraCardExtEID = eid;
-                                    paraCardExtRar = rarity;
-                                    try
-                                    {
-                                        adb.InsertCardExtension(paraCardExtCID, paraCardExtEID, paraCardExtRar);
-                                    }
-                                    catch
-                                    {
-                                        // Clunky way of catching an exception that seems to go if we retry...
-                                        adb.InsertCardExtension(paraCardExtCID, paraCardExtEID, paraCardExtRar);
-                                    }
-                                }
-                                else
-                                {
-                                }
+								currentCardName = value;
+								paraCardName = value;
+								string href = cols[1].SelectSingleNode("a").GetAttributeValue("href", ""); //../Card/Details.aspx?multiverseid=201281
+								paraMultiverseidString = href.Substring(href.LastIndexOf("=") + 1); //201281
+								paraMultiverseid = Convert.ToInt32(paraMultiverseidString);
+							}
+							if (key == "Cost") paraCost = value;
+							if (key == "Type") paraType = value;
+							if (key == "Pow/Tgh") paraPowTgh = value;
+							if (key == "Rules Text") paraRulesText = value;
+							if (key == "Set/Rarity") paraCardExtRar = value;
+						}
+						else
+						{
+							if (currentCardName != "")
+							{								
+								Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, paraMultiverseid);
+								string cid = adb.InsertCard(card);
+
+								string[] setrlist = paraCardExtRar.Split(',');
+								foreach(string setr in setrlist)
+								{
+									int split = setr.LastIndexOf(" ");
+									if (split > 0)
+									{
+										string set = setr.Substring(0, split).Trim();
+										string rarity = setr.Substring(split).Trim();
+										int eid = setList.IndexOf(set);
+										paraCardExtCID = cid;
+										paraCardExtEID = eid;
+										paraCardExtRar = rarity;
+										try
+										{
+											adb.InsertCardExtension(paraCardExtCID, paraCardExtEID, paraCardExtRar);
+										}
+										catch
+										{
+											// Clunky way of catching an exception that seems to go if we retry...
+											adb.InsertCardExtension(paraCardExtCID, paraCardExtEID, paraCardExtRar);
+										}
+									}
+									else
+									{
+									}
+								}
 							}
 
+							// New card
 							paraCardName = null; paraCost = null; paraType = null;
-							paraPowTgh = null; paraRulesText = null; cardSetRarity = null;
+							paraPowTgh = null; paraRulesText = null; paraCardExtRar = null;
+							paraMultiverseidString = null;
 							currentCardName = "";
 						}
-						
-						if (m.Groups["key"].ToString() == "CardName") paraCardName = m.Groups["value"].ToString();
-						if (m.Groups["key"].ToString() == "Cost") paraCost = m.Groups["value"].ToString();
-						if (m.Groups["key"].ToString() == "Type") paraType = m.Groups["value"].ToString();
-						if (m.Groups["key"].ToString() == "Pow/Tgh") paraPowTgh = m.Groups["value"].ToString();
-						if (m.Groups["key"].ToString() == "Rules Text") paraRulesText = m.Groups["value"].ToString();
-						if (m.Groups["key"].ToString() == "Set/Rarity") cardSetRarity = m.Groups["value"].ToString();
-					}
 
-					UpdateTotalStatus(extlist.Count + id + 1, 2 * extlist.Count + 2);
+					}
+					
+					UpdateTotalStatus(setList.Count + id + 1, 2 * setList.Count + 2);
 					id++;
 				}
 
-
-
-                // ------------------------------------------------------------
+				// ------------------------------------------------------------
                 // We are done!
 				UpdateTotalStatus(100, 100);
-                UpdateListText("Update completed!", true);*/
+                UpdateListText("Update completed!", true);
             }
             catch (Exception e)
             {
@@ -192,90 +172,71 @@ namespace Archivist
 
 		private IEnumerable<string> DownloadSetList()
 		{
-			WebClient client = new WebClient();
-			// ------------------------------------------------------------
-			// Download set list
-			string downloadUrl = "http://gatherer.wizards.com/Pages/Default.aspx";
-			UpdateListText("Downloading Set list...");
-			byte[] setlistBytes = client.DownloadData(downloadUrl);
-			UpdateTotalStatus(1, 100);
-
-			// ------------------------------------------------------------
-			// Parse download for setlist
-			UpdateListText("Analyzing file...");
-			UTF8Encoding utf8 = new UTF8Encoding();
-
-			string setlist = utf8.GetString(setlistBytes);
-
-			string subsetlist = setlist.Substring(setlist.IndexOf("<select name=\"ctl00$ctl00$MainContent$Content$SearchControls$setAddText\""));
-			subsetlist = subsetlist.Substring(subsetlist.IndexOf(">") + 1);
-			subsetlist = subsetlist.Substring(0, subsetlist.IndexOf("</select>"));
-
-			Regex r = new Regex("<option value=\"(?<id>.+)\">(?<name>.+)</option>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-			MatchCollection mcl = r.Matches(subsetlist);
-
-			List<string> extlist = new List<string>();
-			foreach (Match m in mcl)
+			using (WebClient client = new WebClient())
 			{
-				if (m.Groups["id"].ToString() != "")
-					extlist.Add(m.Groups["name"].ToString());
+				// ------------------------------------------------------------
+				// Download set list
+				string downloadUrl = "http://gatherer.wizards.com/Pages/Default.aspx";
+
+				UpdateListText("Downloading Set list...");
+				byte[] setlistBytes = client.DownloadData(downloadUrl);
+				UpdateTotalStatus(1, 100);
+
+				// ------------------------------------------------------------
+				// Parse download for setlist
+				UpdateListText("Analyzing file...");
+				UTF8Encoding utf8 = new UTF8Encoding();
+				string setlist = utf8.GetString(setlistBytes);
+				string subsetlist = setlist.Substring(setlist.IndexOf("<select name=\"ctl00$ctl00$MainContent$Content$SearchControls$setAddText\""));
+				subsetlist = subsetlist.Substring(subsetlist.IndexOf(">") + 1);
+				subsetlist = subsetlist.Substring(0, subsetlist.IndexOf("</select>"));
+				Regex r = new Regex("<option value=\"(?<id>.+)\">(?<name>.+)</option>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+				MatchCollection mcl = r.Matches(subsetlist);
+
+				List<string> extlist = new List<string>();
+				foreach (Match m in mcl)
+				{
+					if (m.Groups["id"].ToString() != "")
+					{
+						extlist.Add(m.Groups["name"].ToString());
+					}
+				}
+				UpdateListText(String.Format("Found {0} Sets.", extlist.Count));
+				return extlist;
 			}
-			UpdateListText(String.Format("Found {0} Sets.", extlist.Count));
-			return extlist;
 		}
 
-
-
-		private string ReadBlock(StreamReader reader)
+		/// <summary>
+		/// Download spoiler lists
+		/// </summary>
+		/// <param name="setList"></param>
+		private void DownloadSpoilerList(List<string> setList)
 		{
-			string line = "";
-			string text = "";
-			bool blockComplete = false;
-			while (!reader.EndOfStream && !blockComplete)
+			using (WebClient client = new WebClient())
 			{
-				line = reader.ReadLine().Trim();
-				text += line + " ";
+				int i = 0;
+				foreach (string ext in setList)
+				{
+					string downloadUrl = "http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&action=advanced&set=[%22" + ext.Replace(" ", "+").Replace("&quot;", "%22") + "%22]&special=true";
 
-				if (line == "")
-					blockComplete = true;
+					string extoutfile = tempDirectory + "\\" + System.Web.HttpUtility.UrlEncode(ext) + ".dat";
+					UpdateListText("Getting extension " + ext + "...");
+
+					if (System.IO.File.Exists(extoutfile))
+					{
+						UpdateListText("Already downloaded. Skipping.");
+					}
+					else
+					{
+						System.Diagnostics.Debug.WriteLine("Getting extension " + ext + "...");
+						client.DownloadFile(downloadUrl, extoutfile);
+					}
+
+					UpdateTaskStatus(i, setList.Count);
+					UpdateTotalStatus(i + 1, 2 * setList.Count + 2);
+					i++;
+				}
 			}
-
-			text = text.Replace("CardName:", "");
-			text = text.Replace("Cost:", "\n");
-			text = text.Replace("Type:", "\n");
-			text = text.Replace("Pow/Tgh:", "\n");
-			text = text.Replace("Rules Text:", "\n");
-			text = text.Replace("Set/Rarity:", "\n");
-
-			string[] fields = text.Split(new char[]{'\n'});
-			for (int i = 0; i < fields.Length; i++ )
-				fields[i] = GetNiceValue(fields[i]);
-
-			string xml = "";
-			xml += "<card";
-			xml += " name=\"" + fields[0] + "\"";
-			xml += " cost=\"" + fields[1] + "\"";
-			xml += " type=\"" + fields[2] + "\"";
-			xml += " powtgh=\"" + fields[3] + "\"";
-			xml += ">\n";
-			xml += "<rules>" + fields[4] + "</rules>\n";
-			string[] eds = fields[5].Split(new char[] { ',' });
-			foreach (string ed in eds)
-			{
-				string edname = ed.Substring(0, ed.LastIndexOf(' ')).Trim();
-				string rarity = ed.Substring(ed.LastIndexOf(' ') + 1).Trim();
-				xml += "<edition name=\"" + edname + "\" rarity=\"" + rarity + "\"/>\n";
-			}
-			xml += "</card>\n";
-			return xml;
-		}
-
-		private string GetNiceValue(string text)
-		{
-			text = text.Trim();
-			text = text.Replace("&", "&amp;");
-			text = text.Replace("\"", "&quot;");
-			return text;
 		}
 
         private void UpdateListText(string text)

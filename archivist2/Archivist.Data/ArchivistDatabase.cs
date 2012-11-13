@@ -23,7 +23,7 @@ namespace Archivist.Data
 
         public void DeleteExtensions()
         {
-            string sqlcmd = "DELETE FROM EXTENSIONS";
+			string sqlcmd = "DELETE FROM EXTENSION";
 
             using (IDbConnection connection = database.CreateOpenConnection())
             {
@@ -36,7 +36,7 @@ namespace Archivist.Data
 
         public void InsertExtension(int paramID, string paramEXT, string paramNAME)
         {
-            string sqlcmd = "INSERT INTO EXTENSIONS (ID, EXT, NAME) VALUES (?, ?, ?)";
+			string sqlcmd = "INSERT INTO EXTENSION (ID, EXT, NAME) VALUES (?, ?, ?)";
 
             using (IDbConnection connection = database.CreateOpenConnection())
             {
@@ -55,7 +55,7 @@ namespace Archivist.Data
 
         public Card GetCard(string paramNAME)
         {
-            string sqlcmd = "SELECT ID FROM CARDS";
+            string sqlcmd = "SELECT ID FROM CARD";
             string whereclause ="WHERE NAME = ?";
 
             using (IDbConnection connection = database.CreateOpenConnection())
@@ -93,17 +93,15 @@ namespace Archivist.Data
             string sparaCost = card.ManaCost;
             string sparaPowTgh = card.PowTgh;
             string sparaRulesText = card.Rule;
-            string sparaCardName2 = card.Name;
-            return InsertCard(sparaCardName, sparaCost, sparaPowTgh, sparaRulesText, sparaCardName2);
-            
+			string sparaType = card.Type;
+			int sparaMultiverseid = card.Multiverseid;
+            return InsertCard(sparaCardName, sparaCost, sparaPowTgh, sparaRulesText, sparaType, sparaMultiverseid);            
         }
 
-        
-
-        public string InsertCard(string sparaCardName, string sparaCost, string sparaPowTgh, string sparaRulesText, string sparaCardName2)
+        public string InsertCard(string sparaCardName, string sparaCost, string sparaPowTgh, string sparaRulesText, string sparaType, int sparaMultiverseid)
         {
-            string sqlcmd = "INSERT OR IGNORE INTO CARDS (NAME, COST, POWTGH, RULE)" +
-                            " VALUES (?, ?, ?, ?); SELECT ID FROM CARDS WHERE NAME = ?";
+            string sqlcmd = "INSERT OR IGNORE INTO CARD (NAME, COST, POWTGH, RULE, TYPE, MULTIVERSEID)" +
+                            " VALUES (?, ?, ?, ?, ?, ?); SELECT ID FROM CARD WHERE NAME = ?";
 
             using (IDbConnection connection = database.CreateOpenConnection())
             {
@@ -113,8 +111,10 @@ namespace Archivist.Data
                     IDbDataParameter paraCost = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraCost); paraCost.Value = sparaCost;
                     IDbDataParameter paraPowTgh = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraPowTgh); paraPowTgh.Value = sparaPowTgh;
                     IDbDataParameter paraRulesText = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraRulesText); paraRulesText.Value = sparaRulesText;
-                    //IDbDataParameter paraType = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraType); paraType.Value = sparaType;
-                    IDbDataParameter paraCardName2 = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraCardName2); paraCardName2.Value = sparaCardName2;
+					IDbDataParameter paraType = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraType); paraType.Value = sparaType;
+					IDbDataParameter paraMultiversid = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraMultiversid); paraMultiversid.Value = sparaMultiverseid;
+
+					IDbDataParameter paraCardName2 = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraCardName2); paraCardName2.Value = sparaCardName;
 
                     string cid = cmdCard.ExecuteScalar().ToString();
                     return cid;
