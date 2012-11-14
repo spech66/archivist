@@ -33,7 +33,7 @@ namespace Archivist
 
         private void UpdateDatabase_Load(object sender, EventArgs e)
         {
-			UpdateListText("Checking directories...");
+			UpdateListText("Checking directories...", true);
 			
 			dataDirectory = Path.Combine(Application.StartupPath, "data");
 			imageDirectory = Path.Combine(Application.StartupPath, "img");

@@ -1,6 +1,6 @@
 namespace Archivist
 {
-    partial class Archivist
+    partial class ArchivistMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace Archivist
         /// </summary>
         private void InitializeComponent()
         {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Archivist));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArchivistMain));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,9 +50,7 @@ namespace Archivist
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxCards = new System.Windows.Forms.GroupBox();
-			this.dgCards = new System.Windows.Forms.DataGridView();
-			this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.colCosts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dgCards = new Archivist.CardDataGrid();
 			this.groupBoxImage = new System.Windows.Forms.GroupBox();
 			this.pictureBoxCard = new System.Windows.Forms.PictureBox();
 			this.groupBoxInformation = new System.Windows.Forms.GroupBox();
@@ -90,7 +88,7 @@ namespace Archivist
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpCardSearch = new System.Windows.Forms.TabPage();
 			this.tpLibrary = new System.Windows.Forms.TabPage();
-			this.dgLibrary = new System.Windows.Forms.DataGridView();
+			this.dgLibrary = new Archivist.CardDataGrid();
 			this.tpDeckManager = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -332,32 +330,13 @@ namespace Archivist
 			this.dgCards.AllowUserToResizeRows = false;
 			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
 			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgCards.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colName,
-            this.colCosts});
 			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgCards.Location = new System.Drawing.Point(3, 16);
 			this.dgCards.Name = "dgCards";
 			this.dgCards.ReadOnly = true;
-			this.dgCards.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgCards.Size = new System.Drawing.Size(258, 516);
 			this.dgCards.TabIndex = 0;
-			this.dgCards.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgCards_CellFormatting);
 			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
-			// 
-			// colName
-			// 
-			this.colName.HeaderText = "Name";
-			this.colName.Name = "colName";
-			this.colName.ReadOnly = true;
-			this.colName.Width = 60;
-			// 
-			// colCosts
-			// 
-			this.colCosts.HeaderText = "Costs";
-			this.colCosts.Name = "colCosts";
-			this.colCosts.ReadOnly = true;
-			this.colCosts.Width = 58;
 			// 
 			// groupBoxImage
 			// 
@@ -809,6 +788,10 @@ namespace Archivist
 			// 
 			// dgLibrary
 			// 
+			this.dgLibrary.AllowUserToAddRows = false;
+			this.dgLibrary.AllowUserToDeleteRows = false;
+			this.dgLibrary.AllowUserToResizeRows = false;
+			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
 			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
@@ -874,7 +857,7 @@ namespace Archivist
 			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			this.lbDeckManagerDeckList.Enter += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			// 
-			// Archivist
+			// ArchivistMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -885,7 +868,7 @@ namespace Archivist
 			this.Controls.Add(this.menuStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "Archivist";
+			this.Name = "ArchivistMain";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Archivist 2";
 			this.menuStrip1.ResumeLayout(false);
@@ -974,16 +957,12 @@ namespace Archivist
         private System.Windows.Forms.ToolStripMenuItem libraryToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.ToolStripButton toolStripButton3;
-		private System.Windows.Forms.DataGridView dgCards;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colCosts;
 		private System.Windows.Forms.LinkLabel linkLabelGatherer;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tpCardSearch;
 		private System.Windows.Forms.TabPage tpLibrary;
 		private System.Windows.Forms.ToolStripMenuItem cardSearchToolStripMenuItem;
 		private System.Windows.Forms.ToolStripButton toolStripButton4;
-		private System.Windows.Forms.DataGridView dgLibrary;
 		private System.Windows.Forms.TabPage tpDeckManager;
 		private System.Windows.Forms.RichTextBox textBoxCardText;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
@@ -991,6 +970,8 @@ namespace Archivist
 		private System.Windows.Forms.Button btnDeckManagerNewDeck;
 		private System.Windows.Forms.ListBox lbDeckManagerDeckList;
 		private System.Windows.Forms.ToolStripMenuItem cardSearchToolStripMenuItem1;
+		private CardDataGrid dgLibrary;
+		private CardDataGrid dgCards;
     }
 }
 

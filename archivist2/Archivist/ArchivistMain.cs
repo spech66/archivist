@@ -11,13 +11,13 @@ using System.IO;
 
 namespace Archivist
 {
-    public partial class Archivist : Form
+    public partial class ArchivistMain : Form
     {
 		private string dataDirectory;
 		private string imageDirectory;
 		private string decksDirectory;
 
-        public Archivist()
+        public ArchivistMain()
         {
             InitializeComponent();
 			dataDirectory = Path.Combine(Application.StartupPath, "data");
@@ -26,6 +26,7 @@ namespace Archivist
 			
 			InitSearch();
 			UpdateCardList();
+			UpdateLibraryList();
 			UpdateDeckList();
         }
 
@@ -93,6 +94,21 @@ namespace Archivist
 			{
 				lbDeckManagerDeckList.Items.Add(file.Replace(decksDirectory, ""));
 			}
+		}
+		
+		public void UpdateLibraryList()
+		{
+			List<Archivist.MagicObjects.MagicCard> cards = new List<Archivist.MagicObjects.MagicCard>();
+
+			ArchivistDatabase adb = new ArchivistDatabase();
+			Archivist.MagicObjects.MagicCard mc = adb.GetCard("Brainbite") as Archivist.MagicObjects.MagicCard;
+			if (mc != null)
+			{
+				cards.Add(mc);
+			}
+
+			//dgLibrary.DataSource = cards;
+			dgLibrary.BindDatasource(cards, false);
 		}
 
 		#region Event handler
@@ -177,10 +193,11 @@ namespace Archivist
 				int pathIdx = path.LastIndexOf("\\");
 				if (pathIdx > -1)
 				{
-					name = "Deck - " + path.Substring();
+					name = "Deck - " + path.Substring(pathIdx + 1);
 				}
 				else
 				{
+					name = "Deck - " + path;
 				}
 			}
 
@@ -192,32 +209,23 @@ namespace Archivist
 
 		private void UpdateCardList()
         {
-			dgCards.Rows.Clear();
+			dgCards.DataSource = null;
 
-            Database database = DatabaseCreatorFactory.CreateDatabase();
-            IDbConnection connection = database.CreateConnection();
-
-            IDbCommand cmd = database.CreateCommand();
-            cmd.Connection = connection;			
-			string sqlcmd = "SELECT NAME, COST FROM CARD";
 			string whereclause = "";
+			List<object> data = new List<object>();
 
 			// Card name
 			if (textBoxSearchName.Text != "")
 			{
 				whereclause += " AND NAME LIKE ?";
-				IDbDataParameter p1 = cmd.CreateParameter();
-				cmd.Parameters.Add(p1);
-				p1.Value = "%" + textBoxSearchName.Text + "%";
+				data.Add("%" + textBoxSearchName.Text + "%");
 			}
 
 			// Rule text
 			if (textBoxSearchText.Text != "")
 			{
 				whereclause += " AND RULE LIKE ?";
-				IDbDataParameter p1 = cmd.CreateParameter();
-				cmd.Parameters.Add(p1);
-				p1.Value = "%" + textBoxSearchText.Text + "%";
+				data.Add("%" + textBoxSearchText.Text + "%");
 			}
 
 			// Card cost
@@ -229,16 +237,12 @@ namespace Archivist
 				if (cb.Text == "Must")
 				{
 					whereclause += " AND COST LIKE ?";
-					IDbDataParameter p1 = cmd.CreateParameter();
-					cmd.Parameters.Add(p1);
-					p1.Value = "%" + color + "%";
+					data.Add("%" + color + "%");
 				}
 				else if (cb.Text == "Must not")
 				{
 					whereclause += " AND COST NOT LIKE ?";
-					IDbDataParameter p1 = cmd.CreateParameter();
-					cmd.Parameters.Add(p1);
-					p1.Value = "%" + color + "%";
+					data.Add("%" + color + "%");
 				}
 			}
 
@@ -279,21 +283,12 @@ namespace Archivist
 
 			if (!String.IsNullOrEmpty(whereclause))
 			{
-				sqlcmd += " WHERE 1=1 " + whereclause;
+				whereclause = " WHERE 1=1 " + whereclause;
 			}
 
-			cmd.CommandText = sqlcmd;
-            if (connection.State != ConnectionState.Open)
-            {
-                connection.Open();
-            }
-			IDataReader reader = cmd.ExecuteReader();
-			while (reader.Read())
-			{
-				//listBox1.Items.Add(reader.GetString(0));
-
-				dgCards.Rows.Add(reader.GetString(0), reader.GetString(1));
-			}
+			ArchivistDatabase adb = new ArchivistDatabase();
+			List<Archivist.MagicObjects.Card> cards = adb.GetCards(whereclause, data.ToArray());
+			dgCards.BindDatasource(cards, true);
 
 			// Load image
 			string noneimg = System.IO.Path.Combine(imageDirectory, "none.jpg");
@@ -306,53 +301,34 @@ namespace Archivist
 		private void ShowCard()
 		{
 			if (dgCards.SelectedRows.Count < 1)
-				return;				
+				return;
 
-			string cardName = dgCards.SelectedRows[0].Cells[0].Value.ToString();
+			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
+			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
 
-			Database database = DatabaseCreatorFactory.CreateDatabase();
+			textBoxCardName.Text = card.Name;
+			//textBoxCostType.Text = reader.GetString(1);
+			textBoxCardPowtgh.Text = card.PowTgh;
+			textBoxCardText.Text = card.Rule;
+			textBoxCardType.Text = card.Type;
 
-			IDbCommand cmd = database.CreateCommand();
-			cmd.Connection = database.CreateOpenConnection();
-			IDbDataParameter p1 = cmd.CreateParameter();
-			cmd.Parameters.Add(p1);
-			p1.Value = cardName;
-			cmd.CommandText = "SELECT NAME, COST, POWTGH, RULE, TYPE, MULTIVERSEID FROM CARD WHERE NAME = ?";
-			IDataReader reader = cmd.ExecuteReader();
-			while (reader.Read())
+			if (card.Multiverseid > 0)
 			{
-				textBoxCardName.Text = reader.GetString(0);
-				//textBoxCostType.Text = reader.GetString(1);
-				textBoxCardPowtgh.Text = reader.GetString(2);
+				DisplayImage(card.Multiverseid.ToString());
 
-				if (!reader.IsDBNull(3))
-					textBoxCardText.Text = reader.GetString(3).Replace("\n", "\r\n");
-				else
-					textBoxCardText.Text = "";
-
-				if (!reader.IsDBNull(4))
-					textBoxCardType.Text = reader.GetString(4);
-				else
-					textBoxCardType.Text = "";
-
-				if (!reader.IsDBNull(5))
-				{
-					DisplayImage(reader.GetValue(5).ToString());
-
-					linkLabelGatherer.Links.Clear();
-					linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + reader.GetValue(5));
-				}
-				else
-				{
-					pictureBoxCard.ImageLocation = "";
-				}
+				linkLabelGatherer.Links.Clear();
+				linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + card.Multiverseid.ToString());
+			}
+			else
+			{
+				pictureBoxCard.ImageLocation = "";
 			}
 
-			IDbCommand cmdEditon = database.CreateCommand();
-			cmdEditon.Connection = database.CreateOpenConnection();
+			IDbCommand cmdEditon = DataBuider.database.CreateCommand();
+			cmdEditon.Connection = DataBuider.database.CreateOpenConnection();
 			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
 			cmdEditon.Parameters.Add(p1Editon);
-			p1Editon.Value = cardName;
+			p1Editon.Value = card.Name;
 			cmdEditon.CommandText = "SELECT RARITY, EXTENSION.NAME FROM CARD JOIN CARD_EXTENSION ON CARD_EXTENSION.CARD_ID = CARD.ID JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE CARD.NAME = ?";
 			IDataReader readerEditon = cmdEditon.ExecuteReader();
 			listBoxCardEdition.Items.Clear();
@@ -394,58 +370,6 @@ namespace Archivist
 					MessageBox.Show(e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
-		}
-
-		private void dgCards_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
-			string costs = dgCards.Rows[e.RowIndex].Cells[1].Value.ToString();
-			int colorCount = 0;
-			string color = "";
-
-			string[] colors = { "U", "B", "W", "R", "G" };
-			foreach(string c in colors)
-			{
-				if (costs.Contains(c))
-				{
-					colorCount++;
-					color = c;
-				}
-			}
-
-			if (colorCount == 0) // Artifacts and lands, ...
-			{
-				dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Gray;
-			}
-			else if (colorCount == 1) // Mono color cards
-			{
-				if (color == "U")
-				{
-					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Blue;
-					dgCards.Rows[e.RowIndex].Cells[1].Style.ForeColor = Color.White;
-				}
-				else if (color == "W")
-				{
-					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.White;
-				}
-				else if (color == "R")
-				{
-					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Red;
-				}
-				else if (color == "G")
-				{
-					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.DarkGreen;
-					dgCards.Rows[e.RowIndex].Cells[1].Style.ForeColor = Color.White;
-				}
-				else if (color == "B")
-				{
-					dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Black;
-					dgCards.Rows[e.RowIndex].Cells[1].Style.ForeColor = Color.White;
-				}
-			}
-			else // Multicolor cards
-			{
-				dgCards.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.Gold;
-			}				
 		}
 	}
 }
