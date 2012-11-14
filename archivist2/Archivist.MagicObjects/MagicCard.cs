@@ -21,6 +21,8 @@ namespace Archivist.MagicObjects
 			public string Name { get { return name; } set { name = value; } }
 			public string Type { get { return type; } set { type = value; } }
 			public int Multiverseid { get; set; }
+			public string Rarity { get; set; }
+			public string Extension { get; set; }
             public bool IsCardUp { get { return isCardUp; } set { isCardUp = value; } }
             
             /// <summary>

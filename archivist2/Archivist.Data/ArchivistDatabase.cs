@@ -56,9 +56,11 @@ namespace Archivist.Data
                         card.Name= reader["name"].ToString();
                         card.ManaCost = reader["cost"].ToString();
                         card.PowTgh = reader["PowTgh"].ToString();
-						card.Multiverseid = Convert.ToInt32(reader["Multiverseid"].ToString());
+						card.Multiverseid = Convert.ToInt32(reader["Id"].ToString());
 						card.Rule = reader["Rule"].ToString();
 						card.Type = reader["Type"].ToString();
+						card.Extension = reader["Extension"].ToString();
+						card.Rarity = reader["Rarity"].ToString();
                         return card;
                     }
                 }
@@ -89,9 +91,11 @@ namespace Archivist.Data
 						card.Name = reader["name"].ToString();
 						card.ManaCost = reader["cost"].ToString();
 						card.PowTgh = reader["PowTgh"].ToString();
-						card.Multiverseid = Convert.ToInt32(reader["Multiverseid"].ToString());
+						card.Multiverseid = Convert.ToInt32(reader["Id"].ToString());
 						card.Rule = reader["Rule"].ToString();
 						card.Type = reader["Type"].ToString();
+						card.Extension = reader["Extension"].ToString();
+						card.Rarity = reader["Rarity"].ToString();
 						cards.Add(card);
 					}
 				}
@@ -107,14 +111,16 @@ namespace Archivist.Data
             string sparaPowTgh = card.PowTgh;
             string sparaRulesText = card.Rule;
 			string sparaType = card.Type;
+			string sparaRarity = card.Rarity;
+			string sparaExtension = card.Extension;
 			int sparaMultiverseid = card.Multiverseid;
-            return InsertCard(sparaCardName, sparaCost, sparaPowTgh, sparaRulesText, sparaType, sparaMultiverseid);            
+			return InsertCard(sparaCardName, sparaCost, sparaPowTgh, sparaRulesText, sparaType, sparaRarity, sparaExtension, sparaMultiverseid);            
         }
 
-        public string InsertCard(string sparaCardName, string sparaCost, string sparaPowTgh, string sparaRulesText, string sparaType, int sparaMultiverseid)
+		public string InsertCard(string sparaCardName, string sparaCost, string sparaPowTgh, string sparaRulesText, string sparaType, string sparaRarity, string sparaExtension, int sparaMultiverseid)
         {
-            string sqlcmd = "INSERT OR IGNORE INTO CARD (NAME, COST, POWTGH, RULE, TYPE, MULTIVERSEID)" +
-                            " VALUES (?, ?, ?, ?, ?, ?); SELECT ID FROM CARD WHERE NAME = ?";
+			string sqlcmd = "INSERT OR IGNORE INTO CARD (NAME, COST, POWTGH, RULE, TYPE, RARITY, EXTENSION, ID)" +
+							" VALUES (?, ?, ?, ?, ?, ?, ?, ?)";//; SELECT ID FROM CARD WHERE NAME = ?";
 
             using (IDbConnection connection = database.CreateOpenConnection())
             {
@@ -125,17 +131,21 @@ namespace Archivist.Data
                     IDbDataParameter paraPowTgh = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraPowTgh); paraPowTgh.Value = sparaPowTgh;
                     IDbDataParameter paraRulesText = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraRulesText); paraRulesText.Value = sparaRulesText;
 					IDbDataParameter paraType = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraType); paraType.Value = sparaType;
+					IDbDataParameter paraRarity = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraRarity); paraRarity.Value = sparaRarity;
+					IDbDataParameter paraExtension = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraExtension); paraExtension.Value = sparaExtension;
 					IDbDataParameter paraMultiversid = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraMultiversid); paraMultiversid.Value = sparaMultiverseid;
 
-					IDbDataParameter paraCardName2 = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraCardName2); paraCardName2.Value = sparaCardName;
+					//IDbDataParameter paraCardName2 = cmdCard.CreateParameter(); cmdCard.Parameters.Add(paraCardName2); paraCardName2.Value = sparaCardName;
 
-                    string cid = cmdCard.ExecuteScalar().ToString();
-                    return cid;
+                    //string cid = cmdCard.ExecuteScalar().ToString();
+					cmdCard.ExecuteScalar();
+					return sparaMultiverseid.ToString();
+                    //return cid;
                 }
             }
         }
 
-        public void InsertCardExtension(string sparaCardExtCID, int sparaCardExtEID, string sparaCardExtRar)
+        /*public void InsertCardExtension(string sparaCardExtCID, int sparaCardExtEID, string sparaCardExtRar)
         {
             string sqlcmd = "INSERT OR IGNORE INTO CARD_EXTENSION (CARD_ID, EXTENSION_ID, RARITY) VALUES (?, ?, ?)";
 
@@ -150,6 +160,6 @@ namespace Archivist.Data
                     cmdCardExt.ExecuteNonQuery();
                 }
             }
-        }
+        }*/
     }
 }

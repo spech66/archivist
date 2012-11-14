@@ -48,8 +48,12 @@ namespace Archivist
         {
             try
             {
-				List<string> setList = DownloadSetList().ToList();
-				DownloadSpoilerList(setList);
+				//List<string> setList = DownloadSetList().ToList();
+				List<string> setList = new List<string>();
+				setList.Add("Limited Edition Alpha");
+				setList.Add("Magic 2011");
+
+				//DownloadSpoilerList(setList);
 								
 				// ------------------------------------------------------------
 				// Update extensions table
@@ -59,7 +63,7 @@ namespace Archivist
 				adb.DeleteExtensions();
 				foreach (string ext in setList)
 				{
-					adb.InsertExtension(id,"", ext.Replace("&quot;", "\""));
+					adb.InsertExtension(id, "", ext.Replace("&quot;", "\""));
 					id++;
 				}
 				
@@ -68,7 +72,7 @@ namespace Archivist
 				string currentCardName = string.Empty;
 				string paraCardName = string.Empty, paraCost = string.Empty, paraPowTgh = string.Empty, paraRulesText = string.Empty, paraType = string.Empty;
 				string paraCardExtCID = string.Empty, paraCardExtRar = string.Empty, paraMultiverseidString = string.Empty;
-				int paraCardExtEID, paraMultiverseid = 0;
+				int /*paraCardExtEID,*/ paraMultiverseid = 0;
 				id = 1;
 				foreach (string ext in setList)
 				{
@@ -91,7 +95,7 @@ namespace Archivist
 						if (cols.Count == 2)
 						{
 							string key = cols[0].InnerText.Replace(":", "").Trim();
-							string value = cols[1].InnerText.TrimStart().TrimEnd().Replace("—", "-");
+							string value = cols[1].InnerText.TrimStart().TrimEnd();
 							if (key == "Name")
 							{
 								currentCardName = value;
@@ -101,7 +105,7 @@ namespace Archivist
 								paraMultiverseid = Convert.ToInt32(paraMultiverseidString);
 							}
 							if (key == "Cost") paraCost = value;
-							if (key == "Type") paraType = value;
+							if (key == "Type") paraType = value.Replace("â€”", "-").Replace("  ", " ");
 							if (key == "Pow/Tgh") paraPowTgh = value;
 							if (key == "Rules Text") paraRulesText = value;
 							if (key == "Set/Rarity") paraCardExtRar = value;
@@ -109,8 +113,28 @@ namespace Archivist
 						else
 						{
 							if (currentCardName != "")
-							{								
-								Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, paraMultiverseid);
+							{
+								string[] setrlist = paraCardExtRar.Split(',');
+								string cid = string.Empty;
+								foreach(string setr in setrlist)
+								{
+									if (setr.Contains(ext))
+									{
+										string set = ext.Trim();
+										string rarity = setr.Replace(ext, "").Trim(); // Might by Common/Uncomm/Rare/Mythic Rare
+
+										Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, rarity, set, paraMultiverseid);
+										cid = adb.InsertCard(card);
+										break;
+									}
+								}
+
+								if (string.IsNullOrEmpty(cid))
+								{
+									UpdateListText("Error inserting card: " + currentCardName);
+								}
+
+								/*Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, paraMultiverseid);
 								string cid = adb.InsertCard(card);
 
 								string[] setrlist = paraCardExtRar.Split(',');
@@ -121,7 +145,7 @@ namespace Archivist
 									{
 										string set = setr.Substring(0, split).Trim();
 										string rarity = setr.Substring(split).Trim();
-										int eid = setList.IndexOf(set);
+										int eid = setList.IndexOf(set) + 1; // First set id = 1; index = 0!
 										paraCardExtCID = cid;
 										paraCardExtEID = eid;
 										paraCardExtRar = rarity;
@@ -138,7 +162,7 @@ namespace Archivist
 									else
 									{
 									}
-								}
+								}*/
 							}
 
 							// New card

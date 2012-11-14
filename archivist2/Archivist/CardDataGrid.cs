@@ -15,6 +15,8 @@ namespace Archivist
 		private DataGridViewTextBoxColumn colLibName;
 		private DataGridViewTextBoxColumn colLibCosts;
 		private DataGridViewTextBoxColumn colLibType;
+		private DataGridViewTextBoxColumn colLibExtension;
+		private DataGridViewTextBoxColumn colLibRarity;
 		private DataGridViewImageColumn colLibImage;
 
 		public CardDataGrid()
@@ -28,6 +30,8 @@ namespace Archivist
 			colLibCosts = new DataGridViewTextBoxColumn();
 			colLibType = new DataGridViewTextBoxColumn();
 			colLibImage = new DataGridViewImageColumn();
+			colLibExtension = new DataGridViewTextBoxColumn();
+			colLibRarity = new DataGridViewTextBoxColumn();
 
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 			AllowUserToAddRows = false;
@@ -65,12 +69,26 @@ namespace Archivist
 			this.colLibImage.HeaderText = "Image";
 			this.colLibImage.Name = "colLibImage";
 			this.colLibImage.ReadOnly = true;
+			// 
+			// colLibExtension
+			// 
+			this.colLibExtension.HeaderText = "Extension";
+			this.colLibExtension.Name = "colLibExtension";
+			this.colLibExtension.ReadOnly = true;
+			// 
+			// colLibName
+			// 
+			this.colLibRarity.HeaderText = "XRarity";
+			this.colLibRarity.Name = "colLibRarity";
+			this.colLibRarity.ReadOnly = true;
 
 			Columns.AddRange(new DataGridViewColumn[] {
 				this.colLibAmount,
 				this.colLibName,
 				this.colLibCosts,
 				this.colLibType,
+				this.colLibExtension,
+				this.colLibRarity,
 				this.colLibImage});
 
 			isInitialized = true;
@@ -90,12 +108,15 @@ namespace Archivist
 			colLibName.DataPropertyName = "Name";
 			colLibCosts.DataPropertyName = "ManaCost"; //mc.ManaCost
 			colLibType.DataPropertyName = "Type";
+			colLibExtension.DataPropertyName = "Extension";
+			colLibRarity.DataPropertyName = "Rarity";
 
 			if (simple)
 			{
 				colLibAmount.Visible = false;
 				colLibType.Visible = false;
 				colLibImage.Visible = false;
+				colLibRarity.Visible = false;
 			}
 			else
 			{
