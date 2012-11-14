@@ -16,6 +16,8 @@ namespace Archivist.MagicObjects
         int CalculatedBaseToughness { get; }
 		string Rule { get; }
 		string Type { get; }
+		string Rarity { get; }
+		string Extension { get; }
 		int Multiverseid { get; }
 	}    
 }

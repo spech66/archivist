@@ -98,6 +98,7 @@ namespace Archivist
 		
 		public void UpdateLibraryList()
 		{
+			/*
 			List<Archivist.MagicObjects.MagicCard> cards = new List<Archivist.MagicObjects.MagicCard>();
 
 			ArchivistDatabase adb = new ArchivistDatabase();
@@ -108,7 +109,7 @@ namespace Archivist
 			}
 
 			//dgLibrary.DataSource = cards;
-			dgLibrary.BindDatasource(cards, false);
+			dgLibrary.BindDatasource(cards, false);*/
 		}
 
 		#region Event handler
@@ -132,6 +133,12 @@ namespace Archivist
 		private void buttonSearch_Click(object sender, EventArgs e)
 		{
 			UpdateCardList();
+		}
+
+		private void textBoxSearchName_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode == Keys.Enter)
+				UpdateCardList();
 		}
 
 		private void libraryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -274,8 +281,9 @@ namespace Archivist
 					list += "'" + sel + "', ";
 				}
 				list = list.Remove(list.Length - 2, 2);
-				
-				whereclause += " AND ID IN (SELECT CARD_ID FROM CARD_EXTENSION JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE EXTENSION.NAME in ("+list+"))";
+
+				whereclause += " AND EXTENSION IN (" + list + ")";
+				//whereclause += " AND ID IN (SELECT CARD_ID FROM CARD_EXTENSION JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE EXTENSION.NAME in ("+list+"))";
 			}
 
 			// Flavor text
@@ -329,7 +337,8 @@ namespace Archivist
 			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
 			cmdEditon.Parameters.Add(p1Editon);
 			p1Editon.Value = card.Name;
-			cmdEditon.CommandText = "SELECT RARITY, EXTENSION.NAME FROM CARD JOIN CARD_EXTENSION ON CARD_EXTENSION.CARD_ID = CARD.ID JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE CARD.NAME = ?";
+			//cmdEditon.CommandText = "SELECT RARITY, EXTENSION.NAME FROM CARD JOIN CARD_EXTENSION ON CARD_EXTENSION.CARD_ID = CARD.ID JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE CARD.NAME = ?";
+			cmdEditon.CommandText = "SELECT RARITY, EXTENSION FROM CARD WHERE NAME = ?";
 			IDataReader readerEditon = cmdEditon.ExecuteReader();
 			listBoxCardEdition.Items.Clear();
 			while (readerEditon.Read())

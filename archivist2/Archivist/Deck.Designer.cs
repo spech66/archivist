@@ -29,36 +29,36 @@
 		private void InitializeComponent()
 		{
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.cardDataGrid1 = new Archivist.CardDataGrid();
 			this.tableLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
 			// 
 			this.tableLayoutPanel1.ColumnCount = 3;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 242F));
-			this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 0);
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.91911F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0809F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			this.tableLayoutPanel1.Controls.Add(this.cardDataGrid1, 0, 0);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 3;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 222F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 89.11565F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.88435F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(824, 597);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
-			// dataGridView1
+			// cardDataGrid1
 			// 
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(285, 181);
-			this.dataGridView1.TabIndex = 0;
+			this.cardDataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.cardDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cardDataGrid1.Location = new System.Drawing.Point(3, 3);
+			this.cardDataGrid1.Name = "cardDataGrid1";
+			this.cardDataGrid1.Size = new System.Drawing.Size(630, 468);
+			this.cardDataGrid1.TabIndex = 0;
 			// 
 			// Deck
 			// 
@@ -68,7 +68,7 @@
 			this.Name = "Deck";
 			this.Size = new System.Drawing.Size(824, 597);
 			this.tableLayoutPanel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -76,6 +76,6 @@
 		#endregion
 
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.DataGridView dataGridView1;
+		private CardDataGrid cardDataGrid1;
 	}
 }
