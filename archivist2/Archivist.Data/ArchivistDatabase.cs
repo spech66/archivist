@@ -7,20 +7,6 @@ namespace Archivist.Data
 {
     public class ArchivistDatabase : DataBuider
     {
-        public void LoadCards()
-        {
-            /*using (IDbConnection connection = database.CreateOpenConnection())
-            {
-                using (IDbCommand command = database.CreateCommand("SELECT * FROM X", connection))
-                {
-                    using (IDataReader reader = command.ExecuteReader())
-                    {
-                        // read flowers and process ...
-                    }
-                }
-            }*/
-        }
-
         public void DeleteExtensions()
         {
 			string sqlcmd = "DELETE FROM EXTENSION";
@@ -55,7 +41,7 @@ namespace Archivist.Data
 
         public Card GetCard(string paramNAME)
         {
-            string sqlcmd = "SELECT ID FROM CARD";
+            string sqlcmd = "SELECT * FROM CARD";
             string whereclause ="WHERE NAME = ?";
 
             using (IDbConnection connection = database.CreateOpenConnection())
@@ -66,26 +52,53 @@ namespace Archivist.Data
                     p1.Value = paramNAME;
                     using (IDataReader reader = command.ExecuteReader())
                     {
-                        string typename = reader["type"].ToString();
-                        //typename.Replace("-", "");
-                        //string[] types = typename.Split(' ');
-                        //List<string> typelist = new List<string>(types);
-                        //List<CardType> cardtypes = new List<CardType>();
-                        //foreach (string item in typelist)
-                        //{
-                        //CardType cardtype = (CardType)Enum.Parse(typeof(CardType), reader["name"].ToString());
-                        //cardtypes.Add(cardtype);
-                        //}
-
                         MagicCard card = new MagicCard(true);
                         card.Name= reader["name"].ToString();
                         card.ManaCost = reader["cost"].ToString();
                         card.PowTgh = reader["PowTgh"].ToString();
+						card.Multiverseid = Convert.ToInt32(reader["Multiverseid"].ToString());
+						card.Rule = reader["Rule"].ToString();
+						card.Type = reader["Type"].ToString();
                         return card;
                     }
                 }
             }
         }
+
+		public List<Card> GetCards(string whereclause = "", params object[] values)
+		{
+			List<Card> cards = new List<Card>();
+
+			string sqlcmd = "SELECT * FROM CARD";
+
+			using (IDbConnection connection = database.CreateOpenConnection())
+			{
+				using (IDbCommand command = database.CreateCommand(sqlcmd + " " + whereclause, connection))
+				{
+					for (int i = 0; i < values.Length; i++)
+					{
+						IDbDataParameter p1 = command.CreateParameter();
+						command.Parameters.Add(p1);
+						p1.Value = values[i];
+					}
+
+					IDataReader reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						MagicCard card = new MagicCard(true);
+						card.Name = reader["name"].ToString();
+						card.ManaCost = reader["cost"].ToString();
+						card.PowTgh = reader["PowTgh"].ToString();
+						card.Multiverseid = Convert.ToInt32(reader["Multiverseid"].ToString());
+						card.Rule = reader["Rule"].ToString();
+						card.Type = reader["Type"].ToString();
+						cards.Add(card);
+					}
+				}
+			}
+
+			return cards;
+		}
 
         public string InsertCard(Card card)
         {

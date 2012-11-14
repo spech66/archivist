@@ -78,11 +78,14 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Archivist.cs">
+    <Compile Include="ArchivistMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Archivist.Designer.cs">
-      <DependentUpon>Archivist.cs</DependentUpon>
+    <Compile Include="ArchivistMain.Designer.cs">
+      <DependentUpon>ArchivistMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardDataGrid.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Deck.cs">
       <SubType>UserControl</SubType>
@@ -90,6 +93,7 @@
     <Compile Include="Deck.Designer.cs">
       <DependentUpon>Deck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="Program.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,9 +101,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Archivist.resx">
+    <EmbeddedResource Include="ArchivistMain.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>Archivist.cs</DependentUpon>
+      <DependentUpon>ArchivistMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Deck.resx">
       <DependentUpon>Deck.cs</DependentUpon>
