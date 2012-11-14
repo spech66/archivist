@@ -33,15 +33,18 @@ namespace Archivist
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cardSearchToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.libraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cardSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -56,10 +59,10 @@ namespace Archivist
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxCardName = new System.Windows.Forms.TextBox();
 			this.textBoxCardType = new System.Windows.Forms.TextBox();
-			this.textBoxCardText = new System.Windows.Forms.TextBox();
 			this.textBoxCardPowtgh = new System.Windows.Forms.TextBox();
 			this.listBoxCardEdition = new System.Windows.Forms.ListBox();
 			this.linkLabelGatherer = new System.Windows.Forms.LinkLabel();
+			this.textBoxCardText = new System.Windows.Forms.RichTextBox();
 			this.groupBoxSearch = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -84,6 +87,15 @@ namespace Archivist
 			this.textBoxSearchFlavor = new System.Windows.Forms.TextBox();
 			this.listBoxSearchExpansion = new System.Windows.Forms.ListBox();
 			this.listBoxSearchType = new System.Windows.Forms.ListBox();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tpCardSearch = new System.Windows.Forms.TabPage();
+			this.tpLibrary = new System.Windows.Forms.TabPage();
+			this.dgLibrary = new System.Windows.Forms.DataGridView();
+			this.tpDeckManager = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.btnDeckManagerNewDeck = new System.Windows.Forms.Button();
+			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -101,6 +113,13 @@ namespace Archivist
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+			this.tabControl1.SuspendLayout();
+			this.tpCardSearch.SuspendLayout();
+			this.tpLibrary.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
+			this.tpDeckManager.SuspendLayout();
+			this.tableLayoutPanel4.SuspendLayout();
+			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -136,6 +155,7 @@ namespace Archivist
 			// databaseToolStripMenuItem
 			// 
 			this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cardSearchToolStripMenuItem1,
             this.libraryToolStripMenuItem,
             this.deckToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -144,11 +164,19 @@ namespace Archivist
 			this.databaseToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
 			this.databaseToolStripMenuItem.Text = "&Database";
 			// 
+			// cardSearchToolStripMenuItem1
+			// 
+			this.cardSearchToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("cardSearchToolStripMenuItem1.Image")));
+			this.cardSearchToolStripMenuItem1.Name = "cardSearchToolStripMenuItem1";
+			this.cardSearchToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
+			this.cardSearchToolStripMenuItem1.Text = "Card Search";
+			this.cardSearchToolStripMenuItem1.Click += new System.EventHandler(this.cardSearchToolStripMenuItem_Click);
+			// 
 			// libraryToolStripMenuItem
 			// 
 			this.libraryToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_library;
 			this.libraryToolStripMenuItem.Name = "libraryToolStripMenuItem";
-			this.libraryToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+			this.libraryToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
 			this.libraryToolStripMenuItem.Text = "Library";
 			this.libraryToolStripMenuItem.Click += new System.EventHandler(this.libraryToolStripMenuItem_Click);
 			// 
@@ -156,20 +184,20 @@ namespace Archivist
 			// 
 			this.deckToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_deck;
 			this.deckToolStripMenuItem.Name = "deckToolStripMenuItem";
-			this.deckToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-			this.deckToolStripMenuItem.Text = "Deck";
+			this.deckToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+			this.deckToolStripMenuItem.Text = "Deck Manager";
 			this.deckToolStripMenuItem.Click += new System.EventHandler(this.deckToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(109, 6);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(147, 6);
 			// 
 			// updateToolStripMenuItem
 			// 
 			this.updateToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_update;
 			this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-			this.updateToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+			this.updateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
 			this.updateToolStripMenuItem.Text = "Update";
 			this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
 			// 
@@ -190,6 +218,13 @@ namespace Archivist
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
+			// cardSearchToolStripMenuItem
+			// 
+			this.cardSearchToolStripMenuItem.Name = "cardSearchToolStripMenuItem";
+			this.cardSearchToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.cardSearchToolStripMenuItem.Text = "Card Search";
+			this.cardSearchToolStripMenuItem.Click += new System.EventHandler(this.cardSearchToolStripMenuItem_Click);
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -209,6 +244,7 @@ namespace Archivist
 			// toolStrip1
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton4,
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripButton3});
@@ -217,6 +253,16 @@ namespace Archivist
 			this.toolStrip1.Size = new System.Drawing.Size(834, 25);
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
+			// 
+			// toolStripButton4
+			// 
+			this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+			this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton4.Name = "toolStripButton4";
+			this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton4.Text = "Card Search";
+			this.toolStripButton4.Click += new System.EventHandler(this.cardSearchToolStripMenuItem_Click);
 			// 
 			// toolStripButton1
 			// 
@@ -235,7 +281,7 @@ namespace Archivist
 			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButton2.Name = "toolStripButton2";
 			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton2.Text = "Deck";
+			this.toolStripButton2.Text = "Deck Manager";
 			this.toolStripButton2.Click += new System.EventHandler(this.deckToolStripMenuItem_Click);
 			// 
 			// toolStripButton3
@@ -259,12 +305,12 @@ namespace Archivist
 			this.tableLayoutPanel1.Controls.Add(this.groupBoxInformation, 1, 1);
 			this.tableLayoutPanel1.Controls.Add(this.groupBoxSearch, 2, 0);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 49);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 340F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(834, 573);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(820, 541);
 			this.tableLayoutPanel1.TabIndex = 3;
 			// 
 			// groupBoxCards
@@ -274,7 +320,7 @@ namespace Archivist
 			this.groupBoxCards.Location = new System.Drawing.Point(3, 3);
 			this.groupBoxCards.Name = "groupBoxCards";
 			this.tableLayoutPanel1.SetRowSpan(this.groupBoxCards, 2);
-			this.groupBoxCards.Size = new System.Drawing.Size(278, 567);
+			this.groupBoxCards.Size = new System.Drawing.Size(264, 535);
 			this.groupBoxCards.TabIndex = 0;
 			this.groupBoxCards.TabStop = false;
 			this.groupBoxCards.Text = "Cards";
@@ -294,7 +340,7 @@ namespace Archivist
 			this.dgCards.Name = "dgCards";
 			this.dgCards.ReadOnly = true;
 			this.dgCards.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgCards.Size = new System.Drawing.Size(272, 548);
+			this.dgCards.Size = new System.Drawing.Size(258, 516);
 			this.dgCards.TabIndex = 0;
 			this.dgCards.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgCards_CellFormatting);
 			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
@@ -317,7 +363,7 @@ namespace Archivist
 			// 
 			this.groupBoxImage.Controls.Add(this.pictureBoxCard);
 			this.groupBoxImage.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxImage.Location = new System.Drawing.Point(287, 3);
+			this.groupBoxImage.Location = new System.Drawing.Point(273, 3);
 			this.groupBoxImage.Name = "groupBoxImage";
 			this.groupBoxImage.Size = new System.Drawing.Size(244, 334);
 			this.groupBoxImage.TabIndex = 1;
@@ -337,9 +383,9 @@ namespace Archivist
 			// 
 			this.groupBoxInformation.Controls.Add(this.tableLayoutPanel3);
 			this.groupBoxInformation.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxInformation.Location = new System.Drawing.Point(287, 343);
+			this.groupBoxInformation.Location = new System.Drawing.Point(273, 343);
 			this.groupBoxInformation.Name = "groupBoxInformation";
-			this.groupBoxInformation.Size = new System.Drawing.Size(244, 227);
+			this.groupBoxInformation.Size = new System.Drawing.Size(244, 195);
 			this.groupBoxInformation.TabIndex = 2;
 			this.groupBoxInformation.TabStop = false;
 			this.groupBoxInformation.Text = "Information";
@@ -350,10 +396,10 @@ namespace Archivist
 			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel3.Controls.Add(this.textBoxCardName, 0, 0);
 			this.tableLayoutPanel3.Controls.Add(this.textBoxCardType, 0, 1);
-			this.tableLayoutPanel3.Controls.Add(this.textBoxCardText, 0, 2);
 			this.tableLayoutPanel3.Controls.Add(this.textBoxCardPowtgh, 0, 3);
 			this.tableLayoutPanel3.Controls.Add(this.listBoxCardEdition, 0, 4);
 			this.tableLayoutPanel3.Controls.Add(this.linkLabelGatherer, 0, 5);
+			this.tableLayoutPanel3.Controls.Add(this.textBoxCardText, 0, 2);
 			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -364,54 +410,50 @@ namespace Archivist
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(238, 208);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(238, 176);
 			this.tableLayoutPanel3.TabIndex = 0;
 			// 
 			// textBoxCardName
 			// 
+			this.textBoxCardName.BackColor = System.Drawing.Color.White;
+			this.textBoxCardName.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBoxCardName.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxCardName.Location = new System.Drawing.Point(3, 3);
 			this.textBoxCardName.Name = "textBoxCardName";
 			this.textBoxCardName.ReadOnly = true;
-			this.textBoxCardName.Size = new System.Drawing.Size(232, 20);
+			this.textBoxCardName.Size = new System.Drawing.Size(232, 13);
 			this.textBoxCardName.TabIndex = 0;
 			// 
 			// textBoxCardType
 			// 
+			this.textBoxCardType.BackColor = System.Drawing.Color.White;
+			this.textBoxCardType.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBoxCardType.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxCardType.Location = new System.Drawing.Point(3, 23);
 			this.textBoxCardType.Name = "textBoxCardType";
 			this.textBoxCardType.ReadOnly = true;
-			this.textBoxCardType.Size = new System.Drawing.Size(232, 20);
+			this.textBoxCardType.Size = new System.Drawing.Size(232, 13);
 			this.textBoxCardType.TabIndex = 1;
-			// 
-			// textBoxCardText
-			// 
-			this.textBoxCardText.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxCardText.Location = new System.Drawing.Point(3, 43);
-			this.textBoxCardText.Multiline = true;
-			this.textBoxCardText.Name = "textBoxCardText";
-			this.textBoxCardText.ReadOnly = true;
-			this.textBoxCardText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxCardText.Size = new System.Drawing.Size(232, 83);
-			this.textBoxCardText.TabIndex = 2;
 			// 
 			// textBoxCardPowtgh
 			// 
+			this.textBoxCardPowtgh.BackColor = System.Drawing.Color.White;
+			this.textBoxCardPowtgh.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBoxCardPowtgh.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxCardPowtgh.Location = new System.Drawing.Point(3, 132);
+			this.textBoxCardPowtgh.Location = new System.Drawing.Point(3, 110);
 			this.textBoxCardPowtgh.Name = "textBoxCardPowtgh";
 			this.textBoxCardPowtgh.ReadOnly = true;
-			this.textBoxCardPowtgh.Size = new System.Drawing.Size(232, 20);
+			this.textBoxCardPowtgh.Size = new System.Drawing.Size(232, 13);
 			this.textBoxCardPowtgh.TabIndex = 4;
 			// 
 			// listBoxCardEdition
 			// 
+			this.listBoxCardEdition.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listBoxCardEdition.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listBoxCardEdition.FormattingEnabled = true;
-			this.listBoxCardEdition.Location = new System.Drawing.Point(3, 152);
+			this.listBoxCardEdition.Location = new System.Drawing.Point(3, 130);
 			this.listBoxCardEdition.Name = "listBoxCardEdition";
-			this.listBoxCardEdition.Size = new System.Drawing.Size(232, 32);
+			this.listBoxCardEdition.Size = new System.Drawing.Size(232, 22);
 			this.listBoxCardEdition.Sorted = true;
 			this.listBoxCardEdition.TabIndex = 5;
 			// 
@@ -419,7 +461,7 @@ namespace Archivist
 			// 
 			this.linkLabelGatherer.AutoSize = true;
 			this.linkLabelGatherer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.linkLabelGatherer.Location = new System.Drawing.Point(3, 187);
+			this.linkLabelGatherer.Location = new System.Drawing.Point(3, 155);
 			this.linkLabelGatherer.Name = "linkLabelGatherer";
 			this.linkLabelGatherer.Size = new System.Drawing.Size(232, 21);
 			this.linkLabelGatherer.TabIndex = 6;
@@ -427,14 +469,26 @@ namespace Archivist
 			this.linkLabelGatherer.Text = "Gatherer online";
 			this.linkLabelGatherer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGatherer_LinkClicked);
 			// 
+			// textBoxCardText
+			// 
+			this.textBoxCardText.BackColor = System.Drawing.Color.White;
+			this.textBoxCardText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.textBoxCardText.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxCardText.Location = new System.Drawing.Point(3, 43);
+			this.textBoxCardText.Name = "textBoxCardText";
+			this.textBoxCardText.ReadOnly = true;
+			this.textBoxCardText.Size = new System.Drawing.Size(232, 61);
+			this.textBoxCardText.TabIndex = 7;
+			this.textBoxCardText.Text = "";
+			// 
 			// groupBoxSearch
 			// 
 			this.groupBoxSearch.Controls.Add(this.tableLayoutPanel2);
 			this.groupBoxSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxSearch.Location = new System.Drawing.Point(537, 3);
+			this.groupBoxSearch.Location = new System.Drawing.Point(523, 3);
 			this.groupBoxSearch.Name = "groupBoxSearch";
 			this.tableLayoutPanel1.SetRowSpan(this.groupBoxSearch, 2);
-			this.groupBoxSearch.Size = new System.Drawing.Size(294, 567);
+			this.groupBoxSearch.Size = new System.Drawing.Size(294, 535);
 			this.groupBoxSearch.TabIndex = 3;
 			this.groupBoxSearch.TabStop = false;
 			this.groupBoxSearch.Text = "Search";
@@ -481,7 +535,7 @@ namespace Archivist
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(288, 548);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(288, 516);
 			this.tableLayoutPanel2.TabIndex = 4;
 			// 
 			// label1
@@ -511,7 +565,7 @@ namespace Archivist
 			this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.label4.Location = new System.Drawing.Point(3, 240);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(66, 139);
+			this.label4.Size = new System.Drawing.Size(66, 123);
 			this.label4.TabIndex = 3;
 			this.label4.Text = "Expansion:";
 			// 
@@ -529,15 +583,15 @@ namespace Archivist
 			// 
 			this.label5.AutoSize = true;
 			this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label5.Location = new System.Drawing.Point(3, 379);
+			this.label5.Location = new System.Drawing.Point(3, 363);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(66, 139);
+			this.label5.Size = new System.Drawing.Size(66, 123);
 			this.label5.TabIndex = 4;
 			this.label5.Text = "Type:";
 			// 
 			// buttonSearch
 			// 
-			this.buttonSearch.Location = new System.Drawing.Point(75, 521);
+			this.buttonSearch.Location = new System.Drawing.Point(75, 489);
 			this.buttonSearch.Name = "buttonSearch";
 			this.buttonSearch.Size = new System.Drawing.Size(75, 23);
 			this.buttonSearch.TabIndex = 5;
@@ -547,7 +601,7 @@ namespace Archivist
 			// 
 			// buttonSearchReset
 			// 
-			this.buttonSearchReset.Location = new System.Drawing.Point(3, 521);
+			this.buttonSearchReset.Location = new System.Drawing.Point(3, 489);
 			this.buttonSearchReset.Name = "buttonSearchReset";
 			this.buttonSearchReset.Size = new System.Drawing.Size(59, 23);
 			this.buttonSearchReset.TabIndex = 6;
@@ -607,6 +661,7 @@ namespace Archivist
 			// 
 			// textBoxSearchName
 			// 
+			this.textBoxSearchName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.textBoxSearchName.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxSearchName.Location = new System.Drawing.Point(75, 3);
 			this.textBoxSearchName.Name = "textBoxSearchName";
@@ -615,8 +670,10 @@ namespace Archivist
 			// 
 			// comboBoxSearchU
 			// 
+			this.comboBoxSearchU.BackColor = System.Drawing.Color.White;
 			this.comboBoxSearchU.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSearchU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxSearchU.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.comboBoxSearchU.FormattingEnabled = true;
 			this.comboBoxSearchU.Location = new System.Drawing.Point(75, 33);
 			this.comboBoxSearchU.Name = "comboBoxSearchU";
@@ -626,8 +683,10 @@ namespace Archivist
 			// 
 			// comboBoxSearchB
 			// 
+			this.comboBoxSearchB.BackColor = System.Drawing.Color.White;
 			this.comboBoxSearchB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSearchB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxSearchB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.comboBoxSearchB.FormattingEnabled = true;
 			this.comboBoxSearchB.Location = new System.Drawing.Point(75, 63);
 			this.comboBoxSearchB.Name = "comboBoxSearchB";
@@ -637,8 +696,10 @@ namespace Archivist
 			// 
 			// comboBoxSearchW
 			// 
+			this.comboBoxSearchW.BackColor = System.Drawing.Color.White;
 			this.comboBoxSearchW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSearchW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxSearchW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.comboBoxSearchW.FormattingEnabled = true;
 			this.comboBoxSearchW.Location = new System.Drawing.Point(75, 93);
 			this.comboBoxSearchW.Name = "comboBoxSearchW";
@@ -648,8 +709,10 @@ namespace Archivist
 			// 
 			// comboBoxSearchR
 			// 
+			this.comboBoxSearchR.BackColor = System.Drawing.Color.White;
 			this.comboBoxSearchR.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSearchR.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxSearchR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.comboBoxSearchR.FormattingEnabled = true;
 			this.comboBoxSearchR.Location = new System.Drawing.Point(75, 123);
 			this.comboBoxSearchR.Name = "comboBoxSearchR";
@@ -659,8 +722,10 @@ namespace Archivist
 			// 
 			// comboBoxSearchG
 			// 
+			this.comboBoxSearchG.BackColor = System.Drawing.Color.White;
 			this.comboBoxSearchG.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSearchG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxSearchG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.comboBoxSearchG.FormattingEnabled = true;
 			this.comboBoxSearchG.Location = new System.Drawing.Point(75, 153);
 			this.comboBoxSearchG.Name = "comboBoxSearchG";
@@ -670,6 +735,7 @@ namespace Archivist
 			// 
 			// textBoxSearchText
 			// 
+			this.textBoxSearchText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.textBoxSearchText.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxSearchText.Location = new System.Drawing.Point(75, 183);
 			this.textBoxSearchText.Name = "textBoxSearchText";
@@ -678,6 +744,7 @@ namespace Archivist
 			// 
 			// textBoxSearchFlavor
 			// 
+			this.textBoxSearchFlavor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.textBoxSearchFlavor.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxSearchFlavor.Location = new System.Drawing.Point(75, 213);
 			this.textBoxSearchFlavor.Name = "textBoxSearchFlavor";
@@ -687,29 +754,132 @@ namespace Archivist
 			// 
 			// listBoxSearchExpansion
 			// 
+			this.listBoxSearchExpansion.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listBoxSearchExpansion.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listBoxSearchExpansion.FormattingEnabled = true;
 			this.listBoxSearchExpansion.Location = new System.Drawing.Point(75, 243);
 			this.listBoxSearchExpansion.Name = "listBoxSearchExpansion";
-			this.listBoxSearchExpansion.Size = new System.Drawing.Size(210, 133);
+			this.listBoxSearchExpansion.Size = new System.Drawing.Size(210, 117);
 			this.listBoxSearchExpansion.TabIndex = 20;
 			// 
 			// listBoxSearchType
 			// 
+			this.listBoxSearchType.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listBoxSearchType.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listBoxSearchType.FormattingEnabled = true;
-			this.listBoxSearchType.Location = new System.Drawing.Point(75, 382);
+			this.listBoxSearchType.Location = new System.Drawing.Point(75, 366);
 			this.listBoxSearchType.Name = "listBoxSearchType";
 			this.listBoxSearchType.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.listBoxSearchType.Size = new System.Drawing.Size(210, 133);
+			this.listBoxSearchType.Size = new System.Drawing.Size(210, 117);
 			this.listBoxSearchType.TabIndex = 21;
+			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.tpCardSearch);
+			this.tabControl1.Controls.Add(this.tpLibrary);
+			this.tabControl1.Controls.Add(this.tpDeckManager);
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Location = new System.Drawing.Point(0, 49);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(834, 573);
+			this.tabControl1.TabIndex = 4;
+			// 
+			// tpCardSearch
+			// 
+			this.tpCardSearch.Controls.Add(this.tableLayoutPanel1);
+			this.tpCardSearch.Location = new System.Drawing.Point(4, 22);
+			this.tpCardSearch.Name = "tpCardSearch";
+			this.tpCardSearch.Padding = new System.Windows.Forms.Padding(3);
+			this.tpCardSearch.Size = new System.Drawing.Size(826, 547);
+			this.tpCardSearch.TabIndex = 0;
+			this.tpCardSearch.Text = "Card Search";
+			this.tpCardSearch.UseVisualStyleBackColor = true;
+			// 
+			// tpLibrary
+			// 
+			this.tpLibrary.Controls.Add(this.dgLibrary);
+			this.tpLibrary.Location = new System.Drawing.Point(4, 22);
+			this.tpLibrary.Name = "tpLibrary";
+			this.tpLibrary.Padding = new System.Windows.Forms.Padding(3);
+			this.tpLibrary.Size = new System.Drawing.Size(826, 547);
+			this.tpLibrary.TabIndex = 1;
+			this.tpLibrary.Text = "Library";
+			this.tpLibrary.UseVisualStyleBackColor = true;
+			// 
+			// dgLibrary
+			// 
+			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
+			this.dgLibrary.Name = "dgLibrary";
+			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
+			this.dgLibrary.TabIndex = 0;
+			// 
+			// tpDeckManager
+			// 
+			this.tpDeckManager.Controls.Add(this.tableLayoutPanel4);
+			this.tpDeckManager.Location = new System.Drawing.Point(4, 22);
+			this.tpDeckManager.Name = "tpDeckManager";
+			this.tpDeckManager.Padding = new System.Windows.Forms.Padding(3);
+			this.tpDeckManager.Size = new System.Drawing.Size(826, 547);
+			this.tpDeckManager.TabIndex = 2;
+			this.tpDeckManager.Text = "Deck Manager";
+			this.tpDeckManager.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel4
+			// 
+			this.tableLayoutPanel4.ColumnCount = 1;
+			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel4.Controls.Add(this.flowLayoutPanel1, 0, 0);
+			this.tableLayoutPanel4.Controls.Add(this.lbDeckManagerDeckList, 0, 1);
+			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+			this.tableLayoutPanel4.RowCount = 2;
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(820, 541);
+			this.tableLayoutPanel4.TabIndex = 0;
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.Controls.Add(this.btnDeckManagerNewDeck);
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(820, 30);
+			this.flowLayoutPanel1.TabIndex = 0;
+			// 
+			// btnDeckManagerNewDeck
+			// 
+			this.btnDeckManagerNewDeck.Location = new System.Drawing.Point(3, 3);
+			this.btnDeckManagerNewDeck.Name = "btnDeckManagerNewDeck";
+			this.btnDeckManagerNewDeck.Size = new System.Drawing.Size(75, 23);
+			this.btnDeckManagerNewDeck.TabIndex = 0;
+			this.btnDeckManagerNewDeck.Text = "New Deck";
+			this.btnDeckManagerNewDeck.UseVisualStyleBackColor = true;
+			this.btnDeckManagerNewDeck.Click += new System.EventHandler(this.btnDeckManagerNewDeck_Click);
+			// 
+			// lbDeckManagerDeckList
+			// 
+			this.lbDeckManagerDeckList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lbDeckManagerDeckList.FormattingEnabled = true;
+			this.lbDeckManagerDeckList.Location = new System.Drawing.Point(3, 33);
+			this.lbDeckManagerDeckList.Name = "lbDeckManagerDeckList";
+			this.lbDeckManagerDeckList.Size = new System.Drawing.Size(814, 505);
+			this.lbDeckManagerDeckList.TabIndex = 1;
+			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
+			this.lbDeckManagerDeckList.Enter += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			// 
 			// Archivist
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 644);
-			this.Controls.Add(this.tableLayoutPanel1);
+			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
@@ -740,6 +910,13 @@ namespace Archivist
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+			this.tabControl1.ResumeLayout(false);
+			this.tpCardSearch.ResumeLayout(false);
+			this.tpLibrary.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
+			this.tpDeckManager.ResumeLayout(false);
+			this.tableLayoutPanel4.ResumeLayout(false);
+			this.flowLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -760,8 +937,7 @@ namespace Archivist
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.PictureBox pictureBoxCard;
         private System.Windows.Forms.TextBox textBoxCardName;
-        private System.Windows.Forms.TextBox textBoxCardType;
-		private System.Windows.Forms.TextBox textBoxCardText;
+		private System.Windows.Forms.TextBox textBoxCardType;
         private System.Windows.Forms.TextBox textBoxCardPowtgh;
         private System.Windows.Forms.ListBox listBoxCardEdition;
         private System.Windows.Forms.GroupBox groupBoxSearch;
@@ -802,6 +978,19 @@ namespace Archivist
 		private System.Windows.Forms.DataGridViewTextBoxColumn colName;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colCosts;
 		private System.Windows.Forms.LinkLabel linkLabelGatherer;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage tpCardSearch;
+		private System.Windows.Forms.TabPage tpLibrary;
+		private System.Windows.Forms.ToolStripMenuItem cardSearchToolStripMenuItem;
+		private System.Windows.Forms.ToolStripButton toolStripButton4;
+		private System.Windows.Forms.DataGridView dgLibrary;
+		private System.Windows.Forms.TabPage tpDeckManager;
+		private System.Windows.Forms.RichTextBox textBoxCardText;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		private System.Windows.Forms.Button btnDeckManagerNewDeck;
+		private System.Windows.Forms.ListBox lbDeckManagerDeckList;
+		private System.Windows.Forms.ToolStripMenuItem cardSearchToolStripMenuItem1;
     }
 }
 

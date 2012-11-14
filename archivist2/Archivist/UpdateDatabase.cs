@@ -42,10 +42,6 @@ namespace Archivist
 			Directory.CreateDirectory(dataDirectory);
 			Directory.CreateDirectory(imageDirectory);
 			Directory.CreateDirectory(tempDirectory);
-
-            UpdateListText("Starting update...");
-            System.Threading.Thread updThrad = new System.Threading.Thread(new System.Threading.ThreadStart(UpdateDB));
-            updThrad.Start();
         }
 
         public void UpdateDB()
@@ -53,7 +49,7 @@ namespace Archivist
             try
             {
 				List<string> setList = DownloadSetList().ToList();
-				//DownloadSpoilerList(setList);
+				DownloadSpoilerList(setList);
 								
 				// ------------------------------------------------------------
 				// Update extensions table
@@ -256,6 +252,8 @@ namespace Archivist
                 listStatus.Items.Add(text);
 				listStatus.TopIndex = listStatus.Items.Count - 1;
                 button1.Enabled = enableButton;
+				btnGatherer.Enabled = enableButton;
+				btnSoftware.Enabled = enableButton;
             }
         }
 
@@ -289,6 +287,22 @@ namespace Archivist
 		private void button1_Click(object sender, EventArgs e)
 		{
 			this.Close();
+		}
+
+		private void btnSoftware_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnGatherer_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Updating cards from Gatherer might take a very long time and could damage your existing cardlist file.\r\nContinue?",
+				"Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+			{
+				UpdateListText("Starting update...");
+				System.Threading.Thread updThrad = new System.Threading.Thread(new System.Threading.ThreadStart(UpdateDB));
+				updThrad.Start();
+			}
 		}
     }
 }

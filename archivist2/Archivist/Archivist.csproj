@@ -84,6 +84,12 @@
     <Compile Include="Archivist.Designer.cs">
       <DependentUpon>Archivist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Deck.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Deck.Designer.cs">
+      <DependentUpon>Deck.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +100,9 @@
     <EmbeddedResource Include="Archivist.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Archivist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Deck.resx">
+      <DependentUpon>Deck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -152,6 +161,7 @@
     <Content Include="Resources\icon_library.png" />
     <None Include="App.config" />
     <None Include="Resources\icon_update.png" />
+    <None Include="Resources\icon_search.png" />
     <Content Include="Resources\status_failed.png" />
     <Content Include="Resources\status_ok.png" />
   </ItemGroup>
@@ -211,6 +221,7 @@
   <PropertyGroup>
     <PostBuildEvent>REM copy $(SolutionDir)\Archivist\$(OutDir)\$(TargetFileName) $(SolutionDir)\$(TargetFileName)
 xcopy "$(SolutionDir)data" "$(TargetDir)data" /e /i /y
-xcopy "$(SolutionDir)img" "$(TargetDir)img" /e /i /y</PostBuildEvent>
+xcopy "$(SolutionDir)img" "$(TargetDir)img" /e /i /y
+xcopy "$(SolutionDir)decks" "$(TargetDir)decks" /e /i /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -15,15 +15,18 @@ namespace Archivist
     {
 		private string dataDirectory;
 		private string imageDirectory;
+		private string decksDirectory;
 
         public Archivist()
         {
             InitializeComponent();
 			dataDirectory = Path.Combine(Application.StartupPath, "data");
 			imageDirectory = Path.Combine(Application.StartupPath, "img");
+			decksDirectory = Path.Combine(Application.StartupPath, "decks");
 			
 			InitSearch();
 			UpdateCardList();
+			UpdateDeckList();
         }
 
 		private void InitSearch()
@@ -72,6 +75,26 @@ namespace Archivist
 			reader.Close();
 		}
 
+		private void UpdateDeckList()
+		{
+			UpdateDeckListGetDeckTree(decksDirectory);
+		}
+
+		private void UpdateDeckListGetDeckTree(string dir)
+		{
+			string[] subdirs = Directory.GetDirectories(dir);
+			foreach(string subdir in subdirs)
+			{
+				UpdateDeckListGetDeckTree(subdir);
+			}
+
+			string[] files = Directory.GetFiles(dir);
+			foreach (string file in files)
+			{
+				lbDeckManagerDeckList.Items.Add(file.Replace(decksDirectory, ""));
+			}
+		}
+
 		#region Event handler
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -97,12 +120,17 @@ namespace Archivist
 
 		private void libraryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			tabControl1.SelectedTab = tpLibrary;
+		}
 
+		private void cardSearchToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			tabControl1.SelectedTab = tpCardSearch;
 		}
 
 		private void deckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			tabControl1.SelectedTab = tpDeckManager;
 		}
 
 		private void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,7 +151,44 @@ namespace Archivist
 			System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
 		}
 
+		private void btnDeckManagerNewDeck_Click(object sender, EventArgs e)
+		{
+			OpenDeck();
+		}
+
+		private void lbDeckManagerDeckList_DoubleClick(object sender, EventArgs e)
+		{
+			if (lbDeckManagerDeckList.SelectedItem == null)
+				return;
+
+			OpenDeck(Path.Combine(decksDirectory, lbDeckManagerDeckList.SelectedItem.ToString()));
+		}
+
 		#endregion
+
+		private void OpenDeck(string path = "")
+		{
+			Deck deck = new Deck(path);
+			deck.Dock = DockStyle.Fill;
+
+			string name = "Deck - New";
+			if (path != "")
+			{
+				int pathIdx = path.LastIndexOf("\\");
+				if (pathIdx > -1)
+				{
+					name = "Deck - " + path.Substring();
+				}
+				else
+				{
+				}
+			}
+
+			TabPage deckPage = new TabPage(name);
+			deckPage.Controls.Add(deck);
+
+			tabControl1.TabPages.Add(deckPage);
+		}
 
 		private void UpdateCardList()
         {
