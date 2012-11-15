@@ -101,6 +101,7 @@ namespace Archivist
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnDeckManagerNewDeck = new System.Windows.Forms.Button();
 			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
+			this.btnDeckManagerOpenDeck = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -892,6 +893,7 @@ namespace Archivist
 			// flowLayoutPanel1
 			// 
 			this.flowLayoutPanel1.Controls.Add(this.btnDeckManagerNewDeck);
+			this.flowLayoutPanel1.Controls.Add(this.btnDeckManagerOpenDeck);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -919,6 +921,16 @@ namespace Archivist
 			this.lbDeckManagerDeckList.TabIndex = 1;
 			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			this.lbDeckManagerDeckList.Enter += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
+			// 
+			// btnDeckManagerOpenDeck
+			// 
+			this.btnDeckManagerOpenDeck.Location = new System.Drawing.Point(84, 3);
+			this.btnDeckManagerOpenDeck.Name = "btnDeckManagerOpenDeck";
+			this.btnDeckManagerOpenDeck.Size = new System.Drawing.Size(75, 23);
+			this.btnDeckManagerOpenDeck.TabIndex = 1;
+			this.btnDeckManagerOpenDeck.Text = "Open Deck";
+			this.btnDeckManagerOpenDeck.UseVisualStyleBackColor = true;
+			this.btnDeckManagerOpenDeck.Click += new System.EventHandler(this.btnDeckManagerOpenDeck_Click);
 			// 
 			// ArchivistMain
 			// 
@@ -1045,6 +1057,7 @@ namespace Archivist
 		private System.Windows.Forms.ToolStripMenuItem addToLibraryToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip cmLibrary;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+		private System.Windows.Forms.Button btnDeckManagerOpenDeck;
     }
 }
 

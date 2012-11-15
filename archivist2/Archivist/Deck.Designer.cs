@@ -30,17 +30,22 @@
 		{
 			this.zgManaCurve = new ZedGraph.ZedGraphControl();
 			this.zgDistribution = new ZedGraph.ZedGraphControl();
-			this.cardDataGrid1 = new Archivist.CardDataGrid();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).BeginInit();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.btnSave = new System.Windows.Forms.Button();
+			this.btnClose = new System.Windows.Forms.Button();
+			this.cardDataGrid1 = new Archivist.CardDataGrid();
+			this.btnSaveAs = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// zgManaCurve
@@ -73,16 +78,6 @@
 			this.zgDistribution.Size = new System.Drawing.Size(791, 583);
 			this.zgDistribution.TabIndex = 2;
 			// 
-			// cardDataGrid1
-			// 
-			this.cardDataGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.cardDataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.cardDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.cardDataGrid1.Location = new System.Drawing.Point(3, 3);
-			this.cardDataGrid1.Name = "cardDataGrid1";
-			this.cardDataGrid1.Size = new System.Drawing.Size(791, 583);
-			this.cardDataGrid1.TabIndex = 0;
-			// 
 			// tabControl1
 			// 
 			this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
@@ -100,7 +95,7 @@
 			// 
 			// tabPage1
 			// 
-			this.tabPage1.Controls.Add(this.cardDataGrid1);
+			this.tabPage1.Controls.Add(this.tableLayoutPanel1);
 			this.tabPage1.Location = new System.Drawing.Point(23, 4);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -141,6 +136,67 @@
 			this.tabPage4.Text = "Info";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.ColumnCount = 4;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			this.tableLayoutPanel1.Controls.Add(this.cardDataGrid1, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.btnClose, 3, 1);
+			this.tableLayoutPanel1.Controls.Add(this.btnSave, 2, 1);
+			this.tableLayoutPanel1.Controls.Add(this.btnSaveAs, 1, 1);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(791, 583);
+			this.tableLayoutPanel1.TabIndex = 1;
+			// 
+			// btnSave
+			// 
+			this.btnSave.Location = new System.Drawing.Point(634, 556);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(74, 23);
+			this.btnSave.TabIndex = 1;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			// 
+			// btnClose
+			// 
+			this.btnClose.Location = new System.Drawing.Point(714, 556);
+			this.btnClose.Name = "btnClose";
+			this.btnClose.Size = new System.Drawing.Size(74, 23);
+			this.btnClose.TabIndex = 2;
+			this.btnClose.Text = "Close";
+			this.btnClose.UseVisualStyleBackColor = true;
+			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+			// 
+			// cardDataGrid1
+			// 
+			this.cardDataGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.cardDataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.tableLayoutPanel1.SetColumnSpan(this.cardDataGrid1, 4);
+			this.cardDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cardDataGrid1.Location = new System.Drawing.Point(3, 3);
+			this.cardDataGrid1.Name = "cardDataGrid1";
+			this.cardDataGrid1.Size = new System.Drawing.Size(785, 547);
+			this.cardDataGrid1.TabIndex = 0;
+			// 
+			// btnSaveAs
+			// 
+			this.btnSaveAs.Location = new System.Drawing.Point(554, 556);
+			this.btnSaveAs.Name = "btnSaveAs";
+			this.btnSaveAs.Size = new System.Drawing.Size(74, 23);
+			this.btnSaveAs.TabIndex = 3;
+			this.btnSaveAs.Text = "Save As ...";
+			this.btnSaveAs.UseVisualStyleBackColor = true;
+			this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
+			// 
 			// Deck
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -149,11 +205,12 @@
 			this.Name = "Deck";
 			this.Size = new System.Drawing.Size(824, 597);
 			this.Load += new System.EventHandler(this.Deck_Load);
-			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
+			this.tableLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -168,5 +225,9 @@
 		private System.Windows.Forms.TabPage tabPage2;
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.Button btnSave;
+		private System.Windows.Forms.Button btnClose;
+		private System.Windows.Forms.Button btnSaveAs;
 	}
 }

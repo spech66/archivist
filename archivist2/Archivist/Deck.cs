@@ -16,7 +16,7 @@ namespace Archivist
 	public partial class Deck : UserControl
 	{
 		private string deckFilename;
-		List<Card> cards = new List<Card>();
+		BindingList<Card> cards = new BindingList<Card>();
 
 		public Deck(string path = "")
 		{
@@ -54,7 +54,7 @@ namespace Archivist
 			cardDataGrid1.BindDatasource(cards, false);
 		}
 
-		private void ParseFormatDEC(string path, ref List<Card> cards)
+		private void ParseFormatDEC(string path, ref BindingList<Card> cards)
 		{
 			using (StreamReader sr = new StreamReader(path))
 			{
@@ -172,6 +172,51 @@ namespace Archivist
 			}
 
 			zgDistribution.AxisChange();
+		}
+
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			((TabControl)((TabPage)this.Parent).Parent).TabPages.Remove((TabPage)this.Parent);
+		}
+
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			SaveDeck();
+		}
+
+		private void btnSaveAs_Click(object sender, EventArgs e)
+		{
+			SaveDeck(true);
+		}
+
+		private void SaveDeck(bool saveas = false)
+		{
+			if (String.IsNullOrEmpty(deckFilename) || saveas)
+			{
+				using (SaveFileDialog sfd = new SaveFileDialog())
+				{
+					sfd.Filter = "Decks (*.dec)|*.dec|All files (*.*)|*.*";
+					sfd.RestoreDirectory = true;
+
+					if (sfd.ShowDialog() == DialogResult.OK)
+					{
+						deckFilename = sfd.FileName;
+					}
+				}
+			}
+
+			if (!String.IsNullOrEmpty(deckFilename))
+			{
+				using (StreamWriter writer = new StreamWriter(deckFilename))
+				{
+					foreach (MagicCard card in cards)
+					{
+						writer.WriteLine(String.Format("{0} {1}", card.Amount, card.Name));
+					}
+				}
+
+				MessageBox.Show("Deck saved to file:\n" + deckFilename, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
 		}
 	}
 }
