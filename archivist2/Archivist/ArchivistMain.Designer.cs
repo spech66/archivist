@@ -28,6 +28,7 @@ namespace Archivist
         /// </summary>
         private void InitializeComponent()
         {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArchivistMain));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +53,8 @@ namespace Archivist
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxCards = new System.Windows.Forms.GroupBox();
 			this.dgCards = new Archivist.CardDataGrid();
+			this.cmCards = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.addToLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBoxImage = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			this.listBoxCardEdition = new System.Windows.Forms.ListBox();
@@ -91,6 +94,8 @@ namespace Archivist
 			this.tpCardSearch = new System.Windows.Forms.TabPage();
 			this.tpLibrary = new System.Windows.Forms.TabPage();
 			this.dgLibrary = new Archivist.CardDataGrid();
+			this.cmLibrary = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tpDeckManager = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -102,6 +107,7 @@ namespace Archivist
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBoxCards.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
+			this.cmCards.SuspendLayout();
 			this.groupBoxImage.SuspendLayout();
 			this.tableLayoutPanel5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).BeginInit();
@@ -118,6 +124,7 @@ namespace Archivist
 			this.tpCardSearch.SuspendLayout();
 			this.tpLibrary.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
+			this.cmLibrary.SuspendLayout();
 			this.tpDeckManager.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
@@ -341,6 +348,7 @@ namespace Archivist
 			this.dgCards.AllowUserToResizeRows = false;
 			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
 			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgCards.ContextMenuStrip = this.cmCards;
 			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgCards.Location = new System.Drawing.Point(3, 16);
 			this.dgCards.Name = "dgCards";
@@ -348,6 +356,20 @@ namespace Archivist
 			this.dgCards.Size = new System.Drawing.Size(258, 516);
 			this.dgCards.TabIndex = 0;
 			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
+			// 
+			// cmCards
+			// 
+			this.cmCards.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToLibraryToolStripMenuItem});
+			this.cmCards.Name = "cmCards";
+			this.cmCards.Size = new System.Drawing.Size(153, 26);
+			// 
+			// addToLibraryToolStripMenuItem
+			// 
+			this.addToLibraryToolStripMenuItem.Name = "addToLibraryToolStripMenuItem";
+			this.addToLibraryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.addToLibraryToolStripMenuItem.Text = "Add To Library";
+			this.addToLibraryToolStripMenuItem.Click += new System.EventHandler(this.addToLibraryToolStripMenuItem_Click);
 			// 
 			// groupBoxImage
 			// 
@@ -819,11 +841,26 @@ namespace Archivist
 			this.dgLibrary.AllowUserToResizeRows = false;
 			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
 			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgLibrary.ContextMenuStrip = this.cmLibrary;
 			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
 			this.dgLibrary.Name = "dgLibrary";
 			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
 			this.dgLibrary.TabIndex = 0;
+			// 
+			// cmLibrary
+			// 
+			this.cmLibrary.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3});
+			this.cmLibrary.Name = "cmLibrary";
+			this.cmLibrary.Size = new System.Drawing.Size(153, 48);
+			// 
+			// toolStripMenuItem3
+			// 
+			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+			this.toolStripMenuItem3.Text = "Remove";
+			this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
 			// 
 			// tpDeckManager
 			// 
@@ -897,6 +934,7 @@ namespace Archivist
 			this.Name = "ArchivistMain";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Archivist 2";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ArchivistMain_FormClosed);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
@@ -906,6 +944,7 @@ namespace Archivist
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBoxCards.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
+			this.cmCards.ResumeLayout(false);
 			this.groupBoxImage.ResumeLayout(false);
 			this.tableLayoutPanel5.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).EndInit();
@@ -924,6 +963,7 @@ namespace Archivist
 			this.tpCardSearch.ResumeLayout(false);
 			this.tpLibrary.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
+			this.cmLibrary.ResumeLayout(false);
 			this.tpDeckManager.ResumeLayout(false);
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.flowLayoutPanel1.ResumeLayout(false);
@@ -1001,6 +1041,10 @@ namespace Archivist
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
 		private System.Windows.Forms.ListBox listBoxCardEdition;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip cmCards;
+		private System.Windows.Forms.ToolStripMenuItem addToLibraryToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip cmLibrary;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
     }
 }
 

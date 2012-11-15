@@ -21,5 +21,7 @@ namespace Archivist.MagicObjects
 		int Multiverseid { get; }
 
 		int Amount { get; set; }
+
+		Card Duplicate(bool amountCopy = false);
 	}    
 }

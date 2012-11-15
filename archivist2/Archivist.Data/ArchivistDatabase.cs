@@ -39,6 +39,37 @@ namespace Archivist.Data
             }
         }
 
+		public MagicCard GetCard(int id)
+		{
+			string sqlcmd = "SELECT * FROM CARD";
+			string whereclause = "WHERE ID = ?";
+
+			using (IDbConnection connection = database.CreateOpenConnection())
+			{
+				using (IDbCommand command = database.CreateCommand(sqlcmd + " " + whereclause, connection))
+				{
+					IDbDataParameter p1 = command.CreateParameter(); command.Parameters.Add(p1);
+					p1.Value = id;
+					using (IDataReader reader = command.ExecuteReader())
+					{
+						if (!reader.Read())
+							return null;
+
+						MagicCard card = new MagicCard(true);
+						card.Name = reader["name"].ToString();
+						card.ManaCost = reader["cost"].ToString();
+						card.PowTgh = reader["PowTgh"].ToString();
+						card.Multiverseid = Convert.ToInt32(reader["Id"].ToString());
+						card.Rule = reader["Rule"].ToString();
+						card.Type = reader["Type"].ToString();
+						card.Extension = reader["Extension"].ToString();
+						card.Rarity = reader["Rarity"].ToString();
+						return card;
+					}
+				}
+			}
+		}
+
         public Card GetCard(string paramNAME)
         {
             string sqlcmd = "SELECT * FROM CARD";
@@ -148,22 +179,5 @@ namespace Archivist.Data
                 }
             }
         }
-
-        /*public void InsertCardExtension(string sparaCardExtCID, int sparaCardExtEID, string sparaCardExtRar)
-        {
-            string sqlcmd = "INSERT OR IGNORE INTO CARD_EXTENSION (CARD_ID, EXTENSION_ID, RARITY) VALUES (?, ?, ?)";
-
-            using (IDbConnection connection = database.CreateOpenConnection())
-            {
-                using (IDbCommand cmdCardExt = database.CreateCommand(sqlcmd, connection))
-                {
-                    IDbDataParameter paraCardExtCID = cmdCardExt.CreateParameter(); cmdCardExt.Parameters.Add(paraCardExtCID); paraCardExtCID.Value = sparaCardExtCID;
-                    IDbDataParameter paraCardExtEID = cmdCardExt.CreateParameter(); cmdCardExt.Parameters.Add(paraCardExtEID); paraCardExtEID.Value = sparaCardExtEID;
-                    IDbDataParameter paraCardExtRar = cmdCardExt.CreateParameter(); cmdCardExt.Parameters.Add(paraCardExtRar); paraCardExtRar.Value = sparaCardExtRar;
-
-                    cmdCardExt.ExecuteNonQuery();
-                }
-            }
-        }*/
-    }
+	}
 }
