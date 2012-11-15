@@ -140,6 +140,8 @@ namespace Archivist
 				}
 			}
 
+			colLibImage.Visible = !simple && Properties.Settings.Default.ShowImages;
+
 			DataSource = datasource;
 		}
 
@@ -212,7 +214,7 @@ namespace Archivist
 					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Gold;
 				}
 			}
-			else if (e.ColumnIndex == imageColumnIdx)
+			else if (e.ColumnIndex == imageColumnIdx && colLibImage.Visible)
 			{
 				if (Rows[e.RowIndex].Cells[idColumnIdx].Value == null || Rows[e.RowIndex].Cells[imageColumnIdx].Value != null)
 				{

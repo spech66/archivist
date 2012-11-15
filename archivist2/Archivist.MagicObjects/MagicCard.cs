@@ -28,7 +28,7 @@ namespace Archivist.MagicObjects
 			public int Amount { get; set; }
 
             /// <summary>
-            /// Constructor for a new card.  Assign the card a suit, face value, and if the card is facing up or down
+            /// Constructor for a new card.
             /// </summary>
             /// <param name="suit"></param>
             /// <param name="faceVal"></param>

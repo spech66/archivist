@@ -181,7 +181,17 @@ namespace Archivist
 
 		private void listBoxCardEdition_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			//TODO: Select set specific multiverseid and display image
+			ListBoxItemNameId itm = (ListBoxItemNameId)listBoxCardEdition.SelectedItem;
+			if (itm != null)
+			{
+				ShowCard(itm.Id);
+			}
+		}
+
+		private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			OptionDialog dlg = new OptionDialog();
+			dlg.ShowDialog();
 		}
 
 		#endregion
@@ -294,7 +304,7 @@ namespace Archivist
 			pictureBoxCard.Image = Helper.GetMagicImage();
         }
 
-		private void ShowCard()
+		private void ShowCard(string differentImageId = "")
 		{
 			if (dgCards.SelectedRows.Count < 1)
 				return;
@@ -302,22 +312,34 @@ namespace Archivist
 			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
 			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
 
+			// Show different image from selection but prevent recursion
+			if (differentImageId == card.Multiverseid.ToString())
+				return;
+
 			textBoxCardName.Text = card.Name;
 			//textBoxCostType.Text = reader.GetString(1);
 			textBoxCardPowtgh.Text = card.PowTgh;
 			textBoxCardText.Text = card.Rule;
 			textBoxCardType.Text = card.Type;
-
-			if (card.Multiverseid > 0)
+			
+			string mvId = !String.IsNullOrEmpty(differentImageId) ? differentImageId : card.Multiverseid.ToString();
+			if (card.Multiverseid > 0 || !String.IsNullOrEmpty(differentImageId))
 			{
-				pictureBoxCard.Image = Helper.GetMagicImage(card.Multiverseid.ToString(), true);
+				pictureBoxCard.Image = Helper.GetMagicImage(mvId);
 
 				linkLabelGatherer.Links.Clear();
-				linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + card.Multiverseid.ToString());
+				linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + mvId);
 			}
 			else
 			{
 				pictureBoxCard.ImageLocation = "";
+			}
+
+			// Show different image from selection but prevent recursion => Must not load extensions because of setting SelectedItem
+			ListBoxItemNameId itm = (ListBoxItemNameId)listBoxCardEdition.SelectedItem;
+			if (itm != null && itm.Id == differentImageId)
+			{
+				return;
 			}
 
 			// Select all extensions
@@ -326,12 +348,21 @@ namespace Archivist
 			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
 			cmdEditon.Parameters.Add(p1Editon);
 			p1Editon.Value = card.Name;
-			cmdEditon.CommandText = "SELECT RARITY, EXTENSION FROM CARD WHERE NAME = ?";
+			cmdEditon.CommandText = "SELECT RARITY, EXTENSION, ID FROM CARD WHERE NAME = ?";
 			IDataReader readerEditon = cmdEditon.ExecuteReader();
 			listBoxCardEdition.Items.Clear();
 			while (readerEditon.Read())
 			{
-				listBoxCardEdition.Items.Add(String.Format("{1} ({0})", readerEditon.GetString(0), readerEditon.GetString(1)));
+				string cardid = readerEditon.GetInt32(2).ToString();
+				ListBoxItemNameId item = new ListBoxItemNameId(String.Format("{1} ({0})", readerEditon.GetString(0), readerEditon.GetString(1)), cardid);
+				listBoxCardEdition.DisplayMember = "Name";
+				listBoxCardEdition.ValueMember = "Id";
+				listBoxCardEdition.Items.Add(item);
+
+				if (mvId == cardid)
+				{
+					listBoxCardEdition.SelectedItem = item;
+				}
 			}
 		}
 	}

@@ -42,7 +42,7 @@ namespace Archivist
 		public static string CardImageDirectory { get { return Instance.cardImageDirectory; } }
 		public static string DecksDirectory { get { return Instance.decksDirectory; } }
 
-		public static Image GetMagicImage(string multiversid = "", bool download = false)
+		public static Image GetMagicImage(string multiversid = "")
 		{
 			// Check or create card image directory
 			if (!Directory.Exists(CardImageDirectory))
@@ -50,7 +50,7 @@ namespace Archivist
 				Directory.CreateDirectory(CardImageDirectory);
 			}
 
-			if (!string.IsNullOrEmpty(multiversid))
+			if (!string.IsNullOrEmpty(multiversid) && Properties.Settings.Default.ShowImages)
 			{
 				// Try to get image from file
 				string filename = Path.Combine(CardImageDirectory, multiversid + ".jpg");
@@ -60,7 +60,7 @@ namespace Archivist
 				}
 
 				// Download image if requested
-				if (download)
+				if (Properties.Settings.Default.DownloadImages)
 				{
 					try
 					{

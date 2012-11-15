@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using Archivist.MagicObjects;
 using System.IO;
+using Archivist.Data;
+using ZedGraph;
 
 namespace Archivist
 {
@@ -31,6 +33,9 @@ namespace Archivist
 			if (!String.IsNullOrEmpty(deckFilename))
 			{
 				LoadDeck(deckFilename);
+
+				UpdateGraphManaCurve();
+				UpdateGraphDistribution();
 			}
 		}
 
@@ -90,7 +95,7 @@ namespace Archivist
 			if (blank > 0)
 			{
 				amount = Convert.ToInt32(text.Substring(0, blank).Trim());
-				name = text.Substring(blank);
+				name = text.Substring(blank).Trim();
 			}
 			else
 			{
@@ -98,12 +103,75 @@ namespace Archivist
 				name = text.Trim();
 			}
 
-			MagicCard card = new MagicCard(true)
+			ArchivistDatabase adb = new ArchivistDatabase();
+			Card card = adb.GetCard(name);
+			if (card == null)
 			{
-				Name = name,
-				Amount = amount
-			};
+				card = new MagicCard(true)
+				{
+					Name = name,
+					Amount = amount
+				};
+			}
+			else
+			{
+				card.Amount = amount;
+			}
+
 			return card;
+		}
+
+		private void UpdateGraphManaCurve()
+		{
+			zgManaCurve.GraphPane.CurveList.Clear();
+			GraphPane pane = zgManaCurve.GraphPane;
+			pane.Title.Text = "Mana Curve";
+
+			PointPairList points = new PointPairList();
+			points.AddRange(cards.GroupBy(grp => grp.CalculatedManaCost)
+				.OrderBy(ord => ord.Key) // Order x-Axis
+				.Where(sel => sel.Key > 0) // Remove lands, and cards with 0 mana for scaling reasons
+				.Select(sel => new PointPair(sel.Key, sel.Sum(sum => sum.Amount))));
+
+			BarItem barChart = pane.AddBar("", points, Color.Blue);
+			barChart.Bar.Fill.Type = FillType.Solid;
+
+			pane.XAxis.Scale.Min = 0;
+			pane.XAxis.Title.IsVisible = false;
+
+			pane.YAxis.Scale.Min = 0;
+			pane.YAxis.Title.IsVisible = false;
+
+			zgManaCurve.AxisChange();
+			//zgManaCurve.Invalidate();
+			//zgManaCurve.Refresh();
+		}
+
+		private void UpdateGraphDistribution()
+		{
+			// http://zedgraph.dariowiz.com/index77e8.html?title=Pie_Charts
+
+			zgDistribution.GraphPane.CurveList.Clear();
+			GraphPane pane = zgDistribution.GraphPane;
+			pane.Title.Text = "Distribution";
+
+			var qry = cards.GroupBy(grp => grp.Type.Substring(0, grp.Type.IndexOf('-') >= 0 ? grp.Type.IndexOf('-') : grp.Type.Length).Trim())
+				.Select(sel => new KeyValuePair<string, int>(sel.Key, sel.Sum(sum => sum.Amount)));
+			foreach (var item in qry)
+			{
+				Color c = Color.Pink; // Other
+				if (item.Key == "Creature") c = Color.DarkRed;
+				else if (item.Key == "Basic Land") c = Color.Goldenrod;
+				else if (item.Key == "Land") c = Color.Goldenrod;
+				else if (item.Key == "Artifact Land") c = Color.Goldenrod;
+				else if (item.Key == "Enchantment") c = Color.Green;
+				else if (item.Key == "Instant") c = Color.Navy;
+				else if (item.Key == "Sorcery") c = Color.DeepSkyBlue;
+				else if (item.Key == "Artifact") c = Color.LightGray;
+				pane.AddPieSlice(item.Value, c, 0, item.Key);
+			}
+
+			zgDistribution.AxisChange();
 		}
 	}
 }
