@@ -39,7 +39,7 @@
 			this.tableLayoutPanel1.ColumnCount = 3;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.91911F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0809F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
 			this.tableLayoutPanel1.Controls.Add(this.cardDataGrid1, 0, 0);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -53,11 +53,12 @@
 			// 
 			// cardDataGrid1
 			// 
+			this.cardDataGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
 			this.cardDataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.cardDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cardDataGrid1.Location = new System.Drawing.Point(3, 3);
 			this.cardDataGrid1.Name = "cardDataGrid1";
-			this.cardDataGrid1.Size = new System.Drawing.Size(630, 468);
+			this.cardDataGrid1.Size = new System.Drawing.Size(629, 468);
 			this.cardDataGrid1.TabIndex = 0;
 			// 
 			// Deck
@@ -67,6 +68,7 @@
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Name = "Deck";
 			this.Size = new System.Drawing.Size(824, 597);
+			this.Load += new System.EventHandler(this.Deck_Load);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).EndInit();
 			this.ResumeLayout(false);

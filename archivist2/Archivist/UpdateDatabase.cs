@@ -48,135 +48,17 @@ namespace Archivist
         {
             try
             {
-				//List<string> setList = DownloadSetList().ToList();
+				List<string> setList = DownloadSetList().ToList();
+				/* TEST
 				List<string> setList = new List<string>();
 				setList.Add("Limited Edition Alpha");
-				setList.Add("Magic 2011");
+				setList.Add("Magic 2011");*/
 
-				//DownloadSpoilerList(setList);
-								
-				// ------------------------------------------------------------
-				// Update extensions table
-				UpdateListText("Writing extensions to database...");
-				int id = 1;
-				ArchivistDatabase adb = new ArchivistDatabase();
-				adb.DeleteExtensions();
-				foreach (string ext in setList)
-				{
-					adb.InsertExtension(id, "", ext.Replace("&quot;", "\""));
-					id++;
-				}
-				
-				// ------------------------------------------------------------
-				// Analyze spoiler lists and update db
-				string currentCardName = string.Empty;
-				string paraCardName = string.Empty, paraCost = string.Empty, paraPowTgh = string.Empty, paraRulesText = string.Empty, paraType = string.Empty;
-				string paraCardExtCID = string.Empty, paraCardExtRar = string.Empty, paraMultiverseidString = string.Empty;
-				int /*paraCardExtEID,*/ paraMultiverseid = 0;
-				id = 1;
-				foreach (string ext in setList)
-				{
-					string extoutfile = tempDirectory + "\\" + System.Web.HttpUtility.UrlEncode(ext) + ".dat";
-					UpdateListText("Analyzing extension file for " + ext + "...");
+				DownloadSpoilerList(setList);
 
-					if (!System.IO.File.Exists(extoutfile))
-					{
-						UpdateListText("File not found. Skipping.");
-						continue;
-					}
+				UpdateExtensions(setList);
 
-					HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
-					HtmlAgilityPack.HtmlDocument doc = web.Load(extoutfile);
-					HtmlAgilityPack.HtmlNode textspoilerNode = doc.DocumentNode.SelectSingleNode("//div[@class=\"textspoiler\"]/table");
-
-					foreach (HtmlAgilityPack.HtmlNode rows in textspoilerNode.SelectNodes("tr"))
-					{
-						HtmlAgilityPack.HtmlNodeCollection cols = rows.SelectNodes("td");
-						if (cols.Count == 2)
-						{
-							string key = cols[0].InnerText.Replace(":", "").Trim();
-							string value = cols[1].InnerText.TrimStart().TrimEnd();
-							if (key == "Name")
-							{
-								currentCardName = value;
-								paraCardName = value;
-								string href = cols[1].SelectSingleNode("a").GetAttributeValue("href", ""); //../Card/Details.aspx?multiverseid=201281
-								paraMultiverseidString = href.Substring(href.LastIndexOf("=") + 1); //201281
-								paraMultiverseid = Convert.ToInt32(paraMultiverseidString);
-							}
-							if (key == "Cost") paraCost = value;
-							if (key == "Type") paraType = value.Replace("â€”", "-").Replace("  ", " ");
-							if (key == "Pow/Tgh") paraPowTgh = value;
-							if (key == "Rules Text") paraRulesText = value;
-							if (key == "Set/Rarity") paraCardExtRar = value;
-						}
-						else
-						{
-							if (currentCardName != "")
-							{
-								string[] setrlist = paraCardExtRar.Split(',');
-								string cid = string.Empty;
-								foreach(string setr in setrlist)
-								{
-									if (setr.Contains(ext))
-									{
-										string set = ext.Trim();
-										string rarity = setr.Replace(ext, "").Trim(); // Might by Common/Uncomm/Rare/Mythic Rare
-
-										Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, rarity, set, paraMultiverseid);
-										cid = adb.InsertCard(card);
-										break;
-									}
-								}
-
-								if (string.IsNullOrEmpty(cid))
-								{
-									UpdateListText("Error inserting card: " + currentCardName);
-								}
-
-								/*Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, paraMultiverseid);
-								string cid = adb.InsertCard(card);
-
-								string[] setrlist = paraCardExtRar.Split(',');
-								foreach(string setr in setrlist)
-								{
-									int split = setr.LastIndexOf(" ");
-									if (split > 0)
-									{
-										string set = setr.Substring(0, split).Trim();
-										string rarity = setr.Substring(split).Trim();
-										int eid = setList.IndexOf(set) + 1; // First set id = 1; index = 0!
-										paraCardExtCID = cid;
-										paraCardExtEID = eid;
-										paraCardExtRar = rarity;
-										try
-										{
-											adb.InsertCardExtension(paraCardExtCID, paraCardExtEID, paraCardExtRar);
-										}
-										catch
-										{
-											// Clunky way of catching an exception that seems to go if we retry...
-											adb.InsertCardExtension(paraCardExtCID, paraCardExtEID, paraCardExtRar);
-										}
-									}
-									else
-									{
-									}
-								}*/
-							}
-
-							// New card
-							paraCardName = null; paraCost = null; paraType = null;
-							paraPowTgh = null; paraRulesText = null; paraCardExtRar = null;
-							paraMultiverseidString = null;
-							currentCardName = "";
-						}
-
-					}
-					
-					UpdateTotalStatus(setList.Count + id + 1, 2 * setList.Count + 2);
-					id++;
-				}
+				GenerateCards(setList);
 
 				// ------------------------------------------------------------
                 // We are done!
@@ -190,6 +72,10 @@ namespace Archivist
             }
         }
 
+		/// <summary>
+		/// Download all sets
+		/// </summary>
+		/// <returns></returns>
 		private IEnumerable<string> DownloadSetList()
 		{
 			using (WebClient client = new WebClient())
@@ -237,7 +123,8 @@ namespace Archivist
 				int i = 0;
 				foreach (string ext in setList)
 				{
-					string downloadUrl = "http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&action=advanced&set=[%22" + ext.Replace(" ", "+").Replace("&quot;", "%22") + "%22]&special=true";
+					string downloadUrl = String.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&action=advanced&set=[%22{0}%22]&special=true",
+						ext.Replace(" ", "+").Replace("&quot;", "%22"));
 
 					string extoutfile = tempDirectory + "\\" + System.Web.HttpUtility.UrlEncode(ext) + ".dat";
 					UpdateListText("Getting extension " + ext + "...");
@@ -259,12 +146,124 @@ namespace Archivist
 			}
 		}
 
-        private void UpdateListText(string text)
-        {
-            UpdateListText(text, false);
-        }
+		/// <summary>
+		/// Update extensions table
+		/// </summary>
+		/// <param name="setList"></param>
+		/// <param name="id"></param>
+		/// <param name="adb"></param>
+		private void UpdateExtensions(List<string> setList)
+		{
+			UpdateListText("Writing extensions to database...");
 
-        private void UpdateListText(string text, bool enableButton)
+			ArchivistDatabase adb = new ArchivistDatabase();
+			adb.DeleteExtensions();
+
+			int id = 1;
+			foreach (string ext in setList)
+			{
+				adb.InsertExtension(id, "", ext.Replace("&quot;", "\""));
+				id++;
+			}
+		}
+
+		/// <summary>
+		/// Generate card data from files
+		/// </summary>
+		/// <param name="setList"></param>
+		private void GenerateCards(List<string> setList)
+		{
+			ArchivistDatabase adb = new ArchivistDatabase();
+			
+			string currentCardName = string.Empty;
+			string paraCardName = string.Empty, paraCost = string.Empty, paraPowTgh = string.Empty, paraRulesText = string.Empty, paraType = string.Empty;
+			string paraCardExtCID = string.Empty, paraCardExtRar = string.Empty, paraMultiverseidString = string.Empty;
+			int /*paraCardExtEID,*/ paraMultiverseid = 0;
+			int id = 1;
+
+			foreach (string ext in setList)
+			{
+				string extoutfile = String.Format("{0}\\{1}.dat", tempDirectory, System.Web.HttpUtility.UrlEncode(ext));
+				UpdateListText(String.Format("Analyzing extension file for {0}...", ext));
+
+				if (!System.IO.File.Exists(extoutfile))
+				{
+					UpdateListText("File not found. Skipping.");
+					continue;
+				}
+
+				HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
+				HtmlAgilityPack.HtmlDocument doc = web.Load(extoutfile);
+				HtmlAgilityPack.HtmlNode textspoilerNode = doc.DocumentNode.SelectSingleNode("//div[@class=\"textspoiler\"]/table");
+
+				foreach (HtmlAgilityPack.HtmlNode rows in textspoilerNode.SelectNodes("tr"))
+				{
+					HtmlAgilityPack.HtmlNodeCollection cols = rows.SelectNodes("td");
+					if (cols.Count == 2)
+					{
+						string key = cols[0].InnerText.Replace(":", "").Trim();
+						string value = cols[1].InnerText.TrimStart().TrimEnd();
+
+						if (key == "Name")
+						{
+							currentCardName = value;
+							paraCardName = value;
+							string href = cols[1].SelectSingleNode("a").GetAttributeValue("href", ""); //../Card/Details.aspx?multiverseid=201281
+							paraMultiverseidString = href.Substring(href.LastIndexOf("=") + 1); //201281
+							paraMultiverseid = Convert.ToInt32(paraMultiverseidString);
+						}
+						if (key == "Cost") paraCost = value;
+						if (key == "Type") paraType = value.Replace("â€”", "-").Replace("  ", " ");
+						if (key == "Pow/Tgh") paraPowTgh = value;
+						if (key == "Rules Text") paraRulesText = value;
+						if (key == "Set/Rarity") paraCardExtRar = value;
+					}
+					else
+					{
+						if (currentCardName != "")
+						{
+							string[] setrlist = paraCardExtRar.Split(',');
+							string cid = string.Empty;
+							foreach (string setr in setrlist)
+							{
+								if (setr.Contains(ext))
+								{
+									string set = ext.Trim();
+									string rarity = setr.Replace(ext, "").Trim(); // Might by Common/Uncomm/Rare/Mythic Rare
+
+									Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, rarity, set, paraMultiverseid);
+									cid = adb.InsertCard(card);
+									break;
+								}
+							}
+
+							if (string.IsNullOrEmpty(cid))
+							{
+								UpdateListText("Error inserting card: " + currentCardName);
+							}
+						}
+
+						// New card
+						paraCardName = null; paraCost = null; paraType = null;
+						paraPowTgh = null; paraRulesText = null; paraCardExtRar = null;
+						paraMultiverseidString = null;
+						currentCardName = "";
+					}
+
+				}
+
+				UpdateTotalStatus(setList.Count + id + 1, 2 * setList.Count + 2);
+				id++;
+			}
+		}
+
+
+		/// <summary>
+		/// Add info text
+		/// </summary>
+		/// <param name="text"></param>
+		/// <param name="enableButton"></param>
+        private void UpdateListText(string text, bool enableButton = false)
         {
             if(this.listStatus.InvokeRequired)
             {

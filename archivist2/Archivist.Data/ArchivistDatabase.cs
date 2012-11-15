@@ -52,6 +52,9 @@ namespace Archivist.Data
                     p1.Value = paramNAME;
                     using (IDataReader reader = command.ExecuteReader())
                     {
+						if (!reader.Read())
+							return null;
+
                         MagicCard card = new MagicCard(true);
                         card.Name= reader["name"].ToString();
                         card.ManaCost = reader["cost"].ToString();
@@ -72,10 +75,11 @@ namespace Archivist.Data
 			List<Card> cards = new List<Card>();
 
 			string sqlcmd = "SELECT * FROM CARD";
+			string orderby = " ORDER BY NAME";
 
 			using (IDbConnection connection = database.CreateOpenConnection())
 			{
-				using (IDbCommand command = database.CreateCommand(sqlcmd + " " + whereclause, connection))
+				using (IDbCommand command = database.CreateCommand(String.Format("{0} {1} {2}", sqlcmd, whereclause, orderby), connection))
 				{
 					for (int i = 0; i < values.Length; i++)
 					{

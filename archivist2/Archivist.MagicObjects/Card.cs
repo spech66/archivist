@@ -19,5 +19,7 @@ namespace Archivist.MagicObjects
 		string Rarity { get; }
 		string Extension { get; }
 		int Multiverseid { get; }
+
+		int Amount { get; set; }
 	}    
 }
