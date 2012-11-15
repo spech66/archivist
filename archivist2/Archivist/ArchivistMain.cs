@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -12,7 +13,10 @@ using System.IO;
 namespace Archivist
 {
     public partial class ArchivistMain : Form
-    {
+	{
+		private BindingList<Archivist.MagicObjects.MagicCard> cardsLibrary = new BindingList<Archivist.MagicObjects.MagicCard>();
+		private string libraryFile;
+
         public ArchivistMain()
         {
             InitializeComponent();
@@ -91,17 +95,28 @@ namespace Archivist
 		
 		public void UpdateLibraryList()
 		{
-			List<Archivist.MagicObjects.MagicCard> cards = new List<Archivist.MagicObjects.MagicCard>();
+			libraryFile = Path.Combine(Helper.DataDirectory, "Library.dat");
 
-			ArchivistDatabase adb = new ArchivistDatabase();
-			// TEST
-			Archivist.MagicObjects.MagicCard mc = adb.GetCard("Archivist") as Archivist.MagicObjects.MagicCard; if (mc != null) cards.Add(mc);
-			Archivist.MagicObjects.MagicCard mc2 = adb.GetCard("Time Walk") as Archivist.MagicObjects.MagicCard; if (mc2 != null) cards.Add(mc2);
-			Archivist.MagicObjects.MagicCard mc3 = adb.GetCard("Black Lotus") as Archivist.MagicObjects.MagicCard; if (mc3 != null) cards.Add(mc3);
-			Archivist.MagicObjects.MagicCard mc4 = adb.GetCard("Fog") as Archivist.MagicObjects.MagicCard; if (mc4 != null) cards.Add(mc4);
+			if (File.Exists(libraryFile))
+			{
+				ArchivistDatabase adb = new ArchivistDatabase();
 
-			//dgLibrary.DataSource = cards;
-			dgLibrary.BindDatasource(cards, false);
+				using (StreamReader reader = new StreamReader(libraryFile))
+				{
+					while (!reader.EndOfStream)
+					{
+						string[] split = reader.ReadLine().Split(';');
+						Archivist.MagicObjects.MagicCard card = adb.GetCard(Convert.ToInt32(split[0])) as Archivist.MagicObjects.MagicCard;
+						if (card != null)
+						{
+							card.Amount = Convert.ToInt32(split[1]);
+							cardsLibrary.Add(card);
+						}
+					}
+				}
+			}
+
+			dgLibrary.BindDatasource(cardsLibrary, false);
 		}
 
 		#region Event handler
@@ -192,6 +207,51 @@ namespace Archivist
 		{
 			OptionDialog dlg = new OptionDialog();
 			dlg.ShowDialog();
+		}
+
+		private void addToLibraryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dgCards.SelectedRows.Count < 1)
+				return;
+
+			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
+			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
+
+			Archivist.MagicObjects.MagicCard findCard = cardsLibrary.FirstOrDefault(sel => sel.Multiverseid == card.Multiverseid);
+			if (findCard != null)
+			{
+				findCard.Amount++;
+			}
+			else
+			{
+				cardsLibrary.Add(card.Duplicate() as Archivist.MagicObjects.MagicCard);
+			}
+		}
+
+		private void toolStripMenuItem3_Click(object sender, EventArgs e)
+		{
+			if (dgLibrary.SelectedRows.Count < 1)
+				return;
+
+			var list = ((BindingList<Archivist.MagicObjects.MagicCard>)dgLibrary.DataSource);
+			Archivist.MagicObjects.MagicCard card = list[dgLibrary.SelectedRows[0].Index];
+
+			Archivist.MagicObjects.MagicCard findCard = cardsLibrary.FirstOrDefault(sel => sel.Multiverseid == card.Multiverseid);
+			if (findCard != null)
+			{
+				cardsLibrary.Remove(findCard);
+			}
+		}
+
+		private void ArchivistMain_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			using (StreamWriter writer = new StreamWriter(libraryFile))
+			{
+				foreach(Archivist.MagicObjects.MagicCard card in cardsLibrary)
+				{
+					writer.WriteLine(String.Format("{0};{1}", card.Multiverseid, card.Amount));
+				}
+			}
 		}
 
 		#endregion
