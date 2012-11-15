@@ -50,6 +50,7 @@ namespace Archivist
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxCards = new System.Windows.Forms.GroupBox();
+			this.dgCards = new Archivist.CardDataGrid();
 			this.groupBoxImage = new System.Windows.Forms.GroupBox();
 			this.pictureBoxCard = new System.Windows.Forms.PictureBox();
 			this.groupBoxInformation = new System.Windows.Forms.GroupBox();
@@ -87,18 +88,18 @@ namespace Archivist
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpCardSearch = new System.Windows.Forms.TabPage();
 			this.tpLibrary = new System.Windows.Forms.TabPage();
+			this.dgLibrary = new Archivist.CardDataGrid();
 			this.tpDeckManager = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnDeckManagerNewDeck = new System.Windows.Forms.Button();
 			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
-			this.dgCards = new Archivist.CardDataGrid();
-			this.dgLibrary = new Archivist.CardDataGrid();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBoxCards.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
 			this.groupBoxImage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).BeginInit();
 			this.groupBoxInformation.SuspendLayout();
@@ -113,11 +114,10 @@ namespace Archivist
 			this.tabControl1.SuspendLayout();
 			this.tpCardSearch.SuspendLayout();
 			this.tpLibrary.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
 			this.tpDeckManager.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -323,6 +323,21 @@ namespace Archivist
 			this.groupBoxCards.TabStop = false;
 			this.groupBoxCards.Text = "Cards";
 			// 
+			// dgCards
+			// 
+			this.dgCards.AllowUserToAddRows = false;
+			this.dgCards.AllowUserToDeleteRows = false;
+			this.dgCards.AllowUserToResizeRows = false;
+			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgCards.Location = new System.Drawing.Point(3, 16);
+			this.dgCards.Name = "dgCards";
+			this.dgCards.ReadOnly = true;
+			this.dgCards.Size = new System.Drawing.Size(258, 516);
+			this.dgCards.TabIndex = 0;
+			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
+			// 
 			// groupBoxImage
 			// 
 			this.groupBoxImage.Controls.Add(this.pictureBoxCard);
@@ -420,6 +435,7 @@ namespace Archivist
 			this.listBoxCardEdition.Size = new System.Drawing.Size(232, 32);
 			this.listBoxCardEdition.Sorted = true;
 			this.listBoxCardEdition.TabIndex = 5;
+			this.listBoxCardEdition.SelectedIndexChanged += new System.EventHandler(this.listBoxCardEdition_SelectedIndexChanged);
 			// 
 			// linkLabelGatherer
 			// 
@@ -772,6 +788,19 @@ namespace Archivist
 			this.tpLibrary.Text = "Library";
 			this.tpLibrary.UseVisualStyleBackColor = true;
 			// 
+			// dgLibrary
+			// 
+			this.dgLibrary.AllowUserToAddRows = false;
+			this.dgLibrary.AllowUserToDeleteRows = false;
+			this.dgLibrary.AllowUserToResizeRows = false;
+			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
+			this.dgLibrary.Name = "dgLibrary";
+			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
+			this.dgLibrary.TabIndex = 0;
+			// 
 			// tpDeckManager
 			// 
 			this.tpDeckManager.Controls.Add(this.tableLayoutPanel4);
@@ -830,34 +859,6 @@ namespace Archivist
 			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			this.lbDeckManagerDeckList.Enter += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			// 
-			// dgCards
-			// 
-			this.dgCards.AllowUserToAddRows = false;
-			this.dgCards.AllowUserToDeleteRows = false;
-			this.dgCards.AllowUserToResizeRows = false;
-			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dgCards.Location = new System.Drawing.Point(3, 16);
-			this.dgCards.Name = "dgCards";
-			this.dgCards.ReadOnly = true;
-			this.dgCards.Size = new System.Drawing.Size(258, 516);
-			this.dgCards.TabIndex = 0;
-			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
-			// 
-			// dgLibrary
-			// 
-			this.dgLibrary.AllowUserToAddRows = false;
-			this.dgLibrary.AllowUserToDeleteRows = false;
-			this.dgLibrary.AllowUserToResizeRows = false;
-			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
-			this.dgLibrary.Name = "dgLibrary";
-			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
-			this.dgLibrary.TabIndex = 0;
-			// 
 			// ArchivistMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -880,6 +881,7 @@ namespace Archivist
 			this.toolStrip1.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBoxCards.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
 			this.groupBoxImage.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).EndInit();
 			this.groupBoxInformation.ResumeLayout(false);
@@ -896,11 +898,10 @@ namespace Archivist
 			this.tabControl1.ResumeLayout(false);
 			this.tpCardSearch.ResumeLayout(false);
 			this.tpLibrary.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
 			this.tpDeckManager.ResumeLayout(false);
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.flowLayoutPanel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

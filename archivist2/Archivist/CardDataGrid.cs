@@ -11,6 +11,7 @@ namespace Archivist
 	{
 		private bool isInitialized = false;
 
+		private DataGridViewTextBoxColumn colLibId;
 		private DataGridViewTextBoxColumn colLibAmount;
 		private DataGridViewTextBoxColumn colLibName;
 		private DataGridViewTextBoxColumn colLibCosts;
@@ -25,6 +26,7 @@ namespace Archivist
 
 		private void InitializeControls()
 		{
+			colLibId = new DataGridViewTextBoxColumn();
 			colLibAmount = new DataGridViewTextBoxColumn();
 			colLibName = new DataGridViewTextBoxColumn();
 			colLibCosts = new DataGridViewTextBoxColumn();
@@ -38,8 +40,16 @@ namespace Archivist
 			AllowUserToDeleteRows = false;
 			AllowUserToResizeRows = false;
 			AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
 			ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 
+			// 
+			// colLibId
+			// 
+			this.colLibId.HeaderText = "Id";
+			this.colLibId.Name = "colLibId";
+			this.colLibId.ReadOnly = true;
+			this.colLibId.Visible = false;
 			// 
 			// colLibAmount
 			// 
@@ -78,11 +88,12 @@ namespace Archivist
 			// 
 			// colLibName
 			// 
-			this.colLibRarity.HeaderText = "XRarity";
+			this.colLibRarity.HeaderText = "Rarity";
 			this.colLibRarity.Name = "colLibRarity";
 			this.colLibRarity.ReadOnly = true;
 
 			Columns.AddRange(new DataGridViewColumn[] {
+				this.colLibId,
 				this.colLibAmount,
 				this.colLibName,
 				this.colLibCosts,
@@ -100,11 +111,11 @@ namespace Archivist
 			{
 				InitializeControls();
 			}
-			
+
 			AutoGenerateColumns = false;
 
-			DataSource = datasource;
-
+			colLibId.DataPropertyName = "Multiverseid";
+			colLibAmount.DataPropertyName = "Amount";
 			colLibName.DataPropertyName = "Name";
 			colLibCosts.DataPropertyName = "ManaCost"; //mc.ManaCost
 			colLibType.DataPropertyName = "Type";
@@ -122,9 +133,14 @@ namespace Archivist
 			{
 				foreach (DataGridViewColumn col in Columns)
 				{
-					col.Visible = true;
+					if (col.Name != colLibId.Name)
+					{
+						col.Visible = true;
+					}
 				}
 			}
+
+			DataSource = datasource;
 		}
 
 		protected override void OnCellFormatting(DataGridViewCellFormattingEventArgs e)
@@ -135,55 +151,77 @@ namespace Archivist
 				return;
 			}
 
+			int idColumnIdx = colLibId.Index;
 			int colorColumnIdx = colLibCosts.Index;
+			int imageColumnIdx = colLibImage.Index;
 
-			string costs = Rows[e.RowIndex].Cells[colorColumnIdx].Value.ToString();
-			int colorCount = 0;
-			string color = "";
-
-			string[] colors = { "U", "B", "W", "R", "G" };
-			foreach (string c in colors)
+			if (e.ColumnIndex == colorColumnIdx)
 			{
-				if (costs.Contains(c))
+				if (Rows[e.RowIndex].Cells[colorColumnIdx].Value == null)
 				{
-					colorCount++;
-					color = c;
+					base.OnCellFormatting(e);
+					return;
+				}
+
+				string costs = Rows[e.RowIndex].Cells[colorColumnIdx].Value.ToString();
+				int colorCount = 0;
+				string color = "";
+
+				string[] colors = { "U", "B", "W", "R", "G" };
+				foreach (string c in colors)
+				{
+					if (costs.Contains(c))
+					{
+						colorCount++;
+						color = c;
+					}
+				}
+
+				if (colorCount == 0) // Artifacts and lands, ...
+				{
+					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Gray;
+				}
+				else if (colorCount == 1) // Mono color cards
+				{
+					if (color == "U")
+					{
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Blue;
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.ForeColor = Color.White;
+					}
+					else if (color == "W")
+					{
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.White;
+					}
+					else if (color == "R")
+					{
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Red;
+					}
+					else if (color == "G")
+					{
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.DarkGreen;
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.ForeColor = Color.White;
+					}
+					else if (color == "B")
+					{
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Black;
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.ForeColor = Color.White;
+					}
+				}
+				else // Multicolor cards
+				{
+					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Gold;
 				}
 			}
+			else if (e.ColumnIndex == imageColumnIdx)
+			{
+				if (Rows[e.RowIndex].Cells[idColumnIdx].Value == null || Rows[e.RowIndex].Cells[imageColumnIdx].Value != null)
+				{
+					base.OnCellFormatting(e);
+					return;
+				}
 
-			if (colorCount == 0) // Artifacts and lands, ...
-			{
-				Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Gray;
-			}
-			else if (colorCount == 1) // Mono color cards
-			{
-				if (color == "U")
-				{
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Blue;
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.ForeColor = Color.White;
-				}
-				else if (color == "W")
-				{
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.White;
-				}
-				else if (color == "R")
-				{
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Red;
-				}
-				else if (color == "G")
-				{
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.DarkGreen;
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.ForeColor = Color.White;
-				}
-				else if (color == "B")
-				{
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Black;
-					Rows[e.RowIndex].Cells[colorColumnIdx].Style.ForeColor = Color.White;
-				}
-			}
-			else // Multicolor cards
-			{
-				Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.Gold;
+				Image img = Helper.GetMagicImage(Rows[e.RowIndex].Cells[idColumnIdx].Value.ToString());
+				Rows[e.RowIndex].Cells[imageColumnIdx].Value = img;
 			}
 
 			base.OnCellFormatting(e);

@@ -24,7 +24,9 @@ namespace Archivist.MagicObjects
 			public string Rarity { get; set; }
 			public string Extension { get; set; }
             public bool IsCardUp { get { return isCardUp; } set { isCardUp = value; } }
-            
+
+			public int Amount { get; set; }
+
             /// <summary>
             /// Constructor for a new card.  Assign the card a suit, face value, and if the card is facing up or down
             /// </summary>

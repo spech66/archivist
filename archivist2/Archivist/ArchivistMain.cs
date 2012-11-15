@@ -13,16 +13,9 @@ namespace Archivist
 {
     public partial class ArchivistMain : Form
     {
-		private string dataDirectory;
-		private string imageDirectory;
-		private string decksDirectory;
-
         public ArchivistMain()
         {
             InitializeComponent();
-			dataDirectory = Path.Combine(Application.StartupPath, "data");
-			imageDirectory = Path.Combine(Application.StartupPath, "img");
-			decksDirectory = Path.Combine(Application.StartupPath, "decks");
 			
 			InitSearch();
 			UpdateCardList();
@@ -78,7 +71,7 @@ namespace Archivist
 
 		private void UpdateDeckList()
 		{
-			UpdateDeckListGetDeckTree(decksDirectory);
+			UpdateDeckListGetDeckTree(Helper.DecksDirectory);
 		}
 
 		private void UpdateDeckListGetDeckTree(string dir)
@@ -92,24 +85,23 @@ namespace Archivist
 			string[] files = Directory.GetFiles(dir);
 			foreach (string file in files)
 			{
-				lbDeckManagerDeckList.Items.Add(file.Replace(decksDirectory, ""));
+				lbDeckManagerDeckList.Items.Add(file.Replace(Helper.DecksDirectory, "").Substring(1));
 			}
 		}
 		
 		public void UpdateLibraryList()
 		{
-			/*
 			List<Archivist.MagicObjects.MagicCard> cards = new List<Archivist.MagicObjects.MagicCard>();
 
 			ArchivistDatabase adb = new ArchivistDatabase();
-			Archivist.MagicObjects.MagicCard mc = adb.GetCard("Brainbite") as Archivist.MagicObjects.MagicCard;
-			if (mc != null)
-			{
-				cards.Add(mc);
-			}
+			// TEST
+			Archivist.MagicObjects.MagicCard mc = adb.GetCard("Archivist") as Archivist.MagicObjects.MagicCard; if (mc != null) cards.Add(mc);
+			Archivist.MagicObjects.MagicCard mc2 = adb.GetCard("Time Walk") as Archivist.MagicObjects.MagicCard; if (mc2 != null) cards.Add(mc2);
+			Archivist.MagicObjects.MagicCard mc3 = adb.GetCard("Black Lotus") as Archivist.MagicObjects.MagicCard; if (mc3 != null) cards.Add(mc3);
+			Archivist.MagicObjects.MagicCard mc4 = adb.GetCard("Fog") as Archivist.MagicObjects.MagicCard; if (mc4 != null) cards.Add(mc4);
 
 			//dgLibrary.DataSource = cards;
-			dgLibrary.BindDatasource(cards, false);*/
+			dgLibrary.BindDatasource(cards, false);
 		}
 
 		#region Event handler
@@ -184,7 +176,12 @@ namespace Archivist
 			if (lbDeckManagerDeckList.SelectedItem == null)
 				return;
 
-			OpenDeck(Path.Combine(decksDirectory, lbDeckManagerDeckList.SelectedItem.ToString()));
+			OpenDeck(Path.Combine(Helper.DecksDirectory, lbDeckManagerDeckList.SelectedItem.ToString()));
+		}
+
+		private void listBoxCardEdition_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//TODO: Select set specific multiverseid and display image
 		}
 
 		#endregion
@@ -209,9 +206,12 @@ namespace Archivist
 			}
 
 			TabPage deckPage = new TabPage(name);
+			tabControl1.TabPages.Add(deckPage);
+
+			// Add controls after page added to tabControl to make layout update working
 			deckPage.Controls.Add(deck);
 
-			tabControl1.TabPages.Add(deckPage);
+			tabControl1.SelectedTab = deckPage;
 		}
 
 		private void UpdateCardList()
@@ -267,14 +267,8 @@ namespace Archivist
 			}
 
 			// Expansion
-			//listBoxSearchExpansion.Items.Clear();
 			if (listBoxSearchExpansion.SelectedIndex > 0)
 			{
-				/*SELECT * FROM CARD WHERE ID IN (
-					SELECT CARD_ID FROM CARD_EXTENSION
-					JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID
-					WHERE EXTENSION.NAME='Nemesis'
-				)*/
 				string list = "";
 				foreach (string sel in listBoxSearchExpansion.SelectedItems)
 				{
@@ -283,11 +277,9 @@ namespace Archivist
 				list = list.Remove(list.Length - 2, 2);
 
 				whereclause += " AND EXTENSION IN (" + list + ")";
-				//whereclause += " AND ID IN (SELECT CARD_ID FROM CARD_EXTENSION JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE EXTENSION.NAME in ("+list+"))";
 			}
 
 			// Flavor text
-			// TODO: :)
 
 			if (!String.IsNullOrEmpty(whereclause))
 			{
@@ -299,11 +291,7 @@ namespace Archivist
 			dgCards.BindDatasource(cards, true);
 
 			// Load image
-			string noneimg = System.IO.Path.Combine(imageDirectory, "none.jpg");
-			if (System.IO.File.Exists(noneimg))
-			{
-				pictureBoxCard.Image = Image.FromFile(noneimg);
-			}
+			pictureBoxCard.Image = Helper.GetMagicImage();
         }
 
 		private void ShowCard()
@@ -322,7 +310,7 @@ namespace Archivist
 
 			if (card.Multiverseid > 0)
 			{
-				DisplayImage(card.Multiverseid.ToString());
+				pictureBoxCard.Image = Helper.GetMagicImage(card.Multiverseid.ToString(), true);
 
 				linkLabelGatherer.Links.Clear();
 				linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + card.Multiverseid.ToString());
@@ -332,52 +320,18 @@ namespace Archivist
 				pictureBoxCard.ImageLocation = "";
 			}
 
+			// Select all extensions
 			IDbCommand cmdEditon = DataBuider.database.CreateCommand();
 			cmdEditon.Connection = DataBuider.database.CreateOpenConnection();
 			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
 			cmdEditon.Parameters.Add(p1Editon);
 			p1Editon.Value = card.Name;
-			//cmdEditon.CommandText = "SELECT RARITY, EXTENSION.NAME FROM CARD JOIN CARD_EXTENSION ON CARD_EXTENSION.CARD_ID = CARD.ID JOIN EXTENSION ON CARD_EXTENSION.EXTENSION_ID=EXTENSION.ID WHERE CARD.NAME = ?";
 			cmdEditon.CommandText = "SELECT RARITY, EXTENSION FROM CARD WHERE NAME = ?";
 			IDataReader readerEditon = cmdEditon.ExecuteReader();
 			listBoxCardEdition.Items.Clear();
 			while (readerEditon.Read())
 			{
 				listBoxCardEdition.Items.Add(String.Format("{1} ({0})", readerEditon.GetString(0), readerEditon.GetString(1)));
-			}
-		}
-
-		private void DisplayImage(string multiversid)
-		{
-			pictureBoxCard.ImageLocation = "";
-
-			string cardimg = Path.Combine(Application.StartupPath, "cardimg");
-			if (!Directory.Exists(cardimg))
-			{
-				Directory.CreateDirectory(cardimg);
-			}
-
-			string filename = Path.Combine(cardimg, multiversid + ".jpg");
-			if (File.Exists(filename))
-			{
-				pictureBoxCard.ImageLocation = filename;
-			}
-			else
-			{
-				try
-				{
-					using (System.Net.WebClient client = new System.Net.WebClient())
-					{
-						string downloadUrl = String.Format("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={0}&type=card", multiversid);
-						client.DownloadFile(downloadUrl, filename);
-					}
-					
-					pictureBoxCard.ImageLocation = filename;
-				}
-				catch (Exception e)
-				{
-					MessageBox.Show(e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
 			}
 		}
 	}
