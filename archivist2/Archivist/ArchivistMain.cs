@@ -194,6 +194,20 @@ namespace Archivist
 			OpenDeck(Path.Combine(Helper.DecksDirectory, lbDeckManagerDeckList.SelectedItem.ToString()));
 		}
 
+		private void btnDeckManagerOpenDeck_Click(object sender, EventArgs e)
+		{
+			using (OpenFileDialog ofd = new OpenFileDialog())
+			{
+				ofd.Filter = "Decks (*.dec)|*.dec|All files (*.*)|*.*";
+				ofd.RestoreDirectory = true;
+
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					OpenDeck(ofd.FileName);
+				}
+			}
+		}
+
 		private void listBoxCardEdition_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ListBoxItemNameId itm = (ListBoxItemNameId)listBoxCardEdition.SelectedItem;
