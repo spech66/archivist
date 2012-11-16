@@ -28,24 +28,28 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.zgManaCurve = new ZedGraph.ZedGraphControl();
 			this.zgDistribution = new ZedGraph.ZedGraphControl();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.dgDeck = new Archivist.CardDataGrid();
+			this.cmDeck = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnClose = new System.Windows.Forms.Button();
+			this.btnSave = new System.Windows.Forms.Button();
+			this.btnSaveAs = new System.Windows.Forms.Button();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.btnSave = new System.Windows.Forms.Button();
-			this.btnClose = new System.Windows.Forms.Button();
-			this.cardDataGrid1 = new Archivist.CardDataGrid();
-			this.btnSaveAs = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgDeck)).BeginInit();
+			this.cmDeck.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// zgManaCurve
@@ -104,6 +108,83 @@
 			this.tabPage1.Text = "Cards";
 			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.ColumnCount = 4;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			this.tableLayoutPanel1.Controls.Add(this.dgDeck, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.btnClose, 3, 1);
+			this.tableLayoutPanel1.Controls.Add(this.btnSave, 2, 1);
+			this.tableLayoutPanel1.Controls.Add(this.btnSaveAs, 1, 1);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(791, 583);
+			this.tableLayoutPanel1.TabIndex = 1;
+			// 
+			// dgDeck
+			// 
+			this.dgDeck.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgDeck.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.tableLayoutPanel1.SetColumnSpan(this.dgDeck, 4);
+			this.dgDeck.ContextMenuStrip = this.cmDeck;
+			this.dgDeck.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgDeck.Location = new System.Drawing.Point(3, 3);
+			this.dgDeck.Name = "dgDeck";
+			this.dgDeck.Size = new System.Drawing.Size(785, 547);
+			this.dgDeck.TabIndex = 0;
+			this.dgDeck.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgDeck_CellValueChanged);
+			// 
+			// cmDeck
+			// 
+			this.cmDeck.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeToolStripMenuItem});
+			this.cmDeck.Name = "cmDeck";
+			this.cmDeck.Size = new System.Drawing.Size(118, 26);
+			// 
+			// removeToolStripMenuItem
+			// 
+			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.removeToolStripMenuItem.Text = "Remove";
+			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+			// 
+			// btnClose
+			// 
+			this.btnClose.Location = new System.Drawing.Point(714, 556);
+			this.btnClose.Name = "btnClose";
+			this.btnClose.Size = new System.Drawing.Size(74, 23);
+			this.btnClose.TabIndex = 2;
+			this.btnClose.Text = "Close";
+			this.btnClose.UseVisualStyleBackColor = true;
+			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+			// 
+			// btnSave
+			// 
+			this.btnSave.Location = new System.Drawing.Point(634, 556);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(74, 23);
+			this.btnSave.TabIndex = 1;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			// 
+			// btnSaveAs
+			// 
+			this.btnSaveAs.Location = new System.Drawing.Point(554, 556);
+			this.btnSaveAs.Name = "btnSaveAs";
+			this.btnSaveAs.Size = new System.Drawing.Size(74, 23);
+			this.btnSaveAs.TabIndex = 3;
+			this.btnSaveAs.Text = "Save As ...";
+			this.btnSaveAs.UseVisualStyleBackColor = true;
+			this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
+			// 
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.zgManaCurve);
@@ -136,67 +217,6 @@
 			this.tabPage4.Text = "Info";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
-			// tableLayoutPanel1
-			// 
-			this.tableLayoutPanel1.ColumnCount = 4;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-			this.tableLayoutPanel1.Controls.Add(this.cardDataGrid1, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.btnClose, 3, 1);
-			this.tableLayoutPanel1.Controls.Add(this.btnSave, 2, 1);
-			this.tableLayoutPanel1.Controls.Add(this.btnSaveAs, 1, 1);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(791, 583);
-			this.tableLayoutPanel1.TabIndex = 1;
-			// 
-			// btnSave
-			// 
-			this.btnSave.Location = new System.Drawing.Point(634, 556);
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(74, 23);
-			this.btnSave.TabIndex = 1;
-			this.btnSave.Text = "Save";
-			this.btnSave.UseVisualStyleBackColor = true;
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-			// 
-			// btnClose
-			// 
-			this.btnClose.Location = new System.Drawing.Point(714, 556);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(74, 23);
-			this.btnClose.TabIndex = 2;
-			this.btnClose.Text = "Close";
-			this.btnClose.UseVisualStyleBackColor = true;
-			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-			// 
-			// cardDataGrid1
-			// 
-			this.cardDataGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.cardDataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.tableLayoutPanel1.SetColumnSpan(this.cardDataGrid1, 4);
-			this.cardDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.cardDataGrid1.Location = new System.Drawing.Point(3, 3);
-			this.cardDataGrid1.Name = "cardDataGrid1";
-			this.cardDataGrid1.Size = new System.Drawing.Size(785, 547);
-			this.cardDataGrid1.TabIndex = 0;
-			// 
-			// btnSaveAs
-			// 
-			this.btnSaveAs.Location = new System.Drawing.Point(554, 556);
-			this.btnSaveAs.Name = "btnSaveAs";
-			this.btnSaveAs.Size = new System.Drawing.Size(74, 23);
-			this.btnSaveAs.TabIndex = 3;
-			this.btnSaveAs.Text = "Save As ...";
-			this.btnSaveAs.UseVisualStyleBackColor = true;
-			this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
-			// 
 			// Deck
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -207,17 +227,18 @@
 			this.Load += new System.EventHandler(this.Deck_Load);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
+			this.tableLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgDeck)).EndInit();
+			this.cmDeck.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.cardDataGrid1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private CardDataGrid cardDataGrid1;
+		private CardDataGrid dgDeck;
 		private ZedGraph.ZedGraphControl zgManaCurve;
 		private ZedGraph.ZedGraphControl zgDistribution;
 		private System.Windows.Forms.TabControl tabControl1;
@@ -229,5 +250,7 @@
 		private System.Windows.Forms.Button btnSave;
 		private System.Windows.Forms.Button btnClose;
 		private System.Windows.Forms.Button btnSaveAs;
+		private System.Windows.Forms.ContextMenuStrip cmDeck;
+		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
 	}
 }

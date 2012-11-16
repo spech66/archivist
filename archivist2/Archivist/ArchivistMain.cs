@@ -20,7 +20,10 @@ namespace Archivist
         public ArchivistMain()
         {
             InitializeComponent();
-			
+
+			dgCards.SetGridType(CardDataGrid.GridType.Cards);
+			dgLibrary.SetGridType(CardDataGrid.GridType.Library);
+
 			InitSearch();
 			UpdateCardList();
 			UpdateLibraryList();
@@ -116,7 +119,7 @@ namespace Archivist
 				}
 			}
 
-			dgLibrary.BindDatasource(cardsLibrary, false);
+			dgLibrary.BindDatasource(cardsLibrary);
 		}
 
 		#region Event handler
@@ -268,6 +271,21 @@ namespace Archivist
 			}
 		}
 
+		private void DynamicAddCardToDeck_Click(object sender, EventArgs e)
+		{
+			ToolStripMenuItem item = (ToolStripMenuItem)sender;
+			if (item == null)
+				return;
+
+			TabPage deckPage = (TabPage)item.Tag;
+			if (deckPage == null)
+				return;
+
+			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
+			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
+			((Deck)deckPage.Controls[0]).AddCard(card);
+		}
+
 		#endregion
 
 		private void OpenDeck(string path = "")
@@ -296,6 +314,11 @@ namespace Archivist
 			deckPage.Controls.Add(deck);
 
 			tabControl1.SelectedTab = deckPage;
+
+			// Update Menu
+			ToolStripMenuItem item = new ToolStripMenuItem("Add to " + name, null, DynamicAddCardToDeck_Click);
+			item.Tag = deckPage;
+			cmCards.Items.Add(item);
 		}
 
 		private void UpdateCardList()
@@ -372,7 +395,7 @@ namespace Archivist
 
 			ArchivistDatabase adb = new ArchivistDatabase();
 			List<Archivist.MagicObjects.Card> cards = adb.GetCards(whereclause, data.ToArray());
-			dgCards.BindDatasource(cards, true);
+			dgCards.BindDatasource(cards);
 
 			// Load image
 			pictureBoxCard.Image = Helper.GetMagicImage();
@@ -437,6 +460,26 @@ namespace Archivist
 				{
 					listBoxCardEdition.SelectedItem = item;
 				}
+			}
+		}
+
+		internal void RemoveDeck(TabPage tabPage)
+		{
+			tabControl1.TabPages.Remove(tabPage);
+
+			ToolStripMenuItem menuItem = null;
+			foreach (ToolStripMenuItem itm in cmCards.Items)
+			{
+				if (itm.Tag == tabPage)
+				{
+					menuItem = itm;
+					break;
+				}
+			}
+
+			if (menuItem != null)
+			{
+				cmCards.Items.Remove(menuItem);
 			}
 		}
 	}

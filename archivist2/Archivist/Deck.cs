@@ -22,6 +22,8 @@ namespace Archivist
 		{
 			InitializeComponent();
 
+			dgDeck.SetGridType(CardDataGrid.GridType.Deck);
+
 			if (!String.IsNullOrEmpty(path))
 			{
 				deckFilename = path;
@@ -45,13 +47,20 @@ namespace Archivist
 			cards.Clear();
 
 			//CHECK file exists
-
-			if (path.ToLower().EndsWith(".dec"))
+			if (File.Exists(path))
 			{
-				ParseFormatDEC(path, ref cards);
-			}
 
-			cardDataGrid1.BindDatasource(cards, false);
+				if (path.ToLower().EndsWith(".dec"))
+				{
+					ParseFormatDEC(path, ref cards);
+				}
+
+				dgDeck.BindDatasource(cards);
+			}
+			else
+			{
+				MessageBox.Show("File does not exist:\n" + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		private void ParseFormatDEC(string path, ref BindingList<Card> cards)
@@ -176,7 +185,10 @@ namespace Archivist
 
 		private void btnClose_Click(object sender, EventArgs e)
 		{
-			((TabControl)((TabPage)this.Parent).Parent).TabPages.Remove((TabPage)this.Parent);
+			TabPage tabPage = (TabPage)this.Parent;
+			TabControl tabControl = (TabControl)tabPage.Parent;
+			ArchivistMain main = (ArchivistMain)tabControl.Parent;
+			main.RemoveDeck(tabPage);
 		}
 
 		private void btnSave_Click(object sender, EventArgs e)
@@ -216,6 +228,50 @@ namespace Archivist
 				}
 
 				MessageBox.Show("Deck saved to file:\n" + deckFilename, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		public void AddCard(Card card)
+		{
+			if (card == null)
+				return;
+
+			Card findCard = cards.FirstOrDefault(sel => sel.Multiverseid == card.Multiverseid);
+			if (findCard != null)
+			{
+				findCard.Amount++;
+			}
+			else
+			{
+				cards.Add(card.Duplicate());
+			}
+
+			UpdateGraphManaCurve();
+			UpdateGraphDistribution();
+			dgDeck.BindDatasource(cards);
+		}
+
+		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dgDeck.SelectedRows.Count < 1)
+				return;
+
+			Card findCard = cards[dgDeck.SelectedRows[0].Index];
+			if (findCard != null)
+			{
+				cards.Remove(findCard);
+
+				UpdateGraphManaCurve();
+				UpdateGraphDistribution();
+			}
+		}
+
+		private void dgDeck_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+			if (dgDeck.Columns[e.ColumnIndex].Name.Contains("Amount"))
+			{
+				UpdateGraphManaCurve();
+				UpdateGraphDistribution();
 			}
 		}
 	}
