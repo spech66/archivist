@@ -271,6 +271,24 @@ namespace Archivist
 			}
 		}
 
+        private void ArchivistMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach (TabPage page in tabControl1.TabPages)
+            {
+                if (page.Controls[0] is Deck)
+                {
+                    Deck deck = (Deck)page.Controls[0];
+                    if (deck.IsModified)
+                    {
+                        if (MessageBox.Show("There are unsaved changes. Would you really like to quit?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.No)
+                        {
+                            e.Cancel = true;
+                        }
+                    }
+                }
+            }
+        }
+
 		private void DynamicAddCardToDeck_Click(object sender, EventArgs e)
 		{
 			ToolStripMenuItem item = (ToolStripMenuItem)sender;

@@ -990,6 +990,7 @@ namespace Archivist
             this.Name = "ArchivistMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Archivist 2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ArchivistMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ArchivistMain_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
