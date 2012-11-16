@@ -9,6 +9,7 @@ namespace Archivist.MagicObjects
     {
         string Name { get;}
         bool IsCardUp { get; set;  }
+		bool IsInSideboard { get; }
         string ManaCost { get; set; }
         int CalculatedManaCost { get;}
         string PowTgh { get; set; }

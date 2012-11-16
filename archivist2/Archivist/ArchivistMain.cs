@@ -292,22 +292,8 @@ namespace Archivist
 		{
 			Deck deck = new Deck(path);
 			deck.Dock = DockStyle.Fill;
-
-			string name = "Deck - New";
-			if (path != "")
-			{
-				int pathIdx = path.LastIndexOf("\\");
-				if (pathIdx > -1)
-				{
-					name = "Deck - " + path.Substring(pathIdx + 1);
-				}
-				else
-				{
-					name = "Deck - " + path;
-				}
-			}
-
-			TabPage deckPage = new TabPage(name);
+			
+			TabPage deckPage = new TabPage("x");
 			tabControl1.TabPages.Add(deckPage);
 
 			// Add controls after page added to tabControl to make layout update working
@@ -316,9 +302,11 @@ namespace Archivist
 			tabControl1.SelectedTab = deckPage;
 
 			// Update Menu
-			ToolStripMenuItem item = new ToolStripMenuItem("Add to " + name, null, DynamicAddCardToDeck_Click);
+			ToolStripMenuItem item = new ToolStripMenuItem("Add to " + deck.Title, null, DynamicAddCardToDeck_Click);
 			item.Tag = deckPage;
 			cmCards.Items.Add(item);
+
+			SetDeckTitle(deckPage, deck.Title);
 		}
 
 		private void UpdateCardList()
@@ -480,6 +468,21 @@ namespace Archivist
 			if (menuItem != null)
 			{
 				cmCards.Items.Remove(menuItem);
+			}
+		}
+
+		internal void SetDeckTitle(TabPage tabPage, string name)
+		{
+			tabPage.Text = name;
+
+			// Update context menu name
+			foreach (ToolStripMenuItem itm in cmCards.Items)
+			{
+				if (itm.Tag == tabPage)
+				{
+					itm.Text = "Add to " + name;
+					break;
+				}
 			}
 		}
 	}
