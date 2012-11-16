@@ -81,6 +81,13 @@ namespace Archivist.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap icon_configure {
+            get {
+                object obj = ResourceManager.GetObject("icon_configure", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap icon_deck {
             get {
                 object obj = ResourceManager.GetObject("icon_deck", resourceCulture);

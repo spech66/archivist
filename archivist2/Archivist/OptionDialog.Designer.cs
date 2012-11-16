@@ -37,7 +37,7 @@
 			// button1
 			// 
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(197, 227);
+			this.button1.Location = new System.Drawing.Point(125, 227);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 0;
@@ -52,9 +52,9 @@
 			this.cbShowImagesLibrary.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Archivist.Properties.Settings.Default, "ShowImagesLibrary", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.cbShowImagesLibrary.Location = new System.Drawing.Point(12, 35);
 			this.cbShowImagesLibrary.Name = "cbShowImagesLibrary";
-			this.cbShowImagesLibrary.Size = new System.Drawing.Size(124, 17);
+			this.cbShowImagesLibrary.Size = new System.Drawing.Size(306, 17);
 			this.cbShowImagesLibrary.TabIndex = 4;
-			this.cbShowImagesLibrary.Text = "Show Images Library";
+			this.cbShowImagesLibrary.Text = "Show Images Library (Restart required, Slows down startup)";
 			this.cbShowImagesLibrary.UseVisualStyleBackColor = true;
 			// 
 			// cbShowImagesDeck
@@ -85,7 +85,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.ClientSize = new System.Drawing.Size(327, 262);
 			this.Controls.Add(this.cbShowImagesLibrary);
 			this.Controls.Add(this.cbShowImagesDeck);
 			this.Controls.Add(this.cbDownload);
