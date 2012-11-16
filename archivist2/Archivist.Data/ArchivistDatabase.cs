@@ -20,6 +20,27 @@ namespace Archivist.Data
             }
         }
 
+		public List<string> GetExtensions()
+		{
+			List<string> extensions = new List<string>();
+
+			string sqlcmd = "SELECT NAME FROM EXTENSION";
+
+			using (IDbConnection connection = database.CreateOpenConnection())
+			{
+				using (IDbCommand command = database.CreateCommand(sqlcmd, connection))
+				{
+					IDataReader reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						extensions.Add(reader["name"].ToString());
+					}
+				}
+			}
+
+			return extensions;
+		}
+
         public void InsertExtension(int paramID, string paramEXT, string paramNAME)
         {
 			string sqlcmd = "INSERT INTO EXTENSION (ID, EXT, NAME) VALUES (?, ?, ?)";
