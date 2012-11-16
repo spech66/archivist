@@ -42,6 +42,8 @@ namespace Archivist
 			Directory.CreateDirectory(dataDirectory);
 			Directory.CreateDirectory(imageDirectory);
 			Directory.CreateDirectory(tempDirectory);
+
+			UpdateListText("Please select one of the update options below!", true);
         }
 
         public void UpdateDB()
@@ -53,12 +55,12 @@ namespace Archivist
 				List<string> setList = new List<string>();
 				setList.Add("Limited Edition Alpha");
 				setList.Add("Magic 2011");*/
+				
+				UpdateExtensions(ref setList);
 
-				DownloadSpoilerList(setList);
+				DownloadSpoilerList(ref setList);
 
-				UpdateExtensions(setList);
-
-				GenerateCards(setList);
+				GenerateCards(ref setList);
 
 				// ------------------------------------------------------------
                 // We are done!
@@ -116,7 +118,7 @@ namespace Archivist
 		/// Download spoiler lists
 		/// </summary>
 		/// <param name="setList"></param>
-		private void DownloadSpoilerList(List<string> setList)
+		private void DownloadSpoilerList(ref List<string> setList)
 		{
 			using (WebClient client = new WebClient())
 			{
@@ -127,7 +129,7 @@ namespace Archivist
 						ext.Replace(" ", "+").Replace("&quot;", "%22"));
 
 					string extoutfile = tempDirectory + "\\" + System.Web.HttpUtility.UrlEncode(ext) + ".dat";
-					UpdateListText("Getting extension " + ext + "...");
+					UpdateListText(String.Format("Getting extension {0}...", ext));
 
 					if (System.IO.File.Exists(extoutfile))
 					{
@@ -135,7 +137,7 @@ namespace Archivist
 					}
 					else
 					{
-						System.Diagnostics.Debug.WriteLine("Getting extension " + ext + "...");
+						System.Diagnostics.Debug.WriteLine(String.Format("Getting extension {0}...", ext));
 						client.DownloadFile(downloadUrl, extoutfile);
 					}
 
@@ -152,18 +154,22 @@ namespace Archivist
 		/// <param name="setList"></param>
 		/// <param name="id"></param>
 		/// <param name="adb"></param>
-		private void UpdateExtensions(List<string> setList)
+		private void UpdateExtensions(ref List<string> setList)
 		{
 			UpdateListText("Writing extensions to database...");
 
 			ArchivistDatabase adb = new ArchivistDatabase();
-			adb.DeleteExtensions();
+			List<string> dbExtensions = adb.GetExtensions();
 
-			int id = 1;
-			foreach (string ext in setList)
+			foreach (string ext in dbExtensions)
 			{
-				adb.InsertExtension(id, "", ext.Replace("&quot;", "\""));
-				id++;
+				//string cleanext = ext.Replace("&quot;", "\"");
+				string uncleanext = ext.Replace("\"", "&quot;");
+				if (setList.Contains(uncleanext))
+				{
+					UpdateListText(String.Format("Extension {0} exists in database. Skipping.", ext));
+					setList.Remove(uncleanext);
+				}
 			}
 		}
 
@@ -171,7 +177,7 @@ namespace Archivist
 		/// Generate card data from files
 		/// </summary>
 		/// <param name="setList"></param>
-		private void GenerateCards(List<string> setList)
+		private void GenerateCards(ref List<string> setList)
 		{
 			ArchivistDatabase adb = new ArchivistDatabase();
 			
@@ -180,6 +186,7 @@ namespace Archivist
 			string paraCardExtCID = string.Empty, paraCardExtRar = string.Empty, paraMultiverseidString = string.Empty;
 			int /*paraCardExtEID,*/ paraMultiverseid = 0;
 			int id = 1;
+			int extId = setList.Count + 1;
 
 			foreach (string ext in setList)
 			{
@@ -229,7 +236,7 @@ namespace Archivist
 								if (setr.Contains(ext))
 								{
 									string set = ext.Trim();
-									string rarity = setr.Replace(ext, "").Trim(); // Might by Common/Uncomm/Rare/Mythic Rare
+									string rarity = setr.Replace(ext, "").Trim(); // Might be Common/Uncomm/Rare/Mythic Rare
 
 									Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, rarity, set, paraMultiverseid);
 									cid = adb.InsertCard(card);
@@ -251,6 +258,10 @@ namespace Archivist
 					}
 
 				}
+
+				// Insert extension to mark it completed
+				adb.InsertExtension(extId, "", ext.Replace("&quot;", "\""));
+				UpdateListText(String.Format("Added extension {0} to database.", ext));
 
 				UpdateTotalStatus(setList.Count + id + 1, 2 * setList.Count + 2);
 				id++;
@@ -314,7 +325,7 @@ namespace Archivist
 
 		private void btnSoftware_Click(object sender, EventArgs e)
 		{
-
+			UpdateListText("Sorry not yet implemented. Please check https://sourceforge.net/projects/archivist/");
 		}
 
 		private void btnGatherer_Click(object sender, EventArgs e)

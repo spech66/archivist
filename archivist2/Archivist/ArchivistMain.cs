@@ -89,7 +89,7 @@ namespace Archivist
 			string[] files = Directory.GetFiles(dir);
 			foreach (string file in files)
 			{
-				lbDeckManagerDeckList.Items.Add(file.Replace(Helper.DecksDirectory, "").Substring(1));
+				lbDeckManagerDeckList.Items.Add(file.Replace(Helper.DecksDirectory, "").Substring(1)); // Remove leading / to not confuse Path.Combine
 			}
 		}
 		
