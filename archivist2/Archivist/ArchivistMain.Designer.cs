@@ -199,6 +199,7 @@ namespace Archivist
             // 
             // saveDeckToolStripMenuItem
             // 
+            this.saveDeckToolStripMenuItem.Enabled = false;
             this.saveDeckToolStripMenuItem.Image = global::Archivist.Properties.Resources.filesave;
             this.saveDeckToolStripMenuItem.Name = "saveDeckToolStripMenuItem";
             this.saveDeckToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
@@ -207,6 +208,7 @@ namespace Archivist
             // 
             // saveDeckAsToolStripMenuItem
             // 
+            this.saveDeckAsToolStripMenuItem.Enabled = false;
             this.saveDeckAsToolStripMenuItem.Image = global::Archivist.Properties.Resources.filesaveas;
             this.saveDeckAsToolStripMenuItem.Name = "saveDeckAsToolStripMenuItem";
             this.saveDeckAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
@@ -228,6 +230,7 @@ namespace Archivist
             // 
             // closeDeckToolStripMenuItem
             // 
+            this.closeDeckToolStripMenuItem.Enabled = false;
             this.closeDeckToolStripMenuItem.Image = global::Archivist.Properties.Resources.fileclose;
             this.closeDeckToolStripMenuItem.Name = "closeDeckToolStripMenuItem";
             this.closeDeckToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
@@ -397,6 +400,7 @@ namespace Archivist
             // tspSaveDeck
             // 
             this.tspSaveDeck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tspSaveDeck.Enabled = false;
             this.tspSaveDeck.Image = global::Archivist.Properties.Resources.filesave;
             this.tspSaveDeck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspSaveDeck.Name = "tspSaveDeck";
@@ -422,6 +426,7 @@ namespace Archivist
             // tspCloseDeck
             // 
             this.tspCloseDeck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tspCloseDeck.Enabled = false;
             this.tspCloseDeck.Image = global::Archivist.Properties.Resources.fileclose;
             this.tspCloseDeck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspCloseDeck.Name = "tspCloseDeck";
@@ -1013,6 +1018,7 @@ namespace Archivist
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(834, 573);
             this.tabControl1.TabIndex = 4;
+            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             // 
             // tpCardSearch
             // 
