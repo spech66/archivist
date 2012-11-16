@@ -359,7 +359,14 @@ namespace Archivist
 				list = list.Remove(list.Length - 2, 2);
 
 				whereclause += " AND TYPE IN (" + list + ")";
-			}
+            }
+            
+            // Type text
+            if (textBoxSearchType.Text != "")
+            {
+                whereclause += " AND TYPE LIKE ?";
+                data.Add("%" + textBoxSearchType.Text + "%");
+            }
 
 			// Expansion
 			if (listBoxSearchExpansion.SelectedIndex > 0)
