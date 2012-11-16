@@ -184,31 +184,12 @@ namespace Archivist
 			System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
 		}
 
-		private void btnDeckManagerNewDeck_Click(object sender, EventArgs e)
-		{
-			OpenDeck();
-		}
-
 		private void lbDeckManagerDeckList_DoubleClick(object sender, EventArgs e)
 		{
 			if (lbDeckManagerDeckList.SelectedItem == null)
 				return;
 
 			OpenDeck(Path.Combine(Helper.DecksDirectory, lbDeckManagerDeckList.SelectedItem.ToString()));
-		}
-
-		private void btnDeckManagerOpenDeck_Click(object sender, EventArgs e)
-		{
-			using (OpenFileDialog ofd = new OpenFileDialog())
-			{
-				ofd.Filter = "Decks (*.dec)|*.dec|All files (*.*)|*.*";
-				ofd.RestoreDirectory = true;
-
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					OpenDeck(ofd.FileName);
-				}
-			}
 		}
 
 		private void listBoxCardEdition_SelectedIndexChanged(object sender, EventArgs e)
@@ -302,7 +283,46 @@ namespace Archivist
 			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
 			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
 			((Deck)deckPage.Controls[0]).AddCard(card);
-		}
+        }
+
+        private void newDeckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenDeck();
+        }
+
+        private void openDeckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Decks (*.dec)|*.dec|All files (*.*)|*.*";
+                ofd.RestoreDirectory = true;
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    OpenDeck(ofd.FileName);
+                }
+            }
+        }
+
+        private void saveDeckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveDeckAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void closeDeckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
 
 		#endregion
 
