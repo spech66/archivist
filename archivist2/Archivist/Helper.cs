@@ -50,7 +50,7 @@ namespace Archivist
 				Directory.CreateDirectory(CardImageDirectory);
 			}
 
-			if (!string.IsNullOrEmpty(multiversid) && Properties.Settings.Default.ShowImages)
+			if (!string.IsNullOrEmpty(multiversid))
 			{
 				// Try to get image from file
 				string filename = Path.Combine(CardImageDirectory, multiversid + ".jpg");

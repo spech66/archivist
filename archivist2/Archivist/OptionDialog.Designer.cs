@@ -29,8 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.button1 = new System.Windows.Forms.Button();
+			this.cbShowImagesLibrary = new System.Windows.Forms.CheckBox();
+			this.cbShowImagesDeck = new System.Windows.Forms.CheckBox();
 			this.cbDownload = new System.Windows.Forms.CheckBox();
-			this.cbShowImages = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -44,37 +45,49 @@
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
+			// cbShowImagesLibrary
+			// 
+			this.cbShowImagesLibrary.AutoSize = true;
+			this.cbShowImagesLibrary.Checked = global::Archivist.Properties.Settings.Default.ShowImagesLibrary;
+			this.cbShowImagesLibrary.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Archivist.Properties.Settings.Default, "ShowImagesLibrary", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.cbShowImagesLibrary.Location = new System.Drawing.Point(12, 35);
+			this.cbShowImagesLibrary.Name = "cbShowImagesLibrary";
+			this.cbShowImagesLibrary.Size = new System.Drawing.Size(124, 17);
+			this.cbShowImagesLibrary.TabIndex = 4;
+			this.cbShowImagesLibrary.Text = "Show Images Library";
+			this.cbShowImagesLibrary.UseVisualStyleBackColor = true;
+			// 
+			// cbShowImagesDeck
+			// 
+			this.cbShowImagesDeck.AutoSize = true;
+			this.cbShowImagesDeck.Checked = global::Archivist.Properties.Settings.Default.ShowImagesDeck;
+			this.cbShowImagesDeck.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Archivist.Properties.Settings.Default, "ShowImagesDeck", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.cbShowImagesDeck.Location = new System.Drawing.Point(12, 12);
+			this.cbShowImagesDeck.Name = "cbShowImagesDeck";
+			this.cbShowImagesDeck.Size = new System.Drawing.Size(119, 17);
+			this.cbShowImagesDeck.TabIndex = 3;
+			this.cbShowImagesDeck.Text = "Show Images Deck";
+			this.cbShowImagesDeck.UseVisualStyleBackColor = true;
+			// 
 			// cbDownload
 			// 
 			this.cbDownload.AutoSize = true;
 			this.cbDownload.Checked = global::Archivist.Properties.Settings.Default.DownloadImages;
 			this.cbDownload.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Archivist.Properties.Settings.Default, "DownloadImages", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.cbDownload.Location = new System.Drawing.Point(12, 35);
+			this.cbDownload.Location = new System.Drawing.Point(12, 58);
 			this.cbDownload.Name = "cbDownload";
 			this.cbDownload.Size = new System.Drawing.Size(111, 17);
 			this.cbDownload.TabIndex = 2;
 			this.cbDownload.Text = "Download Images";
 			this.cbDownload.UseVisualStyleBackColor = true;
 			// 
-			// cbShowImages
-			// 
-			this.cbShowImages.AutoSize = true;
-			this.cbShowImages.Checked = global::Archivist.Properties.Settings.Default.ShowImages;
-			this.cbShowImages.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cbShowImages.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Archivist.Properties.Settings.Default, "ShowImages", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.cbShowImages.Location = new System.Drawing.Point(12, 12);
-			this.cbShowImages.Name = "cbShowImages";
-			this.cbShowImages.Size = new System.Drawing.Size(90, 17);
-			this.cbShowImages.TabIndex = 3;
-			this.cbShowImages.Text = "Show Images";
-			this.cbShowImages.UseVisualStyleBackColor = true;
-			// 
 			// OptionDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
-			this.Controls.Add(this.cbShowImages);
+			this.Controls.Add(this.cbShowImagesLibrary);
+			this.Controls.Add(this.cbShowImagesDeck);
 			this.Controls.Add(this.cbDownload);
 			this.Controls.Add(this.button1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -92,6 +105,7 @@
 
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.CheckBox cbDownload;
-		private System.Windows.Forms.CheckBox cbShowImages;
+		private System.Windows.Forms.CheckBox cbShowImagesDeck;
+		private System.Windows.Forms.CheckBox cbShowImagesLibrary;
 	}
 }

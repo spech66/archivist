@@ -239,6 +239,7 @@
     <PostBuildEvent>REM copy $(SolutionDir)\Archivist\$(OutDir)\$(TargetFileName) $(SolutionDir)\$(TargetFileName)
 xcopy "$(SolutionDir)data" "$(TargetDir)data" /e /i /y
 xcopy "$(SolutionDir)img" "$(TargetDir)img" /e /i /y
-xcopy "$(SolutionDir)decks" "$(TargetDir)decks" /e /i /y</PostBuildEvent>
+xcopy "$(SolutionDir)decks" "$(TargetDir)decks" /e /i /y
+xcopy "$(SolutionDir)cardimg" "$(TargetDir)cardimg" /e /i /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

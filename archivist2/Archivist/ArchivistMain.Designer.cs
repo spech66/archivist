@@ -100,8 +100,8 @@ namespace Archivist
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnDeckManagerNewDeck = new System.Windows.Forms.Button();
-			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
 			this.btnDeckManagerOpenDeck = new System.Windows.Forms.Button();
+			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -911,17 +911,6 @@ namespace Archivist
 			this.btnDeckManagerNewDeck.UseVisualStyleBackColor = true;
 			this.btnDeckManagerNewDeck.Click += new System.EventHandler(this.btnDeckManagerNewDeck_Click);
 			// 
-			// lbDeckManagerDeckList
-			// 
-			this.lbDeckManagerDeckList.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lbDeckManagerDeckList.FormattingEnabled = true;
-			this.lbDeckManagerDeckList.Location = new System.Drawing.Point(3, 33);
-			this.lbDeckManagerDeckList.Name = "lbDeckManagerDeckList";
-			this.lbDeckManagerDeckList.Size = new System.Drawing.Size(814, 505);
-			this.lbDeckManagerDeckList.TabIndex = 1;
-			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
-			this.lbDeckManagerDeckList.Enter += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
-			// 
 			// btnDeckManagerOpenDeck
 			// 
 			this.btnDeckManagerOpenDeck.Location = new System.Drawing.Point(84, 3);
@@ -931,6 +920,16 @@ namespace Archivist
 			this.btnDeckManagerOpenDeck.Text = "Open Deck";
 			this.btnDeckManagerOpenDeck.UseVisualStyleBackColor = true;
 			this.btnDeckManagerOpenDeck.Click += new System.EventHandler(this.btnDeckManagerOpenDeck_Click);
+			// 
+			// lbDeckManagerDeckList
+			// 
+			this.lbDeckManagerDeckList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lbDeckManagerDeckList.FormattingEnabled = true;
+			this.lbDeckManagerDeckList.Location = new System.Drawing.Point(3, 33);
+			this.lbDeckManagerDeckList.Name = "lbDeckManagerDeckList";
+			this.lbDeckManagerDeckList.Size = new System.Drawing.Size(814, 505);
+			this.lbDeckManagerDeckList.TabIndex = 1;
+			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			// 
 			// ArchivistMain
 			// 

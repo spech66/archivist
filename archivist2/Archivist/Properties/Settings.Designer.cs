@@ -37,13 +37,25 @@ namespace Archivist.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowImages {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowImagesDeck {
             get {
-                return ((bool)(this["ShowImages"]));
+                return ((bool)(this["ShowImagesDeck"]));
             }
             set {
-                this["ShowImages"] = value;
+                this["ShowImagesDeck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowImagesLibrary {
+            get {
+                return ((bool)(this["ShowImagesLibrary"]));
+            }
+            set {
+                this["ShowImagesLibrary"] = value;
             }
         }
     }

@@ -9,8 +9,11 @@ namespace Archivist
 {
 	public class CardDataGrid :DataGridView
 	{
-		private bool isInitialized = false;
+		public enum GridType { Cards, Library, Deck }
+		private GridType type = GridType.Cards;
 
+		private bool isInitialized = false;
+		
 		private DataGridViewTextBoxColumn colLibId;
 		private DataGridViewTextBoxColumn colLibAmount;
 		private DataGridViewTextBoxColumn colLibName;
@@ -22,6 +25,11 @@ namespace Archivist
 
 		public CardDataGrid()
 		{
+		}
+
+		public void SetGridType(GridType t)
+		{
+			type = t;
 		}
 
 		private void InitializeControls()
@@ -105,7 +113,7 @@ namespace Archivist
 			isInitialized = true;
 		}
 
-		public void BindDatasource(object datasource, bool simple)
+		public void BindDatasource(object datasource)
 		{
 			if (!isInitialized)
 			{
@@ -122,7 +130,7 @@ namespace Archivist
 			colLibExtension.DataPropertyName = "Extension";
 			colLibRarity.DataPropertyName = "Rarity";
 
-			if (simple)
+			if (type == CardDataGrid.GridType.Cards)
 			{
 				colLibAmount.Visible = false;
 				colLibType.Visible = false;
@@ -140,7 +148,9 @@ namespace Archivist
 				}
 			}
 
-			colLibImage.Visible = !simple && Properties.Settings.Default.ShowImages;
+			if (type == CardDataGrid.GridType.Cards) colLibImage.Visible = false;
+			else if (type == CardDataGrid.GridType.Deck) colLibImage.Visible = Properties.Settings.Default.ShowImagesDeck;
+			else if (type == CardDataGrid.GridType.Library) colLibImage.Visible = Properties.Settings.Default.ShowImagesLibrary;
 
 			DataSource = datasource;
 		}
@@ -227,6 +237,31 @@ namespace Archivist
 			}
 
 			base.OnCellFormatting(e);
+		}
+		
+		protected override void OnCellValidating(DataGridViewCellValidatingEventArgs e)
+		{
+			if (e.ColumnIndex == colLibAmount.Index)
+			{
+				int i;
+				if (!int.TryParse(Convert.ToString(e.FormattedValue), out i))
+				{
+					MessageBox.Show("Value must be numeric.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					e.Cancel = true;
+					base.OnCellValidating(e);
+					return;
+				}
+
+				if (i < 1)
+				{
+					MessageBox.Show("Value must be greater than 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					e.Cancel = true;
+					base.OnCellValidating(e);
+					return;
+				}
+			}
+
+			base.OnCellValidating(e);
 		}
 	}
 }
