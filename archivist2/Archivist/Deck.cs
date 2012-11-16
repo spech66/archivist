@@ -16,7 +16,26 @@ namespace Archivist
 	public partial class Deck : UserControl
 	{
 		private string deckFilename;
-		BindingList<Card> cards = new BindingList<Card>();
+		private BindingList<Card> cards = new BindingList<Card>();
+		private bool modified;
+
+		public bool IsModified
+		{
+			get { return modified; }
+			private set
+			{
+				modified = value;
+
+				TabPage tabPage = (TabPage)this.Parent;
+				if (tabPage == null) return;
+				TabControl tabControl = (TabControl)tabPage.Parent;
+				ArchivistMain main = (ArchivistMain)tabControl.Parent;
+
+				main.SetDeckTitle(tabPage, Title);
+			}
+		}
+
+		public string Title { get { return String.Format("Deck - {0}{1}", String.IsNullOrEmpty(deckFilename) ? "New" : Path.GetFileNameWithoutExtension(deckFilename), (modified ? "*" : "")); } }
 
 		public Deck(string path = "")
 		{
@@ -41,7 +60,7 @@ namespace Archivist
 			}
 		}
 
-		public void LoadDeck(string path)
+		private void LoadDeck(string path)
 		{
 			deckFilename = path;
 			cards.Clear();
@@ -50,7 +69,7 @@ namespace Archivist
 			if (File.Exists(path))
 			{
 
-				if (path.ToLower().EndsWith(".dec"))
+				if (path.ToLower().EndsWith(".dec") || path.ToLower().EndsWith(".txt"))
 				{
 					ParseFormatDEC(path, ref cards);
 				}
@@ -63,16 +82,24 @@ namespace Archivist
 			}
 		}
 
+		/// <summary>
+		/// DEC Format or Text files of form: Amount Name
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="cards"></param>
 		private void ParseFormatDEC(string path, ref BindingList<Card> cards)
 		{
 			using (StreamReader sr = new StreamReader(path))
 			{
 				string line;
-				Card card;
+				MagicCard card;
 
 				while (!sr.EndOfStream)
 				{
 					line = sr.ReadLine().Trim();
+					if (string.IsNullOrEmpty(line))
+						continue;
+
 					card = null;
 					
 					if (line.StartsWith("//")) // Comment, may contain "Name:"
@@ -81,6 +108,7 @@ namespace Archivist
 					else if (line.StartsWith("SB:"))
 					{
 						card = GetCardFromText(line.Replace("SB:", "").Trim());
+						card.IsInSideboard = true;
 					}
 					else
 					{
@@ -95,7 +123,7 @@ namespace Archivist
 			}
 		}
 
-		private Card GetCardFromText(string text)
+		private MagicCard GetCardFromText(string text)
 		{
 			int blank = text.IndexOf(" ");
 			int amount;
@@ -113,7 +141,7 @@ namespace Archivist
 			}
 
 			ArchivistDatabase adb = new ArchivistDatabase();
-			Card card = adb.GetCard(name);
+			MagicCard card = adb.GetCard(name) as MagicCard;
 			if (card == null)
 			{
 				card = new MagicCard(true)
@@ -223,10 +251,18 @@ namespace Archivist
 				{
 					foreach (MagicCard card in cards)
 					{
-						writer.WriteLine(String.Format("{0} {1}", card.Amount, card.Name));
+						if (card.IsInSideboard)
+						{
+							writer.WriteLine(String.Format("SB: {0} {1}", card.Amount, card.Name));
+						}
+						else
+						{
+							writer.WriteLine(String.Format("{0} {1}", card.Amount, card.Name));
+						}
 					}
 				}
 
+				IsModified = false;
 				MessageBox.Show("Deck saved to file:\n" + deckFilename, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
@@ -246,6 +282,8 @@ namespace Archivist
 				cards.Add(card.Duplicate());
 			}
 
+			IsModified = true;
+			
 			UpdateGraphManaCurve();
 			UpdateGraphDistribution();
 			dgDeck.BindDatasource(cards);
@@ -261,6 +299,8 @@ namespace Archivist
 			{
 				cards.Remove(findCard);
 
+				IsModified = true;
+
 				UpdateGraphManaCurve();
 				UpdateGraphDistribution();
 			}
@@ -270,6 +310,8 @@ namespace Archivist
 		{
 			if (dgDeck.Columns[e.ColumnIndex].Name.Contains("Amount"))
 			{
+				IsModified = true;
+
 				UpdateGraphManaCurve();
 				UpdateGraphDistribution();
 			}

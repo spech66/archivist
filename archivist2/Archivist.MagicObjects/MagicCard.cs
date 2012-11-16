@@ -8,22 +8,17 @@ namespace Archivist.MagicObjects
     public class MagicCard : Card
 	{
         // Objects for card information
-        private bool isCardUp;
-        private string name;
-        private string rule;
-        private string manaCost;
-		private string powTgh;
-		private string type;
         private CalculatedStats calculatedStats;
-        public string Rule { get { return rule; } set { rule = value;} }
-        public string ManaCost { get { return manaCost; } set { manaCost = value; } }
-        public string PowTgh { get {return powTgh;} set {powTgh = value; }}
-		public string Name { get { return name; } set { name = value; } }
-		public string Type { get { return type; } set { type = value; } }
+		public string Rule { get; set; }
+		public string ManaCost { get; set; }
+		public string PowTgh { get; set; }
+		public string Name { get; set; }
+		public string Type { get; set; }
 		public int Multiverseid { get; set; }
 		public string Rarity { get; set; }
 		public string Extension { get; set; }
-        public bool IsCardUp { get { return isCardUp; } set { isCardUp = value; } }
+		public bool IsCardUp { get; set; }
+		public bool IsInSideboard { get; set; }
 
 		public int Amount { get; set; }
 
@@ -35,14 +30,19 @@ namespace Archivist.MagicObjects
         /// <param name="isCardUp"></param>
         public MagicCard(bool isCardUp)
         {
-            this.isCardUp = isCardUp;
+			Rule = ManaCost = PowTgh = Name = Type = Rarity = Extension = String.Empty;
+
+			this.IsCardUp = isCardUp;
             this.calculatedStats = new CalculatedStats(this);
+
         }
 
         public MagicCard(string name, bool isCardUp)
-        {
-            this.name = name;
-            this.isCardUp = isCardUp;
+		{
+			Rule = ManaCost = PowTgh = Name = Type = Rarity = Extension = String.Empty;
+
+            this.Name = name;
+			this.IsCardUp = isCardUp;
             this.calculatedStats = new CalculatedStats(this);
         }
 
@@ -66,7 +66,7 @@ namespace Archivist.MagicObjects
 
 		public Card Duplicate(bool amountCopy = false)
 		{
-			MagicCard mc = new MagicCard(isCardUp)
+			MagicCard mc = new MagicCard(IsCardUp)
 			{
 				Rule = Rule,
 				ManaCost = ManaCost,
@@ -77,6 +77,7 @@ namespace Archivist.MagicObjects
 				Rarity = Rarity,
 				Extension = Extension,
 				IsCardUp = IsCardUp,
+				IsInSideboard = IsInSideboard,
 			};
 
 			if (amountCopy)

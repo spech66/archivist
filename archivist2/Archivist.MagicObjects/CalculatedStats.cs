@@ -24,7 +24,7 @@ namespace Archivist.MagicObjects
 					if (string.IsNullOrEmpty(card.ManaCost))
 						return 0;
 
-					string pattern = "\\([WURBG//]*\\)";
+					string pattern = "\\([WURBGP//]*\\)"; // P = B/P
 					Regex rgx = new Regex(pattern);
 					string cleanMana = rgx.Replace(card.ManaCost, "M");
 					cleanMana = cleanMana.Replace("X", ""); // X = 0
