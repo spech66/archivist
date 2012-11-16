@@ -32,33 +32,20 @@ namespace Archivist
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArchivistMain));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.cardSearchToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.libraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-			this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cardSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxCards = new System.Windows.Forms.GroupBox();
-			this.dgCards = new Archivist.CardDataGrid();
 			this.cmCards = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addToLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBoxImage = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			this.listBoxCardEdition = new System.Windows.Forms.ListBox();
-			this.pictureBoxCard = new System.Windows.Forms.PictureBox();
 			this.groupBoxInformation = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxCardName = new System.Windows.Forms.TextBox();
@@ -75,11 +62,6 @@ namespace Archivist
 			this.label5 = new System.Windows.Forms.Label();
 			this.buttonSearch = new System.Windows.Forms.Button();
 			this.buttonSearchReset = new System.Windows.Forms.Button();
-			this.pictureBox2 = new System.Windows.Forms.PictureBox();
-			this.pictureBox3 = new System.Windows.Forms.PictureBox();
-			this.pictureBox4 = new System.Windows.Forms.PictureBox();
-			this.pictureBox5 = new System.Windows.Forms.PictureBox();
-			this.pictureBox6 = new System.Windows.Forms.PictureBox();
 			this.textBoxSearchName = new System.Windows.Forms.TextBox();
 			this.comboBoxSearchU = new System.Windows.Forms.ComboBox();
 			this.comboBoxSearchB = new System.Windows.Forms.ComboBox();
@@ -93,7 +75,6 @@ namespace Archivist
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpCardSearch = new System.Windows.Forms.TabPage();
 			this.tpLibrary = new System.Windows.Forms.TabPage();
-			this.dgLibrary = new Archivist.CardDataGrid();
 			this.cmLibrary = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tpDeckManager = new System.Windows.Forms.TabPage();
@@ -102,33 +83,54 @@ namespace Archivist
 			this.btnDeckManagerNewDeck = new System.Windows.Forms.Button();
 			this.btnDeckManagerOpenDeck = new System.Windows.Forms.Button();
 			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
+			this.pictureBoxCard = new System.Windows.Forms.PictureBox();
+			this.pictureBox2 = new System.Windows.Forms.PictureBox();
+			this.pictureBox3 = new System.Windows.Forms.PictureBox();
+			this.pictureBox4 = new System.Windows.Forms.PictureBox();
+			this.pictureBox5 = new System.Windows.Forms.PictureBox();
+			this.pictureBox6 = new System.Windows.Forms.PictureBox();
+			this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cardSearchToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.libraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+			this.dgCards = new Archivist.CardDataGrid();
+			this.dgLibrary = new Archivist.CardDataGrid();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBoxCards.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
 			this.cmCards.SuspendLayout();
 			this.groupBoxImage.SuspendLayout();
 			this.tableLayoutPanel5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).BeginInit();
 			this.groupBoxInformation.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
 			this.groupBoxSearch.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.tpCardSearch.SuspendLayout();
+			this.tpLibrary.SuspendLayout();
+			this.cmLibrary.SuspendLayout();
+			this.tpDeckManager.SuspendLayout();
+			this.tableLayoutPanel4.SuspendLayout();
+			this.flowLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-			this.tabControl1.SuspendLayout();
-			this.tpCardSearch.SuspendLayout();
-			this.tpLibrary.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
-			this.cmLibrary.SuspendLayout();
-			this.tpDeckManager.SuspendLayout();
-			this.tableLayoutPanel4.SuspendLayout();
-			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -152,15 +154,6 @@ namespace Archivist
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
 			this.toolStripMenuItem1.Text = "&File";
 			// 
-			// exitToolStripMenuItem
-			// 
-			this.exitToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_exit;
-			this.exitToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
-			this.exitToolStripMenuItem.Text = "E&xit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-			// 
 			// databaseToolStripMenuItem
 			// 
 			this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -173,42 +166,10 @@ namespace Archivist
 			this.databaseToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
 			this.databaseToolStripMenuItem.Text = "&Database";
 			// 
-			// cardSearchToolStripMenuItem1
-			// 
-			this.cardSearchToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("cardSearchToolStripMenuItem1.Image")));
-			this.cardSearchToolStripMenuItem1.Name = "cardSearchToolStripMenuItem1";
-			this.cardSearchToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
-			this.cardSearchToolStripMenuItem1.Text = "Card Search";
-			this.cardSearchToolStripMenuItem1.Click += new System.EventHandler(this.cardSearchToolStripMenuItem_Click);
-			// 
-			// libraryToolStripMenuItem
-			// 
-			this.libraryToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_library;
-			this.libraryToolStripMenuItem.Name = "libraryToolStripMenuItem";
-			this.libraryToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-			this.libraryToolStripMenuItem.Text = "Library";
-			this.libraryToolStripMenuItem.Click += new System.EventHandler(this.libraryToolStripMenuItem_Click);
-			// 
-			// deckToolStripMenuItem
-			// 
-			this.deckToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_deck;
-			this.deckToolStripMenuItem.Name = "deckToolStripMenuItem";
-			this.deckToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-			this.deckToolStripMenuItem.Text = "Deck Manager";
-			this.deckToolStripMenuItem.Click += new System.EventHandler(this.deckToolStripMenuItem_Click);
-			// 
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
 			this.toolStripMenuItem2.Size = new System.Drawing.Size(147, 6);
-			// 
-			// updateToolStripMenuItem
-			// 
-			this.updateToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_update;
-			this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-			this.updateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-			this.updateToolStripMenuItem.Text = "Update";
-			this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -218,22 +179,6 @@ namespace Archivist
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "&Help";
-			// 
-			// optionsToolStripMenuItem
-			// 
-			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-			this.optionsToolStripMenuItem.Text = "Options";
-			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
-			// 
-			// aboutToolStripMenuItem
-			// 
-			this.aboutToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_about;
-			this.aboutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-			this.aboutToolStripMenuItem.Text = "&About";
-			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
 			// cardSearchToolStripMenuItem
 			// 
@@ -264,52 +209,14 @@ namespace Archivist
             this.toolStripButton4,
             this.toolStripButton1,
             this.toolStripButton2,
+            this.toolStripSeparator1,
+            this.toolStripButton5,
             this.toolStripButton3});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(834, 25);
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
-			// 
-			// toolStripButton4
-			// 
-			this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-			this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton4.Name = "toolStripButton4";
-			this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton4.Text = "Card Search";
-			this.toolStripButton4.Click += new System.EventHandler(this.cardSearchToolStripMenuItem_Click);
-			// 
-			// toolStripButton1
-			// 
-			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.Image = global::Archivist.Properties.Resources.icon_library;
-			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton1.Text = "Library";
-			this.toolStripButton1.Click += new System.EventHandler(this.libraryToolStripMenuItem_Click);
-			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = global::Archivist.Properties.Resources.icon_deck;
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton2.Text = "Deck Manager";
-			this.toolStripButton2.Click += new System.EventHandler(this.deckToolStripMenuItem_Click);
-			// 
-			// toolStripButton3
-			// 
-			this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton3.Image = global::Archivist.Properties.Resources.icon_about;
-			this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton3.Name = "toolStripButton3";
-			this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton3.Text = "About";
-			this.toolStripButton3.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -341,22 +248,6 @@ namespace Archivist
 			this.groupBoxCards.TabIndex = 0;
 			this.groupBoxCards.TabStop = false;
 			this.groupBoxCards.Text = "Cards";
-			// 
-			// dgCards
-			// 
-			this.dgCards.AllowUserToAddRows = false;
-			this.dgCards.AllowUserToDeleteRows = false;
-			this.dgCards.AllowUserToResizeRows = false;
-			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgCards.ContextMenuStrip = this.cmCards;
-			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dgCards.Location = new System.Drawing.Point(3, 16);
-			this.dgCards.Name = "dgCards";
-			this.dgCards.ReadOnly = true;
-			this.dgCards.Size = new System.Drawing.Size(258, 516);
-			this.dgCards.TabIndex = 0;
-			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
 			// 
 			// cmCards
 			// 
@@ -408,15 +299,6 @@ namespace Archivist
 			this.listBoxCardEdition.Size = new System.Drawing.Size(238, 49);
 			this.listBoxCardEdition.Sorted = true;
 			this.listBoxCardEdition.TabIndex = 6;
-			// 
-			// pictureBoxCard
-			// 
-			this.pictureBoxCard.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBoxCard.Location = new System.Drawing.Point(3, 3);
-			this.pictureBoxCard.Name = "pictureBoxCard";
-			this.pictureBoxCard.Size = new System.Drawing.Size(238, 314);
-			this.pictureBoxCard.TabIndex = 0;
-			this.pictureBoxCard.TabStop = false;
 			// 
 			// groupBoxInformation
 			// 
@@ -636,56 +518,6 @@ namespace Archivist
 			this.buttonSearchReset.UseVisualStyleBackColor = true;
 			this.buttonSearchReset.Click += new System.EventHandler(this.button2_Click);
 			// 
-			// pictureBox2
-			// 
-			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox2.Image = global::Archivist.Properties.Resources.u;
-			this.pictureBox2.Location = new System.Drawing.Point(3, 33);
-			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(66, 24);
-			this.pictureBox2.TabIndex = 7;
-			this.pictureBox2.TabStop = false;
-			// 
-			// pictureBox3
-			// 
-			this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox3.Image = global::Archivist.Properties.Resources.b;
-			this.pictureBox3.Location = new System.Drawing.Point(3, 63);
-			this.pictureBox3.Name = "pictureBox3";
-			this.pictureBox3.Size = new System.Drawing.Size(66, 24);
-			this.pictureBox3.TabIndex = 8;
-			this.pictureBox3.TabStop = false;
-			// 
-			// pictureBox4
-			// 
-			this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox4.Image = global::Archivist.Properties.Resources.w;
-			this.pictureBox4.Location = new System.Drawing.Point(3, 93);
-			this.pictureBox4.Name = "pictureBox4";
-			this.pictureBox4.Size = new System.Drawing.Size(66, 24);
-			this.pictureBox4.TabIndex = 9;
-			this.pictureBox4.TabStop = false;
-			// 
-			// pictureBox5
-			// 
-			this.pictureBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox5.Image = global::Archivist.Properties.Resources.r;
-			this.pictureBox5.Location = new System.Drawing.Point(3, 123);
-			this.pictureBox5.Name = "pictureBox5";
-			this.pictureBox5.Size = new System.Drawing.Size(66, 24);
-			this.pictureBox5.TabIndex = 10;
-			this.pictureBox5.TabStop = false;
-			// 
-			// pictureBox6
-			// 
-			this.pictureBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox6.Image = global::Archivist.Properties.Resources.g;
-			this.pictureBox6.Location = new System.Drawing.Point(3, 153);
-			this.pictureBox6.Name = "pictureBox6";
-			this.pictureBox6.Size = new System.Drawing.Size(66, 24);
-			this.pictureBox6.TabIndex = 11;
-			this.pictureBox6.TabStop = false;
-			// 
 			// textBoxSearchName
 			// 
 			this.textBoxSearchName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -835,31 +667,17 @@ namespace Archivist
 			this.tpLibrary.Text = "Library";
 			this.tpLibrary.UseVisualStyleBackColor = true;
 			// 
-			// dgLibrary
-			// 
-			this.dgLibrary.AllowUserToAddRows = false;
-			this.dgLibrary.AllowUserToDeleteRows = false;
-			this.dgLibrary.AllowUserToResizeRows = false;
-			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgLibrary.ContextMenuStrip = this.cmLibrary;
-			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
-			this.dgLibrary.Name = "dgLibrary";
-			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
-			this.dgLibrary.TabIndex = 0;
-			// 
 			// cmLibrary
 			// 
 			this.cmLibrary.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem3});
 			this.cmLibrary.Name = "cmLibrary";
-			this.cmLibrary.Size = new System.Drawing.Size(153, 48);
+			this.cmLibrary.Size = new System.Drawing.Size(118, 26);
 			// 
 			// toolStripMenuItem3
 			// 
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(117, 22);
 			this.toolStripMenuItem3.Text = "Remove";
 			this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
 			// 
@@ -931,6 +749,208 @@ namespace Archivist
 			this.lbDeckManagerDeckList.TabIndex = 1;
 			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			// 
+			// pictureBoxCard
+			// 
+			this.pictureBoxCard.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBoxCard.Location = new System.Drawing.Point(3, 3);
+			this.pictureBoxCard.Name = "pictureBoxCard";
+			this.pictureBoxCard.Size = new System.Drawing.Size(238, 314);
+			this.pictureBoxCard.TabIndex = 0;
+			this.pictureBoxCard.TabStop = false;
+			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox2.Image = global::Archivist.Properties.Resources.u;
+			this.pictureBox2.Location = new System.Drawing.Point(3, 33);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(66, 24);
+			this.pictureBox2.TabIndex = 7;
+			this.pictureBox2.TabStop = false;
+			// 
+			// pictureBox3
+			// 
+			this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox3.Image = global::Archivist.Properties.Resources.b;
+			this.pictureBox3.Location = new System.Drawing.Point(3, 63);
+			this.pictureBox3.Name = "pictureBox3";
+			this.pictureBox3.Size = new System.Drawing.Size(66, 24);
+			this.pictureBox3.TabIndex = 8;
+			this.pictureBox3.TabStop = false;
+			// 
+			// pictureBox4
+			// 
+			this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox4.Image = global::Archivist.Properties.Resources.w;
+			this.pictureBox4.Location = new System.Drawing.Point(3, 93);
+			this.pictureBox4.Name = "pictureBox4";
+			this.pictureBox4.Size = new System.Drawing.Size(66, 24);
+			this.pictureBox4.TabIndex = 9;
+			this.pictureBox4.TabStop = false;
+			// 
+			// pictureBox5
+			// 
+			this.pictureBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox5.Image = global::Archivist.Properties.Resources.r;
+			this.pictureBox5.Location = new System.Drawing.Point(3, 123);
+			this.pictureBox5.Name = "pictureBox5";
+			this.pictureBox5.Size = new System.Drawing.Size(66, 24);
+			this.pictureBox5.TabIndex = 10;
+			this.pictureBox5.TabStop = false;
+			// 
+			// pictureBox6
+			// 
+			this.pictureBox6.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox6.Image = global::Archivist.Properties.Resources.g;
+			this.pictureBox6.Location = new System.Drawing.Point(3, 153);
+			this.pictureBox6.Name = "pictureBox6";
+			this.pictureBox6.Size = new System.Drawing.Size(66, 24);
+			this.pictureBox6.TabIndex = 11;
+			this.pictureBox6.TabStop = false;
+			// 
+			// toolStripButton4
+			// 
+			this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+			this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton4.Name = "toolStripButton4";
+			this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton4.Text = "Card Search";
+			this.toolStripButton4.Click += new System.EventHandler(this.cardSearchToolStripMenuItem_Click);
+			// 
+			// toolStripButton1
+			// 
+			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton1.Image = global::Archivist.Properties.Resources.icon_library;
+			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton1.Text = "Library";
+			this.toolStripButton1.Click += new System.EventHandler(this.libraryToolStripMenuItem_Click);
+			// 
+			// toolStripButton2
+			// 
+			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton2.Image = global::Archivist.Properties.Resources.icon_deck;
+			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton2.Name = "toolStripButton2";
+			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton2.Text = "Deck Manager";
+			this.toolStripButton2.Click += new System.EventHandler(this.deckToolStripMenuItem_Click);
+			// 
+			// toolStripButton3
+			// 
+			this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton3.Image = global::Archivist.Properties.Resources.icon_about;
+			this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton3.Name = "toolStripButton3";
+			this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton3.Text = "About";
+			this.toolStripButton3.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_exit;
+			this.exitToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+			this.exitToolStripMenuItem.Text = "E&xit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			// 
+			// cardSearchToolStripMenuItem1
+			// 
+			this.cardSearchToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("cardSearchToolStripMenuItem1.Image")));
+			this.cardSearchToolStripMenuItem1.Name = "cardSearchToolStripMenuItem1";
+			this.cardSearchToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
+			this.cardSearchToolStripMenuItem1.Text = "Card Search";
+			this.cardSearchToolStripMenuItem1.Click += new System.EventHandler(this.cardSearchToolStripMenuItem_Click);
+			// 
+			// libraryToolStripMenuItem
+			// 
+			this.libraryToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_library;
+			this.libraryToolStripMenuItem.Name = "libraryToolStripMenuItem";
+			this.libraryToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+			this.libraryToolStripMenuItem.Text = "Library";
+			this.libraryToolStripMenuItem.Click += new System.EventHandler(this.libraryToolStripMenuItem_Click);
+			// 
+			// deckToolStripMenuItem
+			// 
+			this.deckToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_deck;
+			this.deckToolStripMenuItem.Name = "deckToolStripMenuItem";
+			this.deckToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+			this.deckToolStripMenuItem.Text = "Deck Manager";
+			this.deckToolStripMenuItem.Click += new System.EventHandler(this.deckToolStripMenuItem_Click);
+			// 
+			// updateToolStripMenuItem
+			// 
+			this.updateToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_update;
+			this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+			this.updateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+			this.updateToolStripMenuItem.Text = "Update";
+			this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+			// 
+			// optionsToolStripMenuItem
+			// 
+			this.optionsToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_configure;
+			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+			this.optionsToolStripMenuItem.Text = "Options";
+			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.Image = global::Archivist.Properties.Resources.icon_about;
+			this.aboutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+			this.aboutToolStripMenuItem.Text = "&About";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			// 
+			// toolStripButton5
+			// 
+			this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton5.Image = global::Archivist.Properties.Resources.icon_configure;
+			this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton5.Name = "toolStripButton5";
+			this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton5.Text = "toolStripButton5";
+			this.toolStripButton5.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+			// 
+			// dgCards
+			// 
+			this.dgCards.AllowUserToAddRows = false;
+			this.dgCards.AllowUserToDeleteRows = false;
+			this.dgCards.AllowUserToResizeRows = false;
+			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgCards.ContextMenuStrip = this.cmCards;
+			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgCards.Location = new System.Drawing.Point(3, 16);
+			this.dgCards.Name = "dgCards";
+			this.dgCards.ReadOnly = true;
+			this.dgCards.Size = new System.Drawing.Size(258, 516);
+			this.dgCards.TabIndex = 0;
+			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
+			// 
+			// dgLibrary
+			// 
+			this.dgLibrary.AllowUserToAddRows = false;
+			this.dgLibrary.AllowUserToDeleteRows = false;
+			this.dgLibrary.AllowUserToResizeRows = false;
+			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgLibrary.ContextMenuStrip = this.cmLibrary;
+			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
+			this.dgLibrary.Name = "dgLibrary";
+			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
+			this.dgLibrary.TabIndex = 0;
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
 			// ArchivistMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -954,30 +974,30 @@ namespace Archivist
 			this.toolStrip1.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBoxCards.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
 			this.cmCards.ResumeLayout(false);
 			this.groupBoxImage.ResumeLayout(false);
 			this.tableLayoutPanel5.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).EndInit();
 			this.groupBoxInformation.ResumeLayout(false);
 			this.tableLayoutPanel3.ResumeLayout(false);
 			this.tableLayoutPanel3.PerformLayout();
 			this.groupBoxSearch.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
+			this.tpCardSearch.ResumeLayout(false);
+			this.tpLibrary.ResumeLayout(false);
+			this.cmLibrary.ResumeLayout(false);
+			this.tpDeckManager.ResumeLayout(false);
+			this.tableLayoutPanel4.ResumeLayout(false);
+			this.flowLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCard)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-			this.tabControl1.ResumeLayout(false);
-			this.tpCardSearch.ResumeLayout(false);
-			this.tpLibrary.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
-			this.cmLibrary.ResumeLayout(false);
-			this.tpDeckManager.ResumeLayout(false);
-			this.tableLayoutPanel4.ResumeLayout(false);
-			this.flowLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1057,6 +1077,8 @@ namespace Archivist
 		private System.Windows.Forms.ContextMenuStrip cmLibrary;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
 		private System.Windows.Forms.Button btnDeckManagerOpenDeck;
+		private System.Windows.Forms.ToolStripButton toolStripButton5;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 
