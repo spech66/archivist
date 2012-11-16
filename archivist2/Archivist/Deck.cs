@@ -210,32 +210,15 @@ namespace Archivist
 
 			zgDistribution.AxisChange();
 		}
-
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			TabPage tabPage = (TabPage)this.Parent;
-			TabControl tabControl = (TabControl)tabPage.Parent;
-			ArchivistMain main = (ArchivistMain)tabControl.Parent;
-			main.RemoveDeck(tabPage);
-		}
-
-		private void btnSave_Click(object sender, EventArgs e)
-		{
-			SaveDeck();
-		}
-
-		private void btnSaveAs_Click(object sender, EventArgs e)
-		{
-			SaveDeck(true);
-		}
-
-		private void SaveDeck(bool saveas = false)
+        
+		public bool SaveDeck(bool saveas = false)
 		{
 			if (String.IsNullOrEmpty(deckFilename) || saveas)
 			{
 				using (SaveFileDialog sfd = new SaveFileDialog())
 				{
 					sfd.Filter = "Decks (*.dec)|*.dec|All files (*.*)|*.*";
+                    sfd.InitialDirectory = Helper.DecksDirectory;
 					sfd.RestoreDirectory = true;
 
 					if (sfd.ShowDialog() == DialogResult.OK)
@@ -264,7 +247,11 @@ namespace Archivist
 
 				IsModified = false;
 				MessageBox.Show("Deck saved to file:\n" + deckFilename, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return true;
 			}
+
+            return false;
 		}
 
 		public void AddCard(Card card)

@@ -264,6 +264,7 @@ namespace Archivist
                         if (MessageBox.Show("There are unsaved changes. Would you really like to quit?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.No)
                         {
                             e.Cancel = true;
+                            return;
                         }
                     }
                 }
@@ -294,7 +295,7 @@ namespace Archivist
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Decks (*.dec)|*.dec|All files (*.*)|*.*";
+                ofd.Filter = "Decks (*.dec;*.txt)|*.dec;*.txt|All files (*.*)|*.*";
                 ofd.RestoreDirectory = true;
 
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -304,24 +305,79 @@ namespace Archivist
             }
         }
 
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage.Controls[0] is Deck)
+            {
+                saveDeckToolStripMenuItem.Enabled = true;
+                saveDeckAsToolStripMenuItem.Enabled = true;
+                closeDeckToolStripMenuItem.Enabled = true;
+
+                tspSaveDeck.Enabled = true;
+                tspCloseDeck.Enabled = true;
+            }
+            else
+            {
+                saveDeckToolStripMenuItem.Enabled = false;
+                saveDeckAsToolStripMenuItem.Enabled = false;
+                closeDeckToolStripMenuItem.Enabled = false;
+
+                tspSaveDeck.Enabled = false;
+                tspCloseDeck.Enabled = false;
+            }
+        }
+
         private void saveDeckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (tabControl1.SelectedTab.Controls[0] is Deck)
+            {
+                Deck deck = (Deck)tabControl1.SelectedTab.Controls[0];
+                deck.SaveDeck();
+            }
         }
 
         private void saveDeckAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (tabControl1.SelectedTab.Controls[0] is Deck)
+            {
+                Deck deck = (Deck)tabControl1.SelectedTab.Controls[0];
+                if (deck.SaveDeck(true))
+                {
+                    UpdateDeckList();
+                }
+            }
         }
 
         private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            foreach (TabPage page in tabControl1.TabPages)
+            {
+                if (page.Controls[0] is Deck)
+                {
+                    Deck deck = (Deck)page.Controls[0];
+                    deck.SaveDeck();
+                }
+            }
         }
 
         private void closeDeckToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedTab.Controls[0] is Deck)
+            {
+                Deck deck = (Deck)tabControl1.SelectedTab.Controls[0];
+                if (deck.IsModified)
+                {
+                    if (MessageBox.Show("There are unsaved changes. Would you like to save before?", "Save changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        if (!deck.SaveDeck())
+                        {
+                            return;
+                        }
+                    }
+                }
 
+                RemoveDeck(tabControl1.SelectedTab);
+            }
         }
 
 		#endregion
@@ -331,7 +387,7 @@ namespace Archivist
 			Deck deck = new Deck(path);
 			deck.Dock = DockStyle.Fill;
 			
-			TabPage deckPage = new TabPage("x");
+			TabPage deckPage = new TabPage("Loading...");
 			tabControl1.TabPages.Add(deckPage);
 
 			// Add controls after page added to tabControl to make layout update working
