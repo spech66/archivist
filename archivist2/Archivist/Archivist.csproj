@@ -212,6 +212,7 @@
     <None Include="Resources\filesaveall.png" />
     <None Include="Resources\fileclose.png" />
     <None Include="Resources\filesaveas.png" />
+    <Content Include="Changelog.txt" />
     <Content Include="Resources\icon_about.png" />
     <None Include="Resources\icon_configure.png" />
     <Content Include="Resources\icon_deck.png" />

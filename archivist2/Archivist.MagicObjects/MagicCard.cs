@@ -45,13 +45,9 @@ namespace Archivist.MagicObjects
 			this.IsCardUp = isCardUp;
             this.calculatedStats = new CalculatedStats(this);
         }
-
-
-        public int CalculatedManaCost
-        {
-            get { return calculatedStats.CalculatedManaCost;}
-        }
-
+        
+        public int CalculatedManaCost { get { return calculatedStats.CalculatedManaCost; } }
+        public Dictionary<char, int> CalculatedManaSymbols { get { return calculatedStats.CalculatedManaSymbols; } }
         public int CalculatedBasePower { get { return calculatedStats.CalculatedBasePower; } }
         public int CalculatedBaseToughness { get { return calculatedStats.CalculatedBaseToughness; } }
 
