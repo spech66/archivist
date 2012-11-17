@@ -42,6 +42,9 @@ namespace Archivist
             this.closeDeckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.proxyDeckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deckListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,6 +64,9 @@ namespace Archivist
             this.tspSaveAll = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tspCloseDeck = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tpPrintProxyDeck = new System.Windows.Forms.ToolStripButton();
+            this.tpPrintDeckList = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tspViewCardSearch = new System.Windows.Forms.ToolStripButton();
             this.tspViewLibrary = new System.Windows.Forms.ToolStripButton();
@@ -149,6 +155,7 @@ namespace Archivist
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
+            this.printToolStripMenuItem,
             this.databaseToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -251,6 +258,31 @@ namespace Archivist
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // printToolStripMenuItem
+            // 
+            this.printToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.proxyDeckToolStripMenuItem,
+            this.deckListToolStripMenuItem});
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.printToolStripMenuItem.Text = "&Print";
+            // 
+            // proxyDeckToolStripMenuItem
+            // 
+            this.proxyDeckToolStripMenuItem.Image = global::Archivist.Properties.Resources.print_proxy;
+            this.proxyDeckToolStripMenuItem.Name = "proxyDeckToolStripMenuItem";
+            this.proxyDeckToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.proxyDeckToolStripMenuItem.Text = "Proxy Deck";
+            this.proxyDeckToolStripMenuItem.Click += new System.EventHandler(this.proxyDeckToolStripMenuItem_Click);
+            // 
+            // deckListToolStripMenuItem
+            // 
+            this.deckListToolStripMenuItem.Image = global::Archivist.Properties.Resources.print_list;
+            this.deckListToolStripMenuItem.Name = "deckListToolStripMenuItem";
+            this.deckListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deckListToolStripMenuItem.Text = "Deck List";
+            this.deckListToolStripMenuItem.Click += new System.EventHandler(this.deckListToolStripMenuItem_Click);
             // 
             // databaseToolStripMenuItem
             // 
@@ -364,6 +396,9 @@ namespace Archivist
             this.tspSaveAll,
             this.toolStripSeparator3,
             this.tspCloseDeck,
+            this.toolStripSeparator4,
+            this.tpPrintProxyDeck,
+            this.tpPrintDeckList,
             this.toolStripSeparator2,
             this.tspViewCardSearch,
             this.tspViewLibrary,
@@ -433,6 +468,33 @@ namespace Archivist
             this.tspCloseDeck.Size = new System.Drawing.Size(23, 22);
             this.tspCloseDeck.Text = "Close Deck";
             this.tspCloseDeck.Click += new System.EventHandler(this.closeDeckToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tpPrintProxyDeck
+            // 
+            this.tpPrintProxyDeck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tpPrintProxyDeck.Enabled = false;
+            this.tpPrintProxyDeck.Image = global::Archivist.Properties.Resources.print_proxy;
+            this.tpPrintProxyDeck.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tpPrintProxyDeck.Name = "tpPrintProxyDeck";
+            this.tpPrintProxyDeck.Size = new System.Drawing.Size(23, 22);
+            this.tpPrintProxyDeck.Text = "Print Proxy Deck";
+            this.tpPrintProxyDeck.Click += new System.EventHandler(this.proxyDeckToolStripMenuItem_Click);
+            // 
+            // tpPrintDeckList
+            // 
+            this.tpPrintDeckList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tpPrintDeckList.Enabled = false;
+            this.tpPrintDeckList.Image = global::Archivist.Properties.Resources.print_list;
+            this.tpPrintDeckList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tpPrintDeckList.Name = "tpPrintDeckList";
+            this.tpPrintDeckList.Size = new System.Drawing.Size(23, 22);
+            this.tpPrintDeckList.Text = "Print Deck List";
+            this.tpPrintDeckList.Click += new System.EventHandler(this.deckListToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -1232,6 +1294,12 @@ namespace Archivist
         private System.Windows.Forms.ToolStripMenuItem closeDeckToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton tspCloseDeck;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem proxyDeckToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deckListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton tpPrintProxyDeck;
+        private System.Windows.Forms.ToolStripButton tpPrintDeckList;
     }
 }
 

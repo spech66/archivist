@@ -419,5 +419,24 @@ namespace Archivist
                 pbDrawImage.Image = Helper.GetMagicImage(itm.Id);
             }
         }
-	}
+
+        internal List<int> GenerateProxyList()
+        {
+            //return cards.Select(sel => new KeyValuePair<int, int>(sel.Multiverseid, sel.Amount)).ToDictionary(t => t.Key, t => t.Value);
+            List<int> ids = new List<int>();
+            foreach (Card c in cards)
+            {
+                for (int i = 0; i < c.Amount; i++)
+                {
+                    ids.Add(c.Multiverseid);
+                }
+            }
+            return ids;
+        }
+
+        internal List<Card> GenerateDeckList()
+        {
+            return cards.ToList();
+        }
+    }
 }

@@ -179,6 +179,20 @@ namespace Archivist.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap print_list {
+            get {
+                object obj = ResourceManager.GetObject("print_list", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap print_proxy {
+            get {
+                object obj = ResourceManager.GetObject("print_proxy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap r {
             get {
                 object obj = ResourceManager.GetObject("r", resourceCulture);
