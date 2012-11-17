@@ -303,5 +303,71 @@ namespace Archivist
 				UpdateGraphDistribution();
 			}
 		}
+
+        private void btnDrawMulligan_Click(object sender, EventArgs e)
+        {
+            if (lbDrawStartingHand.Items.Count > 1)
+            {
+                GenerateDraw(lbDrawStartingHand.Items.Count - 1);
+            }
+            else
+            {
+                GenerateDraw(6);
+            }
+        }
+
+        private void btnDrawNewHand_Click(object sender, EventArgs e)
+        {
+            GenerateDraw(7);
+        }
+
+        private void GenerateDraw(int drawCards)
+        {
+            List<ListBoxItemNameId> deckList = new List<ListBoxItemNameId>();
+            foreach (Card c in cards)
+            {
+                for (int i = 0; i < c.Amount; i++)
+                {
+                    deckList.Add(new ListBoxItemNameId(c.Name, c.Multiverseid.ToString()));
+                }
+            }
+
+            if (deckList.Count < 8)
+            {
+                lbDrawLibrary.Items.Add("Not enough cards!");
+                lbDrawStartingHand.Items.Add("Not enough cards!");
+                return;
+            }
+
+            deckList.Shuffle();
+            List<ListBoxItemNameId> handList = deckList.Take(drawCards).ToList();
+            deckList.RemoveRange(0, drawCards);
+
+            lbDrawLibrary.DisplayMember = "Name";
+            lbDrawLibrary.ValueMember = "Id";
+            lbDrawLibrary.DataSource = deckList;
+
+            lbDrawStartingHand.DisplayMember = "Name";
+            lbDrawStartingHand.ValueMember = "Id";
+            lbDrawStartingHand.DataSource = handList;
+        }
+
+        private void lbDrawStartingHand_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBoxItemNameId itm = (ListBoxItemNameId)lbDrawStartingHand.SelectedItem;
+            if (itm != null)
+            {
+                pbDrawImage.Image = Helper.GetMagicImage(itm.Id);
+            }
+        }
+
+        private void lbDrawLibrary_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBoxItemNameId itm = (ListBoxItemNameId)lbDrawLibrary.SelectedItem;
+            if (itm != null)
+            {
+                pbDrawImage.Image = Helper.GetMagicImage(itm.Id);
+            }
+        }
 	}
 }
