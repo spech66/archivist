@@ -33,6 +33,7 @@
             this.zgDistribution = new ZedGraph.ZedGraphControl();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpCards = new System.Windows.Forms.TabPage();
+            this.dgDeck = new Archivist.CardDataGrid();
             this.cmDeck = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tpManaCurve = new System.Windows.Forms.TabPage();
@@ -46,16 +47,18 @@
             this.pbDrawImage = new System.Windows.Forms.PictureBox();
             this.lbDrawStartingHand = new System.Windows.Forms.ListBox();
             this.lbDrawLibrary = new System.Windows.Forms.ListBox();
-            this.dgDeck = new Archivist.CardDataGrid();
+            this.tpManaSymbols = new System.Windows.Forms.TabPage();
+            this.zgManaSymbols = new ZedGraph.ZedGraphControl();
             this.tabControl1.SuspendLayout();
             this.tpCards.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgDeck)).BeginInit();
             this.cmDeck.SuspendLayout();
             this.tpManaCurve.SuspendLayout();
             this.tpDistribution.SuspendLayout();
             this.tpDraw.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDrawImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgDeck)).BeginInit();
+            this.tpManaSymbols.SuspendLayout();
             this.SuspendLayout();
             // 
             // zgManaCurve
@@ -93,6 +96,7 @@
             this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.tabControl1.Controls.Add(this.tpCards);
             this.tabControl1.Controls.Add(this.tpManaCurve);
+            this.tabControl1.Controls.Add(this.tpManaSymbols);
             this.tabControl1.Controls.Add(this.tpDistribution);
             this.tabControl1.Controls.Add(this.tpDraw);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -113,6 +117,18 @@
             this.tpCards.TabIndex = 0;
             this.tpCards.Text = "Cards";
             this.tpCards.UseVisualStyleBackColor = true;
+            // 
+            // dgDeck
+            // 
+            this.dgDeck.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dgDeck.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgDeck.ContextMenuStrip = this.cmDeck;
+            this.dgDeck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgDeck.Location = new System.Drawing.Point(3, 3);
+            this.dgDeck.Name = "dgDeck";
+            this.dgDeck.Size = new System.Drawing.Size(791, 583);
+            this.dgDeck.TabIndex = 0;
+            this.dgDeck.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgDeck_CellValueChanged);
             // 
             // cmDeck
             // 
@@ -256,17 +272,31 @@
             this.lbDrawLibrary.TabIndex = 6;
             this.lbDrawLibrary.SelectedIndexChanged += new System.EventHandler(this.lbDrawLibrary_SelectedIndexChanged);
             // 
-            // dgDeck
+            // tpManaSymbols
             // 
-            this.dgDeck.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dgDeck.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgDeck.ContextMenuStrip = this.cmDeck;
-            this.dgDeck.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgDeck.Location = new System.Drawing.Point(3, 3);
-            this.dgDeck.Name = "dgDeck";
-            this.dgDeck.Size = new System.Drawing.Size(791, 583);
-            this.dgDeck.TabIndex = 0;
-            this.dgDeck.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgDeck_CellValueChanged);
+            this.tpManaSymbols.Controls.Add(this.zgManaSymbols);
+            this.tpManaSymbols.Location = new System.Drawing.Point(23, 4);
+            this.tpManaSymbols.Name = "tpManaSymbols";
+            this.tpManaSymbols.Padding = new System.Windows.Forms.Padding(3);
+            this.tpManaSymbols.Size = new System.Drawing.Size(797, 589);
+            this.tpManaSymbols.TabIndex = 4;
+            this.tpManaSymbols.Text = "Mana Symbols";
+            this.tpManaSymbols.UseVisualStyleBackColor = true;
+            // 
+            // zgManaSymbols
+            // 
+            this.zgManaSymbols.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zgManaSymbols.Location = new System.Drawing.Point(3, 3);
+            this.zgManaSymbols.Name = "zgManaSymbols";
+            this.zgManaSymbols.ScrollGrace = 0D;
+            this.zgManaSymbols.ScrollMaxX = 0D;
+            this.zgManaSymbols.ScrollMaxY = 0D;
+            this.zgManaSymbols.ScrollMaxY2 = 0D;
+            this.zgManaSymbols.ScrollMinX = 0D;
+            this.zgManaSymbols.ScrollMinY = 0D;
+            this.zgManaSymbols.ScrollMinY2 = 0D;
+            this.zgManaSymbols.Size = new System.Drawing.Size(791, 583);
+            this.zgManaSymbols.TabIndex = 0;
             // 
             // Deck
             // 
@@ -278,6 +308,7 @@
             this.Load += new System.EventHandler(this.Deck_Load);
             this.tabControl1.ResumeLayout(false);
             this.tpCards.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgDeck)).EndInit();
             this.cmDeck.ResumeLayout(false);
             this.tpManaCurve.ResumeLayout(false);
             this.tpDistribution.ResumeLayout(false);
@@ -285,7 +316,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDrawImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgDeck)).EndInit();
+            this.tpManaSymbols.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -310,5 +341,7 @@
         private System.Windows.Forms.PictureBox pbDrawImage;
         private System.Windows.Forms.ListBox lbDrawStartingHand;
         private System.Windows.Forms.ListBox lbDrawLibrary;
+        private System.Windows.Forms.TabPage tpManaSymbols;
+        private ZedGraph.ZedGraphControl zgManaSymbols;
 	}
 }

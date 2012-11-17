@@ -22,7 +22,8 @@ namespace Archivist
 		private DataGridViewTextBoxColumn colLibExtension;
 		private DataGridViewTextBoxColumn colLibRarity;
 		private DataGridViewImageColumn colLibImage;
-
+        private DataGridViewCheckBoxColumn colLibIsInSideboard;
+            
 		public CardDataGrid()
 		{
 		}
@@ -42,6 +43,7 @@ namespace Archivist
 			colLibImage = new DataGridViewImageColumn();
 			colLibExtension = new DataGridViewTextBoxColumn();
 			colLibRarity = new DataGridViewTextBoxColumn();
+            colLibIsInSideboard = new DataGridViewCheckBoxColumn();
 
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 			AllowUserToAddRows = false;
@@ -100,10 +102,16 @@ namespace Archivist
 			this.colLibRarity.HeaderText = "Rarity";
 			this.colLibRarity.Name = "colLibRarity";
 			this.colLibRarity.ReadOnly = true;
+            //
+            // colLibIsInSideboard
+            //
+            this.colLibIsInSideboard.HeaderText = "Sideboard";
+            this.colLibIsInSideboard.Name = "colLibIsInSideboard";
 
 			Columns.AddRange(new DataGridViewColumn[] {
 				this.colLibId,
 				this.colLibAmount,
+				this.colLibIsInSideboard,
 				this.colLibName,
 				this.colLibCosts,
 				this.colLibType,
@@ -118,40 +126,46 @@ namespace Archivist
 		{
 			if (!isInitialized)
 			{
-				InitializeControls();
+                InitializeControls();
+
+                AutoGenerateColumns = false;
+
+                colLibId.DataPropertyName = "Multiverseid";
+                colLibAmount.DataPropertyName = "Amount";
+                colLibIsInSideboard.DataPropertyName = "IsInSideboard";
+                colLibName.DataPropertyName = "Name";
+                colLibCosts.DataPropertyName = "ManaCost";
+                colLibType.DataPropertyName = "Type";
+                colLibExtension.DataPropertyName = "Extension";
+                colLibRarity.DataPropertyName = "Rarity";
+
+                foreach (DataGridViewColumn col in Columns)
+                {
+                    if (col.Name != colLibId.Name)
+                    {
+                        col.Visible = true;
+                    }
+                }
+
+                switch (type)
+                {
+                    case CardDataGrid.GridType.Cards:
+                        colLibImage.Visible = false;
+                        colLibAmount.Visible = false;
+                        colLibType.Visible = false;
+                        colLibImage.Visible = false;
+                        colLibRarity.Visible = false;
+                        colLibIsInSideboard.Visible = false;
+                        break;
+                    case CardDataGrid.GridType.Deck:
+                        colLibImage.Visible = Properties.Settings.Default.ShowImagesDeck;
+                        break;
+                    case CardDataGrid.GridType.Library:
+                        colLibImage.Visible = Properties.Settings.Default.ShowImagesLibrary;
+                        colLibIsInSideboard.Visible = false;
+                        break;
+                }
 			}
-
-			AutoGenerateColumns = false;
-
-			colLibId.DataPropertyName = "Multiverseid";
-			colLibAmount.DataPropertyName = "Amount";
-			colLibName.DataPropertyName = "Name";
-			colLibCosts.DataPropertyName = "ManaCost"; //mc.ManaCost
-			colLibType.DataPropertyName = "Type";
-			colLibExtension.DataPropertyName = "Extension";
-			colLibRarity.DataPropertyName = "Rarity";
-
-			if (type == CardDataGrid.GridType.Cards)
-			{
-				colLibAmount.Visible = false;
-				colLibType.Visible = false;
-				colLibImage.Visible = false;
-				colLibRarity.Visible = false;
-			}
-			else
-			{
-				foreach (DataGridViewColumn col in Columns)
-				{
-					if (col.Name != colLibId.Name)
-					{
-						col.Visible = true;
-					}
-				}
-			}
-
-			if (type == CardDataGrid.GridType.Cards) colLibImage.Visible = false;
-			else if (type == CardDataGrid.GridType.Deck) colLibImage.Visible = Properties.Settings.Default.ShowImagesDeck;
-			else if (type == CardDataGrid.GridType.Library) colLibImage.Visible = Properties.Settings.Default.ShowImagesLibrary;
 
 			DataSource = datasource;
 		}

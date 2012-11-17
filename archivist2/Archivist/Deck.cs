@@ -55,7 +55,8 @@ namespace Archivist
 			{
 				LoadDeck(deckFilename);
 
-				UpdateGraphManaCurve();
+                UpdateGraphManaCurve();
+                UpdateGraphManaSymbols();
 				UpdateGraphDistribution();
 			}
 		}
@@ -165,7 +166,8 @@ namespace Archivist
 			pane.Title.Text = "Mana Curve";
 
 			PointPairList points = new PointPairList();
-			points.AddRange(cards.GroupBy(grp => grp.CalculatedManaCost)
+            points.AddRange(cards.Where(wh => !wh.IsInSideboard)
+                .GroupBy(grp => grp.CalculatedManaCost)
 				.OrderBy(ord => ord.Key) // Order x-Axis
 				.Where(sel => sel.Key > 0) // Remove lands, and cards with 0 mana for scaling reasons
 				.Select(sel => new PointPair(sel.Key, sel.Sum(sum => sum.Amount))));
@@ -184,15 +186,56 @@ namespace Archivist
 			//zgManaCurve.Refresh();
 		}
 
+        private void UpdateGraphManaSymbols()
+        {
+            zgManaSymbols.GraphPane.CurveList.Clear();
+            GraphPane pane = zgManaSymbols.GraphPane;
+            pane.Legend.IsVisible = false;
+            pane.Title.Text = "Mana Symbols";
+            
+            Dictionary<char, int> calculatedManaSymbols = new Dictionary<char,int>();
+            foreach (Card c in cards)
+            {
+                if (c.IsInSideboard)
+                    continue;
+
+                foreach (KeyValuePair<char, int> symb in c.CalculatedManaSymbols)
+                {
+                    if (calculatedManaSymbols.ContainsKey(symb.Key))
+                    {
+                        calculatedManaSymbols[symb.Key] += symb.Value * c.Amount;
+                    }
+                    else
+                    {
+                        calculatedManaSymbols.Add(symb.Key, symb.Value * c.Amount);
+                    }
+                }
+            }
+
+            foreach (var item in calculatedManaSymbols)
+            {
+                Color c = Color.Gold; // Other
+                string name = "Multicolor and others";
+                if (item.Key == 'W') { c = Color.White; name = "White"; }
+                else if (item.Key == 'U') { c = Color.Blue; name = "Blue"; }
+                else if (item.Key == 'R') { c = Color.Red; name = "Red"; }
+                else if (item.Key == 'B') { c = Color.Black; name = "Black"; }
+                else if (item.Key == 'G') { c = Color.DarkGreen; name = "Green"; }
+                PieItem pi = pane.AddPieSlice(item.Value, c, 0, name + " - " + item.Value);
+            }
+
+            zgManaSymbols.AxisChange();
+        }
+
 		private void UpdateGraphDistribution()
 		{
 			// http://zedgraph.dariowiz.com/index77e8.html?title=Pie_Charts
 
 			zgDistribution.GraphPane.CurveList.Clear();
-			GraphPane pane = zgDistribution.GraphPane;
-			pane.Title.Text = "Distribution";
+            GraphPane pane = zgDistribution.GraphPane;
+            pane.Legend.IsVisible = false;
 
-			var qry = cards.GroupBy(grp => grp.Type.Substring(0, grp.Type.IndexOf('-') >= 0 ? grp.Type.IndexOf('-') : grp.Type.Length).Trim())
+			var qry = cards.Where(wh => !wh.IsInSideboard).GroupBy(grp => grp.Type.Substring(0, grp.Type.IndexOf('-') >= 0 ? grp.Type.IndexOf('-') : grp.Type.Length).Trim())
 				.Select(sel => new KeyValuePair<string, int>(sel.Key, sel.Sum(sum => sum.Amount)));
 			foreach (var item in qry)
 			{
@@ -205,8 +248,11 @@ namespace Archivist
 				else if (item.Key == "Instant") c = Color.Navy;
 				else if (item.Key == "Sorcery") c = Color.DeepSkyBlue;
 				else if (item.Key == "Artifact") c = Color.LightGray;
-				pane.AddPieSlice(item.Value, c, 0, item.Key);
+                PieItem pi = pane.AddPieSlice(item.Value, c, 0, item.Key + " - " + item.Value);
 			}
+
+            int cardAmount = cards.Sum(sum => sum.Amount);
+            pane.Title.Text = "Distribution - " + cardAmount + " Cards";
 
 			zgDistribution.AxisChange();
 		}
@@ -270,8 +316,9 @@ namespace Archivist
 			}
 
 			IsModified = true;
-			
-			UpdateGraphManaCurve();
+
+            UpdateGraphManaCurve();
+            UpdateGraphManaSymbols();
 			UpdateGraphDistribution();
 			dgDeck.BindDatasource(cards);
 		}
@@ -288,20 +335,23 @@ namespace Archivist
 
 				IsModified = true;
 
-				UpdateGraphManaCurve();
+                UpdateGraphManaCurve();
+                UpdateGraphManaSymbols();
 				UpdateGraphDistribution();
 			}
 		}
 
 		private void dgDeck_CellValueChanged(object sender, DataGridViewCellEventArgs e)
 		{
-			if (dgDeck.Columns[e.ColumnIndex].Name.Contains("Amount"))
+			if (dgDeck.Columns[e.ColumnIndex].Name.Contains("Amount")
+                || dgDeck.Columns[e.ColumnIndex].Name.Contains("Sideboard"))
 			{
 				IsModified = true;
 
-				UpdateGraphManaCurve();
+                UpdateGraphManaCurve();
+                UpdateGraphManaSymbols();
 				UpdateGraphDistribution();
-			}
+            }
 		}
 
         private void btnDrawMulligan_Click(object sender, EventArgs e)
