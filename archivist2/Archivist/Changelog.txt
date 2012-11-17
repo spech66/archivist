@@ -12,6 +12,8 @@
 - Mana symbols analysis
 - Draw simulator
 - Freetext type search
+- Print proxy list
+- Print deck list
 
 ===============================================================================
 # Archivist Beta 1                                                            #

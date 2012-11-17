@@ -312,18 +312,26 @@ namespace Archivist
                 saveDeckToolStripMenuItem.Enabled = true;
                 saveDeckAsToolStripMenuItem.Enabled = true;
                 closeDeckToolStripMenuItem.Enabled = true;
+                deckListToolStripMenuItem.Enabled = true;
+                proxyDeckToolStripMenuItem.Enabled = true;
 
                 tspSaveDeck.Enabled = true;
                 tspCloseDeck.Enabled = true;
+                tpPrintDeckList.Enabled = true;
+                tpPrintProxyDeck.Enabled = true;
             }
             else
             {
                 saveDeckToolStripMenuItem.Enabled = false;
                 saveDeckAsToolStripMenuItem.Enabled = false;
                 closeDeckToolStripMenuItem.Enabled = false;
+                deckListToolStripMenuItem.Enabled = false;
+                proxyDeckToolStripMenuItem.Enabled = false;
 
                 tspSaveDeck.Enabled = false;
                 tspCloseDeck.Enabled = false;
+                tpPrintDeckList.Enabled = false;
+                tpPrintProxyDeck.Enabled = false;
             }
         }
 
@@ -377,6 +385,24 @@ namespace Archivist
                 }
 
                 RemoveDeck(tabControl1.SelectedTab);
+            }
+        }
+
+        private void proxyDeckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab.Controls[0] is Deck)
+            {
+                Deck deck = (Deck)tabControl1.SelectedTab.Controls[0];                
+                PrintDeck.PrintProxyDeck(deck.GenerateProxyList());
+            }
+        }
+
+        private void deckListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab.Controls[0] is Deck)
+            {
+                Deck deck = (Deck)tabControl1.SelectedTab.Controls[0];
+                PrintDeck.PrintDeckList(deck.GenerateDeckList());
             }
         }
 
