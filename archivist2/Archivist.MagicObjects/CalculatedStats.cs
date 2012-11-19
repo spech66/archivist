@@ -104,9 +104,9 @@ namespace Archivist.MagicObjects
 		{
 			get
 			{
-				if (card != null)
+				if (card != null && !String.IsNullOrEmpty(card.PowTgh))
 				{
-					string[] data = card.PowTgh.Split('/');
+					string[] data = card.PowTgh.Replace("(", "").Replace(")", "").Split('/');
 					if (data.Count() > 1)
 					{
 						return Convert.ToInt32(data[0]);
@@ -121,9 +121,9 @@ namespace Archivist.MagicObjects
 		{
 			get
 			{
-				if (card != null)
+				if (card != null && !String.IsNullOrEmpty(card.PowTgh))
 				{
-					string[] data = card.PowTgh.Split('/');
+					string[] data = card.PowTgh.Replace("(", "").Replace(")", "").Split('/');
 					if (data.Count() > 1)
 					{
 						return Convert.ToInt32(data[1]);
