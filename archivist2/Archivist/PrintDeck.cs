@@ -17,7 +17,7 @@ namespace Archivist
         private int deckCardListIndex;
 
         /// <summary>
-        /// Print list of form Id;Amount
+        /// Print list of images
         /// </summary>
         /// <param name="cardList"></param>
         public static void PrintProxyDeck(List<int> cardList)
@@ -42,76 +42,99 @@ namespace Archivist
         {
             proxyCardListIndex = 0;
 
-            //PrintDialog printDialog1 = new PrintDialog();
-            PrintPreviewDialog printDialog1 = new PrintPreviewDialog();
-            PrintDocument printDocumentProxyCardList = new PrintDocument();
+            using(PrintDialog printDialog1 = new PrintDialog())
+			//using (PrintPreviewDialog printDialog1 = new PrintPreviewDialog())
+			{
+				PrintDocument printDocumentProxyCardList = new PrintDocument();
+				SetPrinterSettings(printDocumentProxyCardList);
 
-            printDialog1.Document = printDocumentProxyCardList;
-            printDocumentProxyCardList.PrintPage += new PrintPageEventHandler(printDocumentProxyCardList_PrintPage);
+				printDialog1.Document = printDocumentProxyCardList;
 
-            DialogResult result = printDialog1.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                printDocumentProxyCardList.Print();
-            }    
+				printDocumentProxyCardList.PrintPage += new PrintPageEventHandler(printDocumentProxyCardList_PrintPage);
+
+				if (printDialog1.ShowDialog() == DialogResult.OK)
+					printDocumentProxyCardList.Print();
+			}    
         }
 
         private void PrintDeckList()
         {
             deckCardListIndex = 0;
+			
+			using (PrintDialog printDialog1 = new PrintDialog())
+			//using (PrintPreviewDialog printDialog1 = new PrintPreviewDialog())
+			{
+				PrintDocument printDocumentDeckList = new PrintDocument();
+				SetPrinterSettings(printDocumentDeckList);
 
-            //PrintDialog printDialog1 = new PrintDialog();
-            PrintPreviewDialog printDialog1 = new PrintPreviewDialog();
-            PrintDocument printDocumentDeckList = new PrintDocument();
+				printDialog1.Document = printDocumentDeckList;
 
-            printDialog1.Document = printDocumentDeckList;
-            printDocumentDeckList.PrintPage += new PrintPageEventHandler(printDocumentDeckList_PrintPage);
+				printDocumentDeckList.PrintPage += new PrintPageEventHandler(printDocumentDeckList_PrintPage);
 
-            DialogResult result = printDialog1.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                printDocumentDeckList.Print();
-            }  
+				if (printDialog1.ShowDialog() == DialogResult.OK)
+					printDocumentDeckList.Print();
+			}  
         }
+
+		/// <summary>
+		/// Set paper format
+		/// </summary>
+		/// <param name="doc"></param>
+		private void SetPrinterSettings(PrintDocument doc)
+		{
+			foreach (PaperSize ps in doc.PrinterSettings.PaperSizes)
+			{
+				if (ps.Kind == PaperKind.A4)
+				{
+					doc.DefaultPageSettings.PaperSize = ps;
+				}
+			}
+		}
 
         private void printDocumentProxyCardList_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics graphic = e.Graphics;
 
-            e.PageSettings.PaperSize = new PaperSize("A4", 850, 1100);
+            float pageWidth = e.PageSettings.PrintableArea.Right;
+            float pageHeight = e.PageSettings.PrintableArea.Bottom;
 
-            float pageWidth = e.PageSettings.PrintableArea.Width;
-            float pageHeight = e.PageSettings.PrintableArea.Height;
-
-            int startX = 40;
-            int startY = 30;
-            int offsetY = 40;
+			float startX = e.PageSettings.PrintableArea.Left;
+			float startY = e.PageSettings.PrintableArea.Top;
+			float offsetX = 0;
+			float offsetY = 0;
+			int heighestCardInRow = 0;
+			float border = 8;
 
             int lastId = -1;
-            Image lastImg = null;
+            Image img = null;
             for (int i = proxyCardListIndex; i < proxyCardList.Count; i++)
             {
-                proxyCardListIndex = i;
+				proxyCardListIndex = i;
 
                 if (lastId != proxyCardList[i])
                 {
                     lastId = proxyCardList[i];
-                    lastImg = Helper.GetMagicImage(proxyCardList[i].ToString());
+                    img = Helper.GetMagicImage(proxyCardList[i].ToString());
                 }
 
-                graphic.DrawImage(lastImg, startX + 20, startY + offsetY);
+				if (startX + offsetX + img.Width > pageWidth)
+				{
+					offsetX = 0;
+					offsetY += heighestCardInRow + border;
+				}
 
-                offsetY += lastImg.Height + 10;
+				if (startY + offsetY + img.Height > pageHeight)
+				{
+					heighestCardInRow = img.Height;
+					e.HasMorePages = true;
+					return;
+				}
 
-                if (offsetY >= pageHeight)
-                {
-                    e.HasMorePages = true;
-                    return;
-                }
-                else
-                {
-                    e.HasMorePages = false;
-                }
+				if (img.Height > heighestCardInRow)
+					heighestCardInRow = img.Height;
+
+				graphic.DrawImage(img, startX + offsetX, startY + offsetY, img.Width, img.Height);
+				offsetX += img.Width + border;
             }
         }
 
@@ -121,38 +144,37 @@ namespace Archivist
             SolidBrush brush = new SolidBrush(Color.Black);
 
             Font font = new Font("Courier New", 12);
-            float fontHeight = font.GetHeight();
+			float fontHeight = font.GetHeight();
+			
+			float pageHeight = e.PageSettings.PrintableArea.Bottom;
+			float startX = e.PageSettings.PrintableArea.Left;
+			float startY = e.PageSettings.PrintableArea.Top;
+			float offsetY = 0;
+			float space = 8;
 
-            e.PageSettings.PaperSize = new PaperSize("A4", 850, 1100);
-
-            float pageWidth = e.PageSettings.PrintableArea.Width;
-            float pageHeight = e.PageSettings.PrintableArea.Height;
-
-            int startX = 40;
-            int startY = 30;
-            int offsetY = 40;
+			float sideboard = graphic.MeasureString(deckCardList.Any(sel => sel.IsInSideboard) ? "SB " : "", font).Width;
+			float lengthAmount = graphic.MeasureString(deckCardList.Max(sel => sel.Amount).ToString(), font).Width + sideboard;
 
             for (int i = deckCardListIndex; i < deckCardList.Count; i++)
             {
                 deckCardListIndex = i;
 
+				if (startY + offsetY + fontHeight > pageHeight)
+				{
+					e.HasMorePages = true;
+					return;
+				}
+
+				if (deckCardList[i].IsInSideboard)
+				{
+					graphic.DrawString("SB ", font, brush, startX, startY + offsetY);
+				}
                 // Amount
-                graphic.DrawString(deckCardList[i].Amount.ToString(), font, brush, startX, startY + offsetY);
+				graphic.DrawString(deckCardList[i].Amount.ToString(), font, brush, startX + sideboard, startY + offsetY);
                 // Name
-                graphic.DrawString(deckCardList[i].Name, font, brush, startX + 20, startY + offsetY);
-                // ?
+				graphic.DrawString(deckCardList[i].Name, font, brush, startX + lengthAmount + space, startY + offsetY);
 
-                offsetY += (int)fontHeight;
-
-                if (offsetY >= pageHeight)
-                {
-                    e.HasMorePages = true;
-                    return;
-                }
-                else
-                {
-                    e.HasMorePages = false;
-                }
+                offsetY += fontHeight;
             }
         }
     }

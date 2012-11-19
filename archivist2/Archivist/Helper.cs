@@ -24,6 +24,8 @@ namespace Archivist
 		private string cardImageDirectory;
 		private string decksDirectory;
 
+		private static Image emptyImage;
+
 		static Helper()
 		{
 			if(_instance == null)
@@ -83,10 +85,14 @@ namespace Archivist
 			}
 
 			// Show empty card
+			if (emptyImage != null)
+				return emptyImage;
+
 			string noneimg = System.IO.Path.Combine(Helper.ImageDirectory, "none.jpg");
 			if (System.IO.File.Exists(noneimg))
 			{
-				return Image.FromFile(noneimg);
+				emptyImage = Image.FromFile(noneimg);
+				return emptyImage;
 			}
 
 			// Nothing was found :-(
