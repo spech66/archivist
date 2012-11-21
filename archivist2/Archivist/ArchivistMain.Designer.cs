@@ -124,6 +124,7 @@ namespace Archivist
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tpDeckManager = new System.Windows.Forms.TabPage();
 			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
+			this.bwUpdateCardList = new System.ComponentModel.BackgroundWorker();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -1154,6 +1155,11 @@ namespace Archivist
 			this.lbDeckManagerDeckList.TabIndex = 1;
 			this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
 			// 
+			// bwUpdateCardList
+			// 
+			this.bwUpdateCardList.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateCardList_DoWork);
+			this.bwUpdateCardList.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUpdateCardList_RunWorkerCompleted);
+			// 
 			// ArchivistMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1301,6 +1307,7 @@ namespace Archivist
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton tpPrintProxyDeck;
         private System.Windows.Forms.ToolStripButton tpPrintDeckList;
+		private System.ComponentModel.BackgroundWorker bwUpdateCardList;
     }
 }
 

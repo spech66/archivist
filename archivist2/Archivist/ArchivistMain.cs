@@ -406,6 +406,25 @@ namespace Archivist
             }
         }
 
+		private void bwUpdateCardList_DoWork(object sender, DoWorkEventArgs e)
+		{
+			object[] args = e.Argument as object[];
+			string whereclause = args[0] as string;
+			List<object> data = args[1] as List<object>;
+
+			ArchivistDatabase adb = new ArchivistDatabase();
+			List<Archivist.MagicObjects.Card> cards = adb.GetCards(whereclause, data.ToArray());
+			e.Result = cards;
+		}
+
+		private void bwUpdateCardList_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			dgCards.BindDatasource(e.Result);
+
+			// Load image
+			pictureBoxCard.Image = Helper.GetMagicImage();
+		}
+
 		#endregion
 
 		private void OpenDeck(string path = "")
@@ -432,7 +451,7 @@ namespace Archivist
 		private void UpdateCardList()
         {
 			dgCards.DataSource = null;
-
+			
 			string whereclause = "";
 			List<object> data = new List<object>();
 
@@ -472,21 +491,21 @@ namespace Archivist
 			if (listBoxSearchType.SelectedIndex > 0)
 			{
 				string list = "";
-				foreach(string sel in listBoxSearchType.SelectedItems)
+				foreach (string sel in listBoxSearchType.SelectedItems)
 				{
 					list += "'" + sel + "', ";
 				}
 				list = list.Remove(list.Length - 2, 2);
 
 				whereclause += " AND TYPE IN (" + list + ")";
-            }
-            
-            // Type text
-            if (textBoxSearchType.Text != "")
-            {
-                whereclause += " AND TYPE LIKE ?";
-                data.Add("%" + textBoxSearchType.Text + "%");
-            }
+			}
+
+			// Type text
+			if (textBoxSearchType.Text != "")
+			{
+				whereclause += " AND TYPE LIKE ?";
+				data.Add("%" + textBoxSearchType.Text + "%");
+			}
 
 			// Expansion
 			if (listBoxSearchExpansion.SelectedIndex > 0)
@@ -508,12 +527,7 @@ namespace Archivist
 				whereclause = " WHERE 1=1 " + whereclause;
 			}
 
-			ArchivistDatabase adb = new ArchivistDatabase();
-			List<Archivist.MagicObjects.Card> cards = adb.GetCards(whereclause, data.ToArray());
-			dgCards.BindDatasource(cards);
-
-			// Load image
-			pictureBoxCard.Image = Helper.GetMagicImage();
+			bwUpdateCardList.RunWorkerAsync(new object[] { whereclause, data });
         }
 
 		private void ShowCard(string differentImageId = "")
