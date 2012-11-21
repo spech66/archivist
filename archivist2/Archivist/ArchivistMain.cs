@@ -100,26 +100,7 @@ namespace Archivist
 		{
 			libraryFile = Path.Combine(Helper.DataDirectory, "Library.dat");
 
-			if (File.Exists(libraryFile))
-			{
-				ArchivistDatabase adb = new ArchivistDatabase();
-
-				using (StreamReader reader = new StreamReader(libraryFile))
-				{
-					while (!reader.EndOfStream)
-					{
-						string[] split = reader.ReadLine().Split(';');
-						Archivist.MagicObjects.MagicCard card = adb.GetCard(Convert.ToInt32(split[0])) as Archivist.MagicObjects.MagicCard;
-						if (card != null)
-						{
-							card.Amount = Convert.ToInt32(split[1]);
-							cardsLibrary.Add(card);
-						}
-					}
-				}
-			}
-
-			dgLibrary.BindDatasource(cardsLibrary);
+			bwUpdateLibrary.RunWorkerAsync(libraryFile);
 		}
 
 		#region Event handler
@@ -423,6 +404,39 @@ namespace Archivist
 
 			// Load image
 			pictureBoxCard.Image = Helper.GetMagicImage();
+		}
+
+		private void bwUpdateLibrary_DoWork(object sender, DoWorkEventArgs e)
+		{
+			BindingList<Archivist.MagicObjects.MagicCard> tempLib = new BindingList<Archivist.MagicObjects.MagicCard>();
+
+			if (File.Exists(libraryFile))
+			{
+				ArchivistDatabase adb = new ArchivistDatabase();
+
+				using (StreamReader reader = new StreamReader(libraryFile))
+				{
+					while (!reader.EndOfStream)
+					{
+						string[] split = reader.ReadLine().Split(';');
+						Archivist.MagicObjects.MagicCard card = adb.GetCard(Convert.ToInt32(split[0])) as Archivist.MagicObjects.MagicCard;
+						if (card != null)
+						{
+							card.Amount = Convert.ToInt32(split[1]);
+							tempLib.Add(card);
+						}
+					}
+				}
+			}
+
+			e.Result = tempLib;
+		}
+
+		private void bwUpdateLibrary_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			cardsLibrary = e.Result as BindingList<Archivist.MagicObjects.MagicCard>;
+
+			dgLibrary.BindDatasource(cardsLibrary);
 		}
 
 		#endregion
