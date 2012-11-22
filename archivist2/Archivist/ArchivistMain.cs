@@ -193,7 +193,7 @@ namespace Archivist
 			if (dgCards.SelectedRows.Count < 1)
 				return;
 
-			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
+			var list = ((SortableBindingList<Archivist.MagicObjects.Card>)dgCards.DataSource);
 			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
 
 			Archivist.MagicObjects.MagicCard findCard = cardsLibrary.FirstOrDefault(sel => sel.Multiverseid == card.Multiverseid);
@@ -262,7 +262,7 @@ namespace Archivist
 			if (deckPage == null)
 				return;
 
-			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
+			var list = ((SortableBindingList<Archivist.MagicObjects.Card>)dgCards.DataSource);
 			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
 			((Deck)deckPage.Controls[0]).AddCard(card);
         }
@@ -394,7 +394,7 @@ namespace Archivist
 			List<object> data = args[1] as List<object>;
 
 			ArchivistDatabase adb = new ArchivistDatabase();
-			List<Archivist.MagicObjects.Card> cards = adb.GetCards(whereclause, data.ToArray());
+			SortableBindingList<Archivist.MagicObjects.Card> cards = new SortableBindingList<MagicObjects.Card>(adb.GetCards(whereclause, data.ToArray()));
 			e.Result = cards;
 		}
 
@@ -402,7 +402,7 @@ namespace Archivist
 		{
 			dgCards.BindDatasource(e.Result);
 
-			groupBoxCards.Text = String.Format("Cards ({0})", (e.Result as List<Archivist.MagicObjects.Card>).Count);
+			groupBoxCards.Text = String.Format("Cards ({0})", (e.Result as SortableBindingList<Archivist.MagicObjects.Card>).Count);
 		}
 
 		private void bwUpdateLibrary_DoWork(object sender, DoWorkEventArgs e)
@@ -548,7 +548,7 @@ namespace Archivist
 			if (dgCards.SelectedRows.Count < 1)
 				return;
 
-			var list = ((List<Archivist.MagicObjects.Card>)dgCards.DataSource);
+			var list = ((SortableBindingList<Archivist.MagicObjects.Card>)dgCards.DataSource);
 			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
 
 			// Show different image from selection but prevent recursion
