@@ -81,6 +81,9 @@ namespace Archivist
 			{
 				MessageBox.Show("File does not exist:\n" + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
+			
+			int cardAmount = cards.Sum(sum => sum.Amount);
+			tpCards.Text = String.Format("Cards ({0})", cardAmount);
 		}
 
 		/// <summary>
@@ -163,7 +166,9 @@ namespace Archivist
 		{
 			zgManaCurve.GraphPane.CurveList.Clear();
 			GraphPane pane = zgManaCurve.GraphPane;
-			pane.Title.Text = "Mana Curve";
+
+			int cardAmount = cards.Sum(sum => sum.Amount);
+			pane.Title.Text = String.Format("Mana Curve - {0} Cards", cardAmount);
 
 			PointPairList points = new PointPairList();
             points.AddRange(cards.Where(wh => !wh.IsInSideboard)
@@ -191,7 +196,9 @@ namespace Archivist
             zgManaSymbols.GraphPane.CurveList.Clear();
             GraphPane pane = zgManaSymbols.GraphPane;
             pane.Legend.IsVisible = false;
-            pane.Title.Text = "Mana Symbols";
+
+			int cardAmount = cards.Sum(sum => sum.Amount);
+			pane.Title.Text = String.Format("Mana Symbols - {0} Cards", cardAmount);
             
             Dictionary<char, int> calculatedManaSymbols = new Dictionary<char,int>();
             foreach (Card c in cards)
@@ -233,7 +240,10 @@ namespace Archivist
 
 			zgDistribution.GraphPane.CurveList.Clear();
             GraphPane pane = zgDistribution.GraphPane;
-            pane.Legend.IsVisible = false;
+			pane.Legend.IsVisible = false;
+
+			int cardAmount = cards.Sum(sum => sum.Amount);
+			pane.Title.Text = String.Format("Distribution - {0} Cards", cardAmount);
 
 			var qry = cards.Where(wh => !wh.IsInSideboard).GroupBy(grp => grp.Type.Substring(0, grp.Type.IndexOf('-') >= 0 ? grp.Type.IndexOf('-') : grp.Type.Length).Trim())
 				.Select(sel => new KeyValuePair<string, int>(sel.Key, sel.Sum(sum => sum.Amount)));
@@ -250,9 +260,6 @@ namespace Archivist
 				else if (item.Key == "Artifact") c = Color.LightGray;
                 PieItem pi = pane.AddPieSlice(item.Value, c, 0, item.Key + " - " + item.Value);
 			}
-
-            int cardAmount = cards.Sum(sum => sum.Amount);
-            pane.Title.Text = "Distribution - " + cardAmount + " Cards";
 
 			zgDistribution.AxisChange();
 		}
@@ -347,6 +354,9 @@ namespace Archivist
                 || dgDeck.Columns[e.ColumnIndex].Name.Contains("Sideboard"))
 			{
 				IsModified = true;
+
+				int cardAmount = cards.Sum(sum => sum.Amount);
+				tpCards.Text = String.Format("Cards ({0})", cardAmount);
 
                 UpdateGraphManaCurve();
                 UpdateGraphManaSymbols();
