@@ -11,6 +11,7 @@
 - Resize of oversized cards
 - Search result card count
 - Sortable lists
+- Card info added to library and deck
 
 ===============================================================================
 # Archivist Beta 2                                                            #

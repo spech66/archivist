@@ -462,5 +462,15 @@ namespace Archivist
 			int cardAmount = cards.Sum(sum => sum.Amount);
 			tpCards.Text = String.Format("Cards ({0})", cardAmount);
 		}
+
+		private void dgDeck_SelectionChanged(object sender, EventArgs e)
+		{
+			if (dgDeck.SelectedRows.Count < 1)
+				return;
+
+			Archivist.MagicObjects.Card card = cards[dgDeck.SelectedRows[0].Index];
+
+			cardInfoDeck.DataSource = card;
+		}
     }
 }

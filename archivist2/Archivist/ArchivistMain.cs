@@ -30,6 +30,7 @@ namespace Archivist
 			UpdateDeckList();
         }
 
+		#region Init
 		private void InitSearch()
 		{
 			textBoxSearchName.Text = "";
@@ -75,7 +76,9 @@ namespace Archivist
 			}
 			reader.Close();
 		}
+		#endregion
 
+		#region UpdateLists
 		private void UpdateDeckList()
 		{
 			UpdateDeckListGetDeckTree(Helper.DecksDirectory);
@@ -102,6 +105,7 @@ namespace Archivist
 
 			bwUpdateLibrary.RunWorkerAsync(libraryFile);
 		}
+		#endregion
 
 		#region Event handler
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -164,6 +168,16 @@ namespace Archivist
 			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
 
 			cardInfoCards.DataSource = card;
+		}
+
+		private void dgLibrary_SelectionChanged(object sender, EventArgs e)
+		{
+			if (dgLibrary.SelectedRows.Count < 1)
+				return;
+
+			Archivist.MagicObjects.Card card = cardsLibrary[dgLibrary.SelectedRows[0].Index];
+
+			cardInfoLibrary.DataSource = card;
 		}
 
 		private void lbDeckManagerDeckList_DoubleClick(object sender, EventArgs e)
@@ -432,6 +446,7 @@ namespace Archivist
 
 		#endregion
 
+		#region Helper
 		private void OpenDeck(string path = "")
 		{
 			Deck deck = new Deck(path);
@@ -570,5 +585,6 @@ namespace Archivist
 				}
 			}
 		}
+		#endregion
 	}
 }

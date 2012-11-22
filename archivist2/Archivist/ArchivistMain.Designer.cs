@@ -109,9 +109,11 @@ namespace Archivist
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpCardSearch = new System.Windows.Forms.TabPage();
 			this.tpLibrary = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.dgLibrary = new Archivist.CardDataGrid();
 			this.cmLibrary = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+			this.cardInfoLibrary = new Archivist.CardInfo();
 			this.tpDeckManager = new System.Windows.Forms.TabPage();
 			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
 			this.bwUpdateCardList = new System.ComponentModel.BackgroundWorker();
@@ -133,6 +135,7 @@ namespace Archivist
 			this.tabControl1.SuspendLayout();
 			this.tpCardSearch.SuspendLayout();
 			this.tpLibrary.SuspendLayout();
+			this.tableLayoutPanel3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
 			this.cmLibrary.SuspendLayout();
 			this.tpDeckManager.SuspendLayout();
@@ -950,7 +953,7 @@ namespace Archivist
 			// 
 			// tpLibrary
 			// 
-			this.tpLibrary.Controls.Add(this.dgLibrary);
+			this.tpLibrary.Controls.Add(this.tableLayoutPanel3);
 			this.tpLibrary.Location = new System.Drawing.Point(4, 22);
 			this.tpLibrary.Name = "tpLibrary";
 			this.tpLibrary.Padding = new System.Windows.Forms.Padding(3);
@@ -958,6 +961,21 @@ namespace Archivist
 			this.tpLibrary.TabIndex = 1;
 			this.tpLibrary.Text = "Library";
 			this.tpLibrary.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel3
+			// 
+			this.tableLayoutPanel3.ColumnCount = 2;
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+			this.tableLayoutPanel3.Controls.Add(this.dgLibrary, 0, 0);
+			this.tableLayoutPanel3.Controls.Add(this.cardInfoLibrary, 1, 0);
+			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+			this.tableLayoutPanel3.RowCount = 1;
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(820, 541);
+			this.tableLayoutPanel3.TabIndex = 1;
 			// 
 			// dgLibrary
 			// 
@@ -970,8 +988,9 @@ namespace Archivist
 			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
 			this.dgLibrary.Name = "dgLibrary";
-			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
+			this.dgLibrary.Size = new System.Drawing.Size(564, 535);
 			this.dgLibrary.TabIndex = 0;
+			this.dgLibrary.SelectionChanged += new System.EventHandler(this.dgLibrary_SelectionChanged);
 			// 
 			// cmLibrary
 			// 
@@ -986,6 +1005,14 @@ namespace Archivist
 			this.toolStripMenuItem3.Size = new System.Drawing.Size(117, 22);
 			this.toolStripMenuItem3.Text = "Remove";
 			this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+			// 
+			// cardInfoLibrary
+			// 
+			this.cardInfoLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cardInfoLibrary.Location = new System.Drawing.Point(573, 3);
+			this.cardInfoLibrary.Name = "cardInfoLibrary";
+			this.cardInfoLibrary.Size = new System.Drawing.Size(244, 535);
+			this.cardInfoLibrary.TabIndex = 1;
 			// 
 			// tpDeckManager
 			// 
@@ -1056,6 +1083,7 @@ namespace Archivist
 			this.tabControl1.ResumeLayout(false);
 			this.tpCardSearch.ResumeLayout(false);
 			this.tpLibrary.ResumeLayout(false);
+			this.tableLayoutPanel3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
 			this.cmLibrary.ResumeLayout(false);
 			this.tpDeckManager.ResumeLayout(false);
@@ -1152,6 +1180,8 @@ namespace Archivist
 		private System.ComponentModel.BackgroundWorker bwUpdateCardList;
 		private System.ComponentModel.BackgroundWorker bwUpdateLibrary;
 		private CardInfo cardInfoCards;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+		private CardInfo cardInfoLibrary;
     }
 }
 
