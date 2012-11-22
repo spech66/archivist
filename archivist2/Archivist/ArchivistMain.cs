@@ -157,12 +157,13 @@ namespace Archivist
 
 		private void dgCards_SelectionChanged(object sender, EventArgs e)
 		{
-			ShowCard();
-		}
+			if (dgCards.SelectedRows.Count < 1)
+				return;
 
-		private void linkLabelGatherer_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
+			var list = ((SortableBindingList<Archivist.MagicObjects.Card>)dgCards.DataSource);
+			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
+
+			cardInfoCards.DataSource = card;
 		}
 
 		private void lbDeckManagerDeckList_DoubleClick(object sender, EventArgs e)
@@ -171,15 +172,6 @@ namespace Archivist
 				return;
 
 			OpenDeck(Path.Combine(Helper.DecksDirectory, lbDeckManagerDeckList.SelectedItem.ToString()));
-		}
-
-		private void listBoxCardEdition_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			ListBoxItemNameId itm = (ListBoxItemNameId)listBoxCardEdition.SelectedItem;
-			if (itm != null)
-			{
-				ShowCard(itm.Id);
-			}
 		}
 
 		private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -543,77 +535,6 @@ namespace Archivist
 			bwUpdateCardList.RunWorkerAsync(new object[] { whereclause, data });
         }
 
-		private void ShowCard(string differentImageId = "")
-		{
-			if (dgCards.SelectedRows.Count < 1)
-				return;
-
-			var list = ((SortableBindingList<Archivist.MagicObjects.Card>)dgCards.DataSource);
-			Archivist.MagicObjects.Card card = list[dgCards.SelectedRows[0].Index];
-
-			// Show different image from selection but prevent recursion
-			if (differentImageId == card.Multiverseid.ToString())
-				return;
-
-			textBoxCardName.Text = card.Name;
-			//textBoxCostType.Text = reader.GetString(1);
-			textBoxCardPowtgh.Text = card.PowTgh;
-			textBoxCardText.Text = card.Rule;
-			textBoxCardType.Text = card.Type;
-			
-			string mvId = !String.IsNullOrEmpty(differentImageId) ? differentImageId : card.Multiverseid.ToString();
-			if (card.Multiverseid > 0 || !String.IsNullOrEmpty(differentImageId))
-			{
-				Image cardImg = Helper.GetMagicImage(mvId);
-				pictureBoxCard.Image = cardImg;
-				// Scheme/Archenemy oversize card handling
-				if (cardImg.Width < pictureBoxCard.Width && cardImg.Height < pictureBoxCard.Height)
-				{
-					pictureBoxCard.SizeMode = PictureBoxSizeMode.Normal;
-				}
-				else
-				{
-					pictureBoxCard.SizeMode = PictureBoxSizeMode.Zoom;
-				}
-
-				linkLabelGatherer.Links.Clear();
-				linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + mvId);
-			}
-			else
-			{
-				pictureBoxCard.ImageLocation = "";
-			}
-
-			// Show different image from selection but prevent recursion => Must not load extensions because of setting SelectedItem
-			ListBoxItemNameId itm = (ListBoxItemNameId)listBoxCardEdition.SelectedItem;
-			if (itm != null && itm.Id == differentImageId)
-			{
-				return;
-			}
-
-			// Select all extensions
-			IDbCommand cmdEditon = DataBuider.database.CreateCommand();
-			cmdEditon.Connection = DataBuider.database.CreateOpenConnection();
-			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
-			cmdEditon.Parameters.Add(p1Editon);
-			p1Editon.Value = card.Name;
-			cmdEditon.CommandText = "SELECT RARITY, EXTENSION, ID FROM CARD WHERE NAME = ?";
-			IDataReader readerEditon = cmdEditon.ExecuteReader();
-			listBoxCardEdition.Items.Clear();
-			while (readerEditon.Read())
-			{
-				string cardid = readerEditon.GetInt32(2).ToString();
-				ListBoxItemNameId item = new ListBoxItemNameId(String.Format("{1} ({0})", readerEditon.GetString(0), readerEditon.GetString(1)), cardid);
-				listBoxCardEdition.DisplayMember = "Name";
-				listBoxCardEdition.ValueMember = "Id";
-				listBoxCardEdition.Items.Add(item);
-
-				if (mvId == cardid)
-				{
-					listBoxCardEdition.SelectedItem = item;
-				}
-			}
-		}
 
 		internal void RemoveDeck(TabPage tabPage)
 		{
