@@ -33,9 +33,11 @@
 			this.zgDistribution = new ZedGraph.ZedGraphControl();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpCards = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.dgDeck = new Archivist.CardDataGrid();
 			this.cmDeck = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cardInfoDeck = new Archivist.CardInfo();
 			this.tpManaCurve = new System.Windows.Forms.TabPage();
 			this.tpManaSymbols = new System.Windows.Forms.TabPage();
 			this.zgManaSymbols = new ZedGraph.ZedGraphControl();
@@ -52,6 +54,7 @@
 			this.bwLoadDeck = new System.ComponentModel.BackgroundWorker();
 			this.tabControl1.SuspendLayout();
 			this.tpCards.SuspendLayout();
+			this.tableLayoutPanel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgDeck)).BeginInit();
 			this.cmDeck.SuspendLayout();
 			this.tpManaCurve.SuspendLayout();
@@ -110,7 +113,7 @@
 			// 
 			// tpCards
 			// 
-			this.tpCards.Controls.Add(this.dgDeck);
+			this.tpCards.Controls.Add(this.tableLayoutPanel2);
 			this.tpCards.Location = new System.Drawing.Point(23, 4);
 			this.tpCards.Name = "tpCards";
 			this.tpCards.Padding = new System.Windows.Forms.Padding(3);
@@ -118,6 +121,21 @@
 			this.tpCards.TabIndex = 0;
 			this.tpCards.Text = "Cards";
 			this.tpCards.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel2
+			// 
+			this.tableLayoutPanel2.ColumnCount = 2;
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+			this.tableLayoutPanel2.Controls.Add(this.dgDeck, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.cardInfoDeck, 1, 0);
+			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+			this.tableLayoutPanel2.RowCount = 1;
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(791, 583);
+			this.tableLayoutPanel2.TabIndex = 1;
 			// 
 			// dgDeck
 			// 
@@ -127,9 +145,10 @@
 			this.dgDeck.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgDeck.Location = new System.Drawing.Point(3, 3);
 			this.dgDeck.Name = "dgDeck";
-			this.dgDeck.Size = new System.Drawing.Size(791, 583);
+			this.dgDeck.Size = new System.Drawing.Size(535, 577);
 			this.dgDeck.TabIndex = 0;
 			this.dgDeck.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgDeck_CellValueChanged);
+			this.dgDeck.SelectionChanged += new System.EventHandler(this.dgDeck_SelectionChanged);
 			// 
 			// cmDeck
 			// 
@@ -144,6 +163,14 @@
 			this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
 			this.removeToolStripMenuItem.Text = "Remove";
 			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+			// 
+			// cardInfoDeck
+			// 
+			this.cardInfoDeck.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cardInfoDeck.Location = new System.Drawing.Point(544, 3);
+			this.cardInfoDeck.Name = "cardInfoDeck";
+			this.cardInfoDeck.Size = new System.Drawing.Size(244, 577);
+			this.cardInfoDeck.TabIndex = 1;
 			// 
 			// tpManaCurve
 			// 
@@ -314,6 +341,7 @@
 			this.Load += new System.EventHandler(this.Deck_Load);
 			this.tabControl1.ResumeLayout(false);
 			this.tpCards.ResumeLayout(false);
+			this.tableLayoutPanel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgDeck)).EndInit();
 			this.cmDeck.ResumeLayout(false);
 			this.tpManaCurve.ResumeLayout(false);
@@ -350,5 +378,7 @@
         private System.Windows.Forms.TabPage tpManaSymbols;
         private ZedGraph.ZedGraphControl zgManaSymbols;
 		private System.ComponentModel.BackgroundWorker bwLoadDeck;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+		private CardInfo cardInfoDeck;
 	}
 }
