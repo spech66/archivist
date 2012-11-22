@@ -46,12 +46,15 @@ namespace Archivist
             colLibIsInSideboard = new DataGridViewCheckBoxColumn();
 
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
 			AllowUserToAddRows = false;
 			AllowUserToDeleteRows = false;
 			AllowUserToResizeRows = false;
+			
 			AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 			AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
 			ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			
 			RowHeadersVisible = false;
 
 			// 
@@ -66,24 +69,28 @@ namespace Archivist
 			// 
 			this.colLibAmount.HeaderText = "Amount";
 			this.colLibAmount.Name = "colLibAmount";
+			this.colLibAmount.SortMode = DataGridViewColumnSortMode.Automatic;
 			// 
 			// colLibName
 			// 
 			this.colLibName.HeaderText = "Name";
 			this.colLibName.Name = "colLibName";
 			this.colLibName.ReadOnly = true;
+			this.colLibName.SortMode = DataGridViewColumnSortMode.Automatic;
 			// 
 			// colLibCosts
 			// 
 			this.colLibCosts.HeaderText = "Costs";
 			this.colLibCosts.Name = "colLibCosts";
 			this.colLibCosts.ReadOnly = true;
+			this.colLibCosts.SortMode = DataGridViewColumnSortMode.Automatic;
 			// 
 			// colLibType
 			// 
 			this.colLibType.HeaderText = "Type";
 			this.colLibType.Name = "colLibType";
 			this.colLibType.ReadOnly = true;
+			this.colLibType.SortMode = DataGridViewColumnSortMode.Automatic;
 			// 
 			// colLibImage
 			// 
@@ -96,17 +103,20 @@ namespace Archivist
 			this.colLibExtension.HeaderText = "Extension";
 			this.colLibExtension.Name = "colLibExtension";
 			this.colLibExtension.ReadOnly = true;
+			this.colLibExtension.SortMode = DataGridViewColumnSortMode.Automatic;
 			// 
 			// colLibName
 			// 
 			this.colLibRarity.HeaderText = "Rarity";
 			this.colLibRarity.Name = "colLibRarity";
 			this.colLibRarity.ReadOnly = true;
-            //
+			this.colLibRarity.SortMode = DataGridViewColumnSortMode.Automatic;
+			//
             // colLibIsInSideboard
             //
             this.colLibIsInSideboard.HeaderText = "Sideboard";
             this.colLibIsInSideboard.Name = "colLibIsInSideboard";
+			this.colLibIsInSideboard.SortMode = DataGridViewColumnSortMode.Automatic;
 
 			Columns.AddRange(new DataGridViewColumn[] {
 				this.colLibId,

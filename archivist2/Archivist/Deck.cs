@@ -16,7 +16,7 @@ namespace Archivist
 	public partial class Deck : UserControl
 	{
 		private string deckFilename;
-		private BindingList<Card> cards = new BindingList<Card>();
+		private SortableBindingList<Card> cards = new SortableBindingList<Card>();
 		private bool modified;
 
 		public bool IsModified
@@ -88,7 +88,7 @@ namespace Archivist
 		/// </summary>
 		/// <param name="path"></param>
 		/// <param name="cards"></param>
-		private void ParseFormatDEC(string path, ref BindingList<Card> cards)
+		private void ParseFormatDEC(string path, ref SortableBindingList<Card> cards)
 		{
 			using (StreamReader sr = new StreamReader(path))
 			{

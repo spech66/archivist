@@ -14,7 +14,7 @@ namespace Archivist
 {
     public partial class ArchivistMain : Form
 	{
-		private BindingList<Archivist.MagicObjects.MagicCard> cardsLibrary = new BindingList<Archivist.MagicObjects.MagicCard>();
+		private SortableBindingList<Archivist.MagicObjects.MagicCard> cardsLibrary = new SortableBindingList<Archivist.MagicObjects.MagicCard>();
 		private string libraryFile;
 
         public ArchivistMain()
@@ -212,7 +212,7 @@ namespace Archivist
 			if (dgLibrary.SelectedRows.Count < 1)
 				return;
 
-			var list = ((BindingList<Archivist.MagicObjects.MagicCard>)dgLibrary.DataSource);
+			var list = ((SortableBindingList<Archivist.MagicObjects.MagicCard>)dgLibrary.DataSource);
 			Archivist.MagicObjects.MagicCard card = list[dgLibrary.SelectedRows[0].Index];
 
 			Archivist.MagicObjects.MagicCard findCard = cardsLibrary.FirstOrDefault(sel => sel.Multiverseid == card.Multiverseid);
@@ -407,7 +407,7 @@ namespace Archivist
 
 		private void bwUpdateLibrary_DoWork(object sender, DoWorkEventArgs e)
 		{
-			BindingList<Archivist.MagicObjects.MagicCard> tempLib = new BindingList<Archivist.MagicObjects.MagicCard>();
+			SortableBindingList<Archivist.MagicObjects.MagicCard> tempLib = new SortableBindingList<Archivist.MagicObjects.MagicCard>();
 
 			if (File.Exists(libraryFile))
 			{
@@ -433,7 +433,7 @@ namespace Archivist
 
 		private void bwUpdateLibrary_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
-			cardsLibrary = e.Result as BindingList<Archivist.MagicObjects.MagicCard>;
+			cardsLibrary = e.Result as SortableBindingList<Archivist.MagicObjects.MagicCard>;
 
 			dgLibrary.BindDatasource(cardsLibrary);
 		}
