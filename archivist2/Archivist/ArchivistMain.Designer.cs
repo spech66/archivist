@@ -76,6 +76,7 @@ namespace Archivist
 			this.tspViewAbout = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxCards = new System.Windows.Forms.GroupBox();
+			this.dgCards = new Archivist.CardDataGrid();
 			this.cmCards = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addToLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBoxImage = new System.Windows.Forms.GroupBox();
@@ -118,19 +119,19 @@ namespace Archivist
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpCardSearch = new System.Windows.Forms.TabPage();
 			this.tpLibrary = new System.Windows.Forms.TabPage();
+			this.dgLibrary = new Archivist.CardDataGrid();
 			this.cmLibrary = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tpDeckManager = new System.Windows.Forms.TabPage();
 			this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
 			this.bwUpdateCardList = new System.ComponentModel.BackgroundWorker();
-			this.dgCards = new Archivist.CardDataGrid();
-			this.dgLibrary = new Archivist.CardDataGrid();
 			this.bwUpdateLibrary = new System.ComponentModel.BackgroundWorker();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBoxCards.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
 			this.cmCards.SuspendLayout();
 			this.groupBoxImage.SuspendLayout();
 			this.tableLayoutPanel5.SuspendLayout();
@@ -147,10 +148,9 @@ namespace Archivist
 			this.tabControl1.SuspendLayout();
 			this.tpCardSearch.SuspendLayout();
 			this.tpLibrary.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
 			this.cmLibrary.SuspendLayout();
 			this.tpDeckManager.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -588,6 +588,22 @@ namespace Archivist
 			this.groupBoxCards.TabIndex = 0;
 			this.groupBoxCards.TabStop = false;
 			this.groupBoxCards.Text = "Cards";
+			// 
+			// dgCards
+			// 
+			this.dgCards.AllowUserToAddRows = false;
+			this.dgCards.AllowUserToDeleteRows = false;
+			this.dgCards.AllowUserToResizeRows = false;
+			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgCards.ContextMenuStrip = this.cmCards;
+			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgCards.Location = new System.Drawing.Point(3, 16);
+			this.dgCards.Name = "dgCards";
+			this.dgCards.ReadOnly = true;
+			this.dgCards.Size = new System.Drawing.Size(258, 516);
+			this.dgCards.TabIndex = 0;
+			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
 			// 
 			// cmCards
 			// 
@@ -1090,6 +1106,20 @@ namespace Archivist
 			this.tpLibrary.Text = "Library";
 			this.tpLibrary.UseVisualStyleBackColor = true;
 			// 
+			// dgLibrary
+			// 
+			this.dgLibrary.AllowUserToAddRows = false;
+			this.dgLibrary.AllowUserToDeleteRows = false;
+			this.dgLibrary.AllowUserToResizeRows = false;
+			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgLibrary.ContextMenuStrip = this.cmLibrary;
+			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
+			this.dgLibrary.Name = "dgLibrary";
+			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
+			this.dgLibrary.TabIndex = 0;
+			// 
 			// cmLibrary
 			// 
 			this.cmLibrary.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1131,36 +1161,6 @@ namespace Archivist
 			this.bwUpdateCardList.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateCardList_DoWork);
 			this.bwUpdateCardList.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUpdateCardList_RunWorkerCompleted);
 			// 
-			// dgCards
-			// 
-			this.dgCards.AllowUserToAddRows = false;
-			this.dgCards.AllowUserToDeleteRows = false;
-			this.dgCards.AllowUserToResizeRows = false;
-			this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgCards.ContextMenuStrip = this.cmCards;
-			this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dgCards.Location = new System.Drawing.Point(3, 16);
-			this.dgCards.Name = "dgCards";
-			this.dgCards.ReadOnly = true;
-			this.dgCards.Size = new System.Drawing.Size(258, 516);
-			this.dgCards.TabIndex = 0;
-			this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
-			// 
-			// dgLibrary
-			// 
-			this.dgLibrary.AllowUserToAddRows = false;
-			this.dgLibrary.AllowUserToDeleteRows = false;
-			this.dgLibrary.AllowUserToResizeRows = false;
-			this.dgLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-			this.dgLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgLibrary.ContextMenuStrip = this.cmLibrary;
-			this.dgLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dgLibrary.Location = new System.Drawing.Point(3, 3);
-			this.dgLibrary.Name = "dgLibrary";
-			this.dgLibrary.Size = new System.Drawing.Size(820, 541);
-			this.dgLibrary.TabIndex = 0;
-			// 
 			// bwUpdateLibrary
 			// 
 			this.bwUpdateLibrary.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateLibrary_DoWork);
@@ -1190,6 +1190,7 @@ namespace Archivist
 			this.toolStrip1.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBoxCards.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
 			this.cmCards.ResumeLayout(false);
 			this.groupBoxImage.ResumeLayout(false);
 			this.tableLayoutPanel5.ResumeLayout(false);
@@ -1208,10 +1209,9 @@ namespace Archivist
 			this.tabControl1.ResumeLayout(false);
 			this.tpCardSearch.ResumeLayout(false);
 			this.tpLibrary.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
 			this.cmLibrary.ResumeLayout(false);
 			this.tpDeckManager.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
