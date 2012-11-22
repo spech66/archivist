@@ -124,6 +124,12 @@
     <Compile Include="CardDataGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CardInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardInfo.Designer.cs">
+      <DependentUpon>CardInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Deck.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -149,6 +155,9 @@
     <EmbeddedResource Include="ArchivistMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ArchivistMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardInfo.resx">
+      <DependentUpon>CardInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Deck.resx">
       <DependentUpon>Deck.cs</DependentUpon>
