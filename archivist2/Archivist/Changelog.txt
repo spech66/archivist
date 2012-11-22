@@ -6,7 +6,7 @@
 ===============================================================================
 # Archivist Beta 3                                                            #
 ===============================================================================
-- Background loading of cards and libary
+- Background loading of cards, deck and libary
 - Warning for download image
 - Resize of oversized cards
 - Search result card count

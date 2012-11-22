@@ -54,10 +54,6 @@ namespace Archivist
 			if (!String.IsNullOrEmpty(deckFilename))
 			{
 				LoadDeck(deckFilename);
-
-                UpdateGraphManaCurve();
-                UpdateGraphManaSymbols();
-				UpdateGraphDistribution();
 			}
 		}
 
@@ -72,18 +68,13 @@ namespace Archivist
 
 				if (path.ToLower().EndsWith(".dec") || path.ToLower().EndsWith(".txt"))
 				{
-					ParseFormatDEC(path, ref cards);
+					bwLoadDeck.RunWorkerAsync(path);
 				}
-
-				dgDeck.BindDatasource(cards);
 			}
 			else
 			{
 				MessageBox.Show("File does not exist:\n" + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-			
-			int cardAmount = cards.Sum(sum => sum.Amount);
-			tpCards.Text = String.Format("Cards ({0})", cardAmount);
 		}
 
 		/// <summary>
@@ -324,10 +315,9 @@ namespace Archivist
 
 			IsModified = true;
 
-            UpdateGraphManaCurve();
-            UpdateGraphManaSymbols();
-			UpdateGraphDistribution();
 			dgDeck.BindDatasource(cards);
+			
+			UpdateAll();
 		}
 
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -342,9 +332,7 @@ namespace Archivist
 
 				IsModified = true;
 
-                UpdateGraphManaCurve();
-                UpdateGraphManaSymbols();
-				UpdateGraphDistribution();
+				UpdateAll();
 			}
 		}
 
@@ -358,9 +346,7 @@ namespace Archivist
 				int cardAmount = cards.Sum(sum => sum.Amount);
 				tpCards.Text = String.Format("Cards ({0})", cardAmount);
 
-                UpdateGraphManaCurve();
-                UpdateGraphManaSymbols();
-				UpdateGraphDistribution();
+				UpdateAll();
             }
 		}
 
@@ -448,5 +434,33 @@ namespace Archivist
         {
             return cards.ToList();
         }
+
+		private void bwLoadDeck_DoWork(object sender, DoWorkEventArgs e)
+		{
+			SortableBindingList<Card> tempList = new SortableBindingList<Card>();
+
+			ParseFormatDEC(e.Argument.ToString(), ref tempList);
+
+			e.Result = tempList;
+		}
+
+		private void bwLoadDeck_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			cards = e.Result as SortableBindingList<Card>;
+
+			dgDeck.BindDatasource(cards);
+
+			UpdateAll();
+		}
+
+		private void UpdateAll()
+		{
+			UpdateGraphManaCurve();
+			UpdateGraphManaSymbols();
+			UpdateGraphDistribution();
+
+			int cardAmount = cards.Sum(sum => sum.Amount);
+			tpCards.Text = String.Format("Cards ({0})", cardAmount);
+		}
     }
 }
