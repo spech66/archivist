@@ -10,7 +10,7 @@
 - Warning for download image
 - Resize of oversized cards
 - Search result card count
-
+- Sortable lists
 
 ===============================================================================
 # Archivist Beta 2                                                            #
