@@ -402,8 +402,7 @@ namespace Archivist
 		{
 			dgCards.BindDatasource(e.Result);
 
-			// Load image
-			pictureBoxCard.Image = Helper.GetMagicImage();
+			groupBoxCards.Text = String.Format("Cards ({0})", (e.Result as List<Archivist.MagicObjects.Card>).Count);
 		}
 
 		private void bwUpdateLibrary_DoWork(object sender, DoWorkEventArgs e)
@@ -565,7 +564,17 @@ namespace Archivist
 			string mvId = !String.IsNullOrEmpty(differentImageId) ? differentImageId : card.Multiverseid.ToString();
 			if (card.Multiverseid > 0 || !String.IsNullOrEmpty(differentImageId))
 			{
-				pictureBoxCard.Image = Helper.GetMagicImage(mvId);
+				Image cardImg = Helper.GetMagicImage(mvId);
+				pictureBoxCard.Image = cardImg;
+				// Scheme/Archenemy oversize card handling
+				if (cardImg.Width < pictureBoxCard.Width && cardImg.Height < pictureBoxCard.Height)
+				{
+					pictureBoxCard.SizeMode = PictureBoxSizeMode.Normal;
+				}
+				else
+				{
+					pictureBoxCard.SizeMode = PictureBoxSizeMode.Zoom;
+				}
 
 				linkLabelGatherer.Links.Clear();
 				linkLabelGatherer.Links.Add(0, 20, "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" + mvId);
