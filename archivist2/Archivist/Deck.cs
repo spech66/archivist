@@ -172,9 +172,11 @@ namespace Archivist
 			barChart.Bar.Fill.Type = FillType.Solid;
 
 			pane.XAxis.Scale.Min = 0;
+			pane.XAxis.Scale.MinorStep = 1;
 			pane.XAxis.Title.IsVisible = false;
 
 			pane.YAxis.Scale.Min = 0;
+			pane.YAxis.Scale.MinorStep = 1;
 			pane.YAxis.Title.IsVisible = false;
 
 			zgManaCurve.AxisChange();

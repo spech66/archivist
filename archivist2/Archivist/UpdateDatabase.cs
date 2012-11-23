@@ -223,7 +223,7 @@ namespace Archivist
 						if (key == "Type") paraType = value.Replace("â€”", "-").Replace("  ", " ");
 						if (key == "Pow/Tgh") paraPowTgh = value;
 						if (key == "Rules Text") paraRulesText = value;
-						if (key == "Set/Rarity") paraCardExtRar = value;
+						if (key == "Set/Rarity") paraCardExtRar = value.Replace("\"", "&quot;");
 					}
 					else
 					{
@@ -235,7 +235,7 @@ namespace Archivist
 							{
 								if (setr.Contains(ext))
 								{
-									string set = ext.Trim();
+									string set = ext.Replace("&quot;", "\"").Trim();
 									string rarity = setr.Replace(ext, "").Trim(); // Might be Common/Uncomm/Rare/Mythic Rare
 
 									Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, rarity, set, paraMultiverseid);
