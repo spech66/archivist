@@ -54,7 +54,8 @@ namespace Archivist
 			AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 			AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
 			ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			
+			MultiSelect = false;
+
 			RowHeadersVisible = false;
 
 			// 

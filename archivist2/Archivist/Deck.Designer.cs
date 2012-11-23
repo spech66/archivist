@@ -68,6 +68,11 @@
 			// zgManaCurve
 			// 
 			this.zgManaCurve.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.zgManaCurve.IsEnableHPan = false;
+			this.zgManaCurve.IsEnableHZoom = false;
+			this.zgManaCurve.IsEnableVPan = false;
+			this.zgManaCurve.IsEnableVZoom = false;
+			this.zgManaCurve.IsEnableWheelZoom = false;
 			this.zgManaCurve.Location = new System.Drawing.Point(3, 3);
 			this.zgManaCurve.Name = "zgManaCurve";
 			this.zgManaCurve.ScrollGrace = 0D;

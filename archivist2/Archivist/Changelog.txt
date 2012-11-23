@@ -12,6 +12,8 @@
 - Search result card count
 - Sortable lists
 - Card info added to library and deck
+- Graph scaling adjusted
+- Missing Time Spiral "Timeshifted" cards added
 
 ===============================================================================
 # Archivist Beta 2                                                            #
