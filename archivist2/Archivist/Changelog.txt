@@ -14,6 +14,7 @@
 - Card info added to library and deck
 - Graph scaling adjusted
 - Missing Time Spiral "Timeshifted" cards added
+- Fixed mana curve calculation
 
 ===============================================================================
 # Archivist Beta 2                                                            #
