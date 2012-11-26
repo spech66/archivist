@@ -158,14 +158,13 @@ namespace Archivist
 			zgManaCurve.GraphPane.CurveList.Clear();
 			GraphPane pane = zgManaCurve.GraphPane;
 
-			int cardAmount = cards.Sum(sum => sum.Amount);
-			pane.Title.Text = String.Format("Mana Curve - {0} Cards", cardAmount);
+			pane.Title.Text = String.Format("Mana Curve - {0}", CardCountText());
 
 			PointPairList points = new PointPairList();
             points.AddRange(cards.Where(wh => !wh.IsInSideboard)
+				.Where(sel => !sel.Type.Contains("Land") && !sel.Type.Contains("Scheme"))
                 .GroupBy(grp => grp.CalculatedManaCost)
 				.OrderBy(ord => ord.Key) // Order x-Axis
-				.Where(sel => sel.Key > 0) // Remove lands, and cards with 0 mana for scaling reasons
 				.Select(sel => new PointPair(sel.Key, sel.Sum(sum => sum.Amount))));
 
 			BarItem barChart = pane.AddBar("", points, Color.Blue);
@@ -173,10 +172,12 @@ namespace Archivist
 
 			pane.XAxis.Scale.Min = 0;
 			pane.XAxis.Scale.MinorStep = 1;
+            pane.XAxis.Scale.MajorStep = 1;
 			pane.XAxis.Title.IsVisible = false;
 
 			pane.YAxis.Scale.Min = 0;
 			pane.YAxis.Scale.MinorStep = 1;
+			pane.YAxis.Scale.MajorStep = 1;
 			pane.YAxis.Title.IsVisible = false;
 
 			zgManaCurve.AxisChange();
@@ -190,8 +191,7 @@ namespace Archivist
             GraphPane pane = zgManaSymbols.GraphPane;
             pane.Legend.IsVisible = false;
 
-			int cardAmount = cards.Sum(sum => sum.Amount);
-			pane.Title.Text = String.Format("Mana Symbols - {0} Cards", cardAmount);
+			pane.Title.Text = String.Format("Mana Symbols - {0}", CardCountText());
             
             Dictionary<char, int> calculatedManaSymbols = new Dictionary<char,int>();
             foreach (Card c in cards)
@@ -235,8 +235,7 @@ namespace Archivist
             GraphPane pane = zgDistribution.GraphPane;
 			pane.Legend.IsVisible = false;
 
-			int cardAmount = cards.Sum(sum => sum.Amount);
-			pane.Title.Text = String.Format("Distribution - {0} Cards", cardAmount);
+			pane.Title.Text = String.Format("Distribution - {0}", CardCountText());
 
 			var qry = cards.Where(wh => !wh.IsInSideboard).GroupBy(grp => grp.Type.Substring(0, grp.Type.IndexOf('-') >= 0 ? grp.Type.IndexOf('-') : grp.Type.Length).Trim())
 				.Select(sel => new KeyValuePair<string, int>(sel.Key, sel.Sum(sum => sum.Amount)));
@@ -345,8 +344,7 @@ namespace Archivist
 			{
 				IsModified = true;
 
-				int cardAmount = cards.Sum(sum => sum.Amount);
-				tpCards.Text = String.Format("Cards ({0})", cardAmount);
+				tpCards.Text = String.Format("Cards {0}", CardCountText(true));
 
 				UpdateAll();
             }
@@ -461,8 +459,7 @@ namespace Archivist
 			UpdateGraphManaSymbols();
 			UpdateGraphDistribution();
 
-			int cardAmount = cards.Sum(sum => sum.Amount);
-			tpCards.Text = String.Format("Cards ({0})", cardAmount);
+			tpCards.Text = String.Format("Cards {0}", CardCountText(true));
 		}
 
 		private void dgDeck_SelectionChanged(object sender, EventArgs e)
@@ -473,6 +470,23 @@ namespace Archivist
 			Archivist.MagicObjects.Card card = cards[dgDeck.SelectedRows[0].Index];
 
 			cardInfoDeck.DataSource = card;
+		}
+
+		private string CardCountText(bool extended = false)
+		{
+			int cardAmount = cards.Where(sel => !sel.IsInSideboard).Sum(sum => sum.Amount);
+
+			if (extended)
+			{
+				int count = cards.Sum(sum => sum.Amount);
+				int sideboardAmount = count - cardAmount;
+
+				return String.Format("({0} Cards - {1} Sideboard)", cardAmount, sideboardAmount);
+			}
+			else
+			{
+				return String.Format("{0} Cards", cardAmount);
+			}
 		}
     }
 }

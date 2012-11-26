@@ -229,6 +229,7 @@ namespace Archivist
 					else if (color == "W")
 					{
 						Rows[e.RowIndex].Cells[colorColumnIdx].Style.BackColor = Color.White;
+						Rows[e.RowIndex].Cells[colorColumnIdx].Style.ForeColor = Color.Black;
 					}
 					else if (color == "R")
 					{
