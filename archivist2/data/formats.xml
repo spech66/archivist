@@ -1,0 +1,271 @@
+<formats update="20 September 2012">
+	<group name="Constructed formats">
+		<format name="Standard">
+			<set>Innistrad</set>
+			<set>Dark Ascension</set>
+			<set>Avacyn Restored</set>
+			<set>Magic 2013</set>
+			<set>Return to Ravnica</set>
+			<set>Gatecrash</set>
+		</format>
+		<format name="Modern">
+			<set>Eighth Edition</set>
+			<set>Mirrodin</set>
+			<set>Darksteel</set>
+			<set>Fifth Dawn</set>
+			<set>Champions of Kamigawa</set>
+			<set>Betrayers of Kamigawa</set>
+			<set>Saviors of Kamigawa</set>
+			<set>Ninth Edition</set>
+			<set>Ravnica: City of Guilds</set>
+			<set>Guildpact</set>
+			<set>Dissension</set>
+			<set>Coldsnap</set>
+			<set>Time Spiral</set>
+			<set>Planar Chaos</set>
+			<set>Future Sight</set>
+			<set>Tenth Edition</set>
+			<set>Lorwyn</set>
+			<set>Morningtide</set>
+			<set>Shadowmoor</set>
+			<set>Eventide</set>
+			<set>Shards of Alara</set>
+			<set>Conflux</set>
+			<set>Alara Reborn</set>
+			<set>Magic 2010</set>
+			<set>Zendikar</set>
+			<set>Worldwake</set>
+			<set>Rise of the Eldrazi</set>
+			<set>Magic 2011</set>
+			<set>Scars of Mirrodin</set>
+			<set>Mirrodin Besieged</set>
+			<set>New Phyrexia</set>
+			<set>Magic 2012</set>
+			<set>Innistrad</set>
+			<set>Dark Ascension</set>
+			<set>Avacyn Restored</set>
+			<set>Magic 2013</set>
+			<set>Return to Ravnica</set>
+			<set>Gatecrash</set>
+			<banned>Ancestral Vision</banned>
+			<banned>Ancient Den</banned>
+			<banned>Bitterblossom</banned>
+			<banned>Blazing Shoal</banned>
+			<banned>Chrome Mox</banned>
+			<banned>Cloudpost</banned>
+			<banned>Dark Depths</banned>
+			<banned>Dread Return</banned>
+			<banned>Glimpse of Nature</banned>
+			<banned>Golgari Grave-Troll</banned>
+			<banned>Great Furnace</banned>
+			<banned>Green Sun's Zenith</banned>
+			<banned>Hypergenesis</banned>
+			<banned>Jace, the Mind Sculptor</banned>
+			<banned>Mental Misstep</banned>
+			<banned>Ponder</banned>
+			<banned>Preordain</banned>
+			<banned>Punishing Fire</banned>
+			<banned>Rite of Flame</banned>
+			<banned>Seat of the Synod</banned>
+			<banned>Sensei's Divining Top</banned>
+			<banned>Stoneforge Mystic</banned>
+			<banned>Skullclamp</banned>
+			<banned>Sword of the Meek</banned>
+			<banned>Tree of Tales</banned>
+			<banned>Umezawa's Jitte</banned>
+			<banned>Valakut, the Molten Pinnacle</banned>
+			<banned>Vault of Whispers</banned>
+			<banned>Wild Nacatl</banned>
+		</format>
+		<format name="Extended">
+			<set>Zendikar</set>
+			<set>Worldwake</set>
+			<set>Rise of the Eldrazi</set>
+			<set>Magic 2011</set>
+			<set>Scars of Mirrodin</set>
+			<set>Mirrodin Besieged</set>
+			<set>New Phyrexia</set>
+			<set>Magic 2012</set>
+			<set>Innistrad</set>
+			<set>Dark Ascension</set>
+			<set>Avacyn Restored</set>
+			<set>Magic 2013</set>
+			<set>Return to Ravnica</set>
+			<set>Gatecrash</set>
+			<banned>Jace, the Mind Sculptor</banned>
+			<banned>Mental Misstep</banned>
+			<banned>Ponder</banned>
+			<banned>Preordain</banned>
+			<banned>Stoneforge Mystic</banned>
+		</format>
+		<format name="Block">
+			<block name="Return to Ravnica"><set>Return to Ravnica</set><set>Gatecrash</set></block>
+			<block name="Innistrad-Avacyn Restored"><set>Innistrad</set><set>Dark Ascension</set><set>Avacyn Restored</set></block>
+			<block name="Scars of Mirrodin"><set>Scars of Mirrodin</set><set>Mirrodin Besieged</set><set>New Phyrexia</set></block>
+			<block name="Zendikar-Rise of the Eldrazi"><set>Zendikar</set><set>Worldwake</set><set>Rise of the Eldrazi</set></block>
+			<block name="Shards of Alara"><set>Shards of Alara</set><set>Conflux</set><set>Alara Reborn</set></block>
+			<block name="Lorwyn-Shadowmoor"><set>Lorwyn</set><set>Morningtide</set><set>Shadowmoor</set><set>Eventide</set></block>
+			<block name="Time Spiral"><set>Time Spiral</set><set>Planar Chaos</set><set>Future Sight</set></block>
+			<block name="Ravnica"><set>Ravnica: City of Guilds</set><set>Guildpact</set><set>Dissension</set></block>
+			<block name="Kamigawa"><set>Champions of Kamigawa</set><set>Betrayers of Kamigawa</set><set>Saviors of Kamigawa</set></block>
+			<block name="Mirrodin"><set>Mirrodin</set><set>Darksteel</set><set>Fifth Dawn</set></block>
+			<block name="Onslaught"><set>Onslaught</set><set>Legions</set><set>Scourge</set></block>
+			<block name="Odyssey"><set>Odyssey</set><set>Torment</set><set>Judgment</set></block>
+			<block name="Invasion"><set>Invasion</set><set>Planeshift</set><set>Apocalypse</set></block>
+			<block name="Masques"><set>Mercadian Masques</set><set>Nemesis</set><set>Prophecy</set></block>
+			<block name="Urza"><set>Urza's Saga</set><set>Urza's Legacy</set><set>Urza's Destiny</set></block>
+			<block name="Tempest"><set>Tempest</set><set>Stronghold</set><set>Exodus</set></block>
+			<block name="Mirage"><set>Mirage</set><set>Visions</set><set>Weatherlight</set></block>
+			<block name="Ice Age"> <set>Ice Age</set><set>Alliances</set><set>Coldsnap</set></block>
+			<banned block="Innistrad-Avacyn Restored">Intangible Virtue</banned>
+			<banned block="Innistrad-Avacyn Restored">Lingering Souls</banned>
+			<banned block="Mirrodin">AEther Vial</banned>
+			<banned block="Mirrodin">Ancient Den</banned>
+			<banned block="Mirrodin">Arcbound Ravager</banned>
+			<banned block="Mirrodin">Darksteel Citadel</banned>
+			<banned block="Mirrodin">Disciple of the Vault</banned>
+			<banned block="Mirrodin">Great Furnace</banned>
+			<banned block="Mirrodin">Seat of the Synod</banned>
+			<banned block="Mirrodin">Tree of Tales</banned>
+			<banned block="Mirrodin">Vault of Whispers</banned>
+			<banned block="Mirrodin">Skullclamp</banned>
+			<banned block="Masques">Lin Sivvi, Defiant Hero</banned>
+			<banned block="Masques">Rishadan Port</banned>
+			<banned block="Urza">Gaea’s Cradle</banned>
+			<banned block="Urza">Memory Jar</banned>
+			<banned block="Urza">Serra’s Sanctum</banned>
+			<banned block="Urza">Time Spiral</banned>
+			<banned block="Urza">Tolarian Academy</banned>
+			<banned block="Urza">Voltaic Key</banned>
+			<banned block="Urza">Windfall</banned>
+			<banned block="Tempest">Cursed Scroll</banned>
+			<banned block="Mirage">Squandered Resources</banned>
+			<banned block="Ice Age">Amulet of Quoz</banned>
+			<banned block="Ice Age">Thawing Glaciers</banned>
+			<banned block="Ice Age">Zuran Orb</banned>
+		</format>
+		<format name="Two-Headed Giant">
+			<banned>Erayo, Soratami Ascendant</banned>
+		</format>
+	</group>
+	<group name="Eternal formats">
+		<format name="Vintage">
+			<banned>Amulet of Quoz</banned>
+			<banned>Bronze Tablet</banned>
+			<banned>Chaos Orb</banned>
+			<banned>Contract from Below</banned>
+			<banned>Darkpact</banned>
+			<banned>Demonic Attorney</banned>
+			<banned>Falling Star</banned>
+			<banned>Jeweled Bird</banned>
+			<banned>Rebirth</banned>
+			<banned>Shahrazad</banned>
+			<banned>Tempest Efreet</banned>
+			<banned>Timmerian Fiends</banned>
+			<restricted>Ancestral Recall</restricted>
+			<restricted>Balance</restricted>
+			<restricted>Black Lotus</restricted>
+			<restricted>Brainstorm</restricted>
+			<restricted>Channel</restricted>
+			<restricted>Demonic Consultation</restricted>
+			<restricted>Demonic Tutor</restricted>
+			<restricted>Fastbond</restricted>
+			<restricted>Flash</restricted>
+			<restricted>Gifts Ungiven</restricted>
+			<restricted>Imperial Seal</restricted>
+			<restricted>Library of Alexandria</restricted>
+			<restricted>Lion’s Eye Diamond</restricted>
+			<restricted>Lotus Petal</restricted>
+			<restricted>Mana Crypt</restricted>
+			<restricted>Mana Vault</restricted>
+			<restricted>Memory Jar</restricted>
+			<restricted>Merchant Scroll</restricted>
+			<restricted>Mind’s Desire</restricted>
+			<restricted>Mox Emerald</restricted>
+			<restricted>Mox Jet</restricted>
+			<restricted>Mox Pearl</restricted>
+			<restricted>Mox Ruby</restricted>
+			<restricted>Mox Sapphire</restricted>
+			<restricted>Mystical Tutor</restricted>
+			<restricted>Necropotence</restricted>
+			<restricted>Ponder</restricted>
+			<restricted>Regrowth</restricted>
+			<restricted>Sol Ring</restricted>
+			<restricted>Strip Mine</restricted>
+			<restricted>Thirst for Knowledge</restricted>
+			<restricted>Time Vault</restricted>
+			<restricted>Time Walk</restricted>
+			<restricted>Timetwister</restricted>
+			<restricted>Tinker</restricted>
+			<restricted>Tolarian Academy</restricted>
+			<restricted>Trinisphere</restricted>
+			<restricted>Vampiric Tutor</restricted>
+			<restricted>Wheel of Fortune</restricted>
+			<restricted>Windfall</restricted>
+			<restricted>Yawgmoth’s Bargain</restricted>
+			<restricted>Yawgmoth’s Will</restricted>
+		</format>
+		<format name="Legacy">
+			<banned>Amulet of Quoz</banned>
+			<banned>Ancestral Recall</banned>
+			<banned>Balance</banned>
+			<banned>Bazaar of Baghdad</banned>
+			<banned>Black Lotus</banned>
+			<banned>Black Vise</banned>
+			<banned>Bronze Tablet</banned>
+			<banned>Channel</banned>
+			<banned>Chaos Orb</banned>
+			<banned>Contract from Below</banned>
+			<banned>Darkpact</banned>
+			<banned>Demonic Attorney</banned>
+			<banned>Demonic Consultation</banned>
+			<banned>Demonic Tutor</banned>
+			<banned>Earthcraft</banned>
+			<banned>Falling Star</banned>
+			<banned>Fastbond</banned>
+			<banned>Flash</banned>
+			<banned>Frantic Search</banned>
+			<banned>Goblin Recruiter</banned>
+			<banned>Gush</banned>
+			<banned>Hermit Druid</banned>
+			<banned>Imperial Seal</banned>
+			<banned>Jeweled Bird</banned>
+			<banned>Library of Alexandria</banned>
+			<banned>Mana Crypt</banned>
+			<banned>Mana Drain</banned>
+			<banned>Mana Vault</banned>
+			<banned>Memory Jar</banned>
+			<banned>Mental Misstep</banned>
+			<banned>Mind Twist</banned>
+			<banned>Mind's Desire</banned>
+			<banned>Mishra's Workshop</banned>
+			<banned>Mox Emerald</banned>
+			<banned>Mox Jet</banned>
+			<banned>Mox Pearl</banned>
+			<banned>Mox Ruby</banned>
+			<banned>Mox Sapphire</banned>
+			<banned>Mystical Tutor</banned>
+			<banned>Necropotence</banned>
+			<banned>Oath of Druids</banned>
+			<banned>Rebirth</banned>
+			<banned>Shahrazad</banned>
+			<banned>Skullclamp</banned>
+			<banned>Sol Ring</banned>
+			<banned>Strip Mine</banned>
+			<banned>Survival of the Fittest</banned>
+			<banned>Tempest Efreet</banned>
+			<banned>Time Vault</banned>
+			<banned>Time Walk</banned>
+			<banned>Timetwister</banned>
+			<banned>Timmerian Fiends</banned>
+			<banned>Tinker</banned>
+			<banned>Tolarian Academy</banned>
+			<banned>Vampiric Tutor</banned>
+			<banned>Wheel of Fortune</banned>
+			<banned>Windfall</banned>
+			<banned>Worldgorger Dragon</banned>
+			<banned>Yawgmoth's Bargain</banned>
+			<banned>Yawgmoth's Will</banned>
+		</format>
+	</group>
+</formats>
