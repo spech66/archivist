@@ -54,31 +54,66 @@ namespace Archivist
 			comboBoxSearchR.Items.AddRange(searchlist); comboBoxSearchR.SelectedIndex = 0;
 			comboBoxSearchG.Items.AddRange(searchlist); comboBoxSearchG.SelectedIndex = 0;
 
-			listBoxSearchExpansion.Items.Add("(All)"); listBoxSearchExpansion.SelectedIndex = 0;
-            Database database = DatabaseCreatorFactory.CreateDatabase();
-			IDbConnection connection = database.CreateConnection();
-			if (connection.State != ConnectionState.Open)
-			{
-				connection.Open();
-			}
+            InitSearchExpansionList();
 
+
+            Database database = DatabaseCreatorFactory.CreateDatabase();
+            IDbConnection connection = database.CreateConnection();
+            if (connection.State != ConnectionState.Open)
+            {
+                connection.Open();
+            }
+			listBoxSearchType.Items.Add("(All)"); listBoxSearchType.SelectedIndex = 0;
             IDbCommand cmd = database.CreateCommand();
             cmd.Connection = connection;
-			cmd.CommandText = "SELECT NAME FROM EXTENSION ORDER BY NAME";
-			IDataReader reader = cmd.ExecuteReader();
-			while (reader.Read())
-				listBoxSearchExpansion.Items.Add(reader.GetString(0));
-			reader.Close();
-
-			listBoxSearchType.Items.Add("(All)"); listBoxSearchType.SelectedIndex = 0;
 			cmd.CommandText = "SELECT distinct(TYPE) as TYPE FROM CARD ORDER BY TYPE";
-			reader = cmd.ExecuteReader();
+			IDataReader reader = cmd.ExecuteReader();
 			while (reader.Read())
 			{
 				listBoxSearchType.Items.Add(reader.GetString(0));
 			}
 			reader.Close();
 		}
+
+        private void InitSearchExpansionList()
+        {
+            listBoxSearchExpansion.Items.Clear();
+            listBoxSearchExpansion.Items.Add("(All)"); listBoxSearchExpansion.SelectedIndex = 0;
+            Database database = DatabaseCreatorFactory.CreateDatabase();
+            IDbConnection connection = database.CreateConnection();
+            if (connection.State != ConnectionState.Open)
+            {
+                connection.Open();
+            }
+
+            IDbCommand cmd = database.CreateCommand();
+            cmd.Connection = connection;
+            cmd.CommandText = "SELECT NAME FROM EXTENSION";
+
+            if (comboBoxSearchFormat.SelectedIndex > 0)
+            {
+                TournamentFormat format = comboBoxSearchFormat.SelectedItem as TournamentFormat;
+
+                if (format.Set.Count() > 0)
+                {
+                    string list = "";
+                    foreach (string sel in format.Set)
+                    {
+                        list += "'" + sel + "', ";
+                    }
+                    list = list.Remove(list.Length - 2, 2);
+
+                    cmd.CommandText += " WHERE NAME IN (" + list + ")";
+                }
+            }
+
+            cmd.CommandText += " ORDER BY NAME";
+
+            IDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+                listBoxSearchExpansion.Items.Add(reader.GetString(0));
+            reader.Close();
+        }
 		#endregion
 
 		#region UpdateLists
@@ -446,6 +481,11 @@ namespace Archivist
 
 			dgLibrary.BindDatasource(cardsLibrary);
 		}
+        
+        private void comboBoxSearchFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            InitSearchExpansionList();
+        }
 
 		#endregion
 
@@ -545,6 +585,39 @@ namespace Archivist
 
 			// Flavor text
 
+            // Format
+            if (comboBoxSearchFormat.SelectedIndex > 0)
+            {
+                TournamentFormat format = comboBoxSearchFormat.SelectedItem as TournamentFormat;
+
+                // Set list
+                if (format.Set.Count() > 0)
+                {
+                    string list = "";
+                    foreach (string sel in format.Set)
+                    {
+                        list += "'" + sel + "', ";
+                    }
+                    list = list.Remove(list.Length - 2, 2);
+
+                    whereclause += " AND EXTENSION IN (" + list + ")";
+                }
+
+                // Banned card list
+                if (format.Banned.Count() > 0)
+                {
+                    string list = "";
+                    foreach (string sel in format.Banned)
+                    {
+                        list += "'" + sel + "', ";
+                    }
+                    list = list.Remove(list.Length - 2, 2);
+
+                    whereclause += " AND NAME NOT IN (" + list + ")";
+                }
+            }
+
+            // Build the whereclause, 1=1 to allow every statement start with AND
 			if (!String.IsNullOrEmpty(whereclause))
 			{
 				whereclause = " WHERE 1=1 " + whereclause;
