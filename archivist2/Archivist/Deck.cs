@@ -370,7 +370,7 @@ namespace Archivist
         private void GenerateDraw(int drawCards)
         {
             List<ListBoxItemNameId> deckList = new List<ListBoxItemNameId>();
-            foreach (Card c in cards)
+            foreach (Card c in cards.Where(sel => !sel.IsInSideboard))
             {
                 for (int i = 0; i < c.Amount; i++)
                 {
@@ -380,7 +380,9 @@ namespace Archivist
 
             if (deckList.Count < 8)
             {
+                lbDrawLibrary.DataSource = null;
                 lbDrawLibrary.Items.Add("Not enough cards!");
+                lbDrawStartingHand.DataSource = null;
                 lbDrawStartingHand.Items.Add("Not enough cards!");
                 return;
             }
