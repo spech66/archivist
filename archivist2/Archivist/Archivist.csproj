@@ -189,6 +189,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SortableBindingList.cs" />
+    <Compile Include="TournamentFormats.cs" />
     <Compile Include="UpdateDatabase.cs">
       <SubType>Form</SubType>
     </Compile>
