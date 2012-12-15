@@ -19,6 +19,7 @@ namespace Archivist
         }
 
         private List<TournamentFormat> formats = new List<TournamentFormat>();
+        public IEnumerable<TournamentFormat> Formats { get { return formats.AsEnumerable(); } }
 
         static TournamentFormats()
 		{
@@ -31,6 +32,8 @@ namespace Archivist
         public TournamentFormats()
         {
             string formatsFile = Path.Combine(Helper.DataDirectory, "formats.xml");
+
+            formats.Add(new TournamentFormat("", ""));
 
             string group = string.Empty;
             TournamentFormat format = null;
@@ -96,6 +99,17 @@ namespace Archivist
         public IEnumerable<string> Set { get { return set; } }
         public IEnumerable<string> Banned { get { return banned; } }
         public IEnumerable<string> Restricted { get { return restricted; } }
+
+        public string GroupName
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(Group))
+                    return "(All)";
+
+                return String.Format("{0} - {1}", Group, Name);
+            }
+        }
 
         public TournamentFormat(string group, string name)
         {
