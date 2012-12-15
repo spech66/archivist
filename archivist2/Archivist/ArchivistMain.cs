@@ -33,6 +33,9 @@ namespace Archivist
 		#region Init
 		private void InitSearch()
 		{
+            comboBoxSearchFormat.DataSource = TournamentFormats.Instance.Formats;
+            comboBoxSearchFormat.DisplayMember = "GroupName";
+
 			textBoxSearchName.Text = "";
 			comboBoxSearchU.Items.Clear();
 			comboBoxSearchB.Items.Clear();
