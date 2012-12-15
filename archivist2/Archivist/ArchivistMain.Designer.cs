@@ -105,6 +105,8 @@ namespace Archivist
             this.buttonSearch = new System.Windows.Forms.Button();
             this.buttonSearchReset = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.comboBoxSearchFormat = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.cardInfoCards = new Archivist.CardInfo();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpCardSearch = new System.Windows.Forms.TabPage();
@@ -118,8 +120,6 @@ namespace Archivist
             this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
             this.bwUpdateCardList = new System.ComponentModel.BackgroundWorker();
             this.bwUpdateLibrary = new System.ComponentModel.BackgroundWorker();
-            this.comboBoxSearchFormat = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -923,6 +923,28 @@ namespace Archivist
             this.label6.TabIndex = 22;
             this.label6.Text = "Type:";
             // 
+            // comboBoxSearchFormat
+            // 
+            this.comboBoxSearchFormat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxSearchFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSearchFormat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxSearchFormat.FormattingEnabled = true;
+            this.comboBoxSearchFormat.Location = new System.Drawing.Point(75, 3);
+            this.comboBoxSearchFormat.Name = "comboBoxSearchFormat";
+            this.comboBoxSearchFormat.Size = new System.Drawing.Size(210, 21);
+            this.comboBoxSearchFormat.TabIndex = 24;
+            this.comboBoxSearchFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxSearchFormat_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 30);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Format:";
+            // 
             // cardInfoCards
             // 
             this.cardInfoCards.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1049,27 +1071,6 @@ namespace Archivist
             // 
             this.bwUpdateLibrary.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateLibrary_DoWork);
             this.bwUpdateLibrary.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUpdateLibrary_RunWorkerCompleted);
-            // 
-            // comboBoxSearchFormat
-            // 
-            this.comboBoxSearchFormat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxSearchFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSearchFormat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxSearchFormat.FormattingEnabled = true;
-            this.comboBoxSearchFormat.Location = new System.Drawing.Point(75, 3);
-            this.comboBoxSearchFormat.Name = "comboBoxSearchFormat";
-            this.comboBoxSearchFormat.Size = new System.Drawing.Size(210, 21);
-            this.comboBoxSearchFormat.TabIndex = 24;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(3, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(66, 30);
-            this.label7.TabIndex = 25;
-            this.label7.Text = "Format:";
             // 
             // ArchivistMain
             // 
