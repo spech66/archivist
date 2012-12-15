@@ -98,27 +98,17 @@
 			<banned>Preordain</banned>
 			<banned>Stoneforge Mystic</banned>
 		</format>
-		<format name="Block">
-			<block name="Return to Ravnica"><set>Return to Ravnica</set><set>Gatecrash</set></block>
-			<block name="Innistrad-Avacyn Restored"><set>Innistrad</set><set>Dark Ascension</set><set>Avacyn Restored</set></block>
-			<block name="Scars of Mirrodin"><set>Scars of Mirrodin</set><set>Mirrodin Besieged</set><set>New Phyrexia</set></block>
-			<block name="Zendikar-Rise of the Eldrazi"><set>Zendikar</set><set>Worldwake</set><set>Rise of the Eldrazi</set></block>
-			<block name="Shards of Alara"><set>Shards of Alara</set><set>Conflux</set><set>Alara Reborn</set></block>
-			<block name="Lorwyn-Shadowmoor"><set>Lorwyn</set><set>Morningtide</set><set>Shadowmoor</set><set>Eventide</set></block>
-			<block name="Time Spiral"><set>Time Spiral</set><set>Planar Chaos</set><set>Future Sight</set></block>
-			<block name="Ravnica"><set>Ravnica: City of Guilds</set><set>Guildpact</set><set>Dissension</set></block>
-			<block name="Kamigawa"><set>Champions of Kamigawa</set><set>Betrayers of Kamigawa</set><set>Saviors of Kamigawa</set></block>
-			<block name="Mirrodin"><set>Mirrodin</set><set>Darksteel</set><set>Fifth Dawn</set></block>
-			<block name="Onslaught"><set>Onslaught</set><set>Legions</set><set>Scourge</set></block>
-			<block name="Odyssey"><set>Odyssey</set><set>Torment</set><set>Judgment</set></block>
-			<block name="Invasion"><set>Invasion</set><set>Planeshift</set><set>Apocalypse</set></block>
-			<block name="Masques"><set>Mercadian Masques</set><set>Nemesis</set><set>Prophecy</set></block>
-			<block name="Urza"><set>Urza's Saga</set><set>Urza's Legacy</set><set>Urza's Destiny</set></block>
-			<block name="Tempest"><set>Tempest</set><set>Stronghold</set><set>Exodus</set></block>
-			<block name="Mirage"><set>Mirage</set><set>Visions</set><set>Weatherlight</set></block>
-			<block name="Ice Age"> <set>Ice Age</set><set>Alliances</set><set>Coldsnap</set></block>
+		<format name="Two-Headed Giant">
+			<banned>Erayo, Soratami Ascendant</banned>
+		</format>
+	</group>
+	<group name="Constructed formats - Block">
+		<block name="Return to Ravnica"><set>Return to Ravnica</set><set>Gatecrash</set></block>
+		<block name="Innistrad-Avacyn Restored"><set>Innistrad</set><set>Dark Ascension</set><set>Avacyn Restored</set>			
 			<banned block="Innistrad-Avacyn Restored">Intangible Virtue</banned>
 			<banned block="Innistrad-Avacyn Restored">Lingering Souls</banned>
+		</block>
+		<block name="Scars of Mirrodin"><set>Scars of Mirrodin</set><set>Mirrodin Besieged</set><set>New Phyrexia</set>
 			<banned block="Mirrodin">AEther Vial</banned>
 			<banned block="Mirrodin">Ancient Den</banned>
 			<banned block="Mirrodin">Arcbound Ravager</banned>
@@ -129,24 +119,44 @@
 			<banned block="Mirrodin">Tree of Tales</banned>
 			<banned block="Mirrodin">Vault of Whispers</banned>
 			<banned block="Mirrodin">Skullclamp</banned>
-			<banned block="Masques">Lin Sivvi, Defiant Hero</banned>
-			<banned block="Masques">Rishadan Port</banned>
-			<banned block="Urza">Gaea’s Cradle</banned>
-			<banned block="Urza">Memory Jar</banned>
-			<banned block="Urza">Serra’s Sanctum</banned>
-			<banned block="Urza">Time Spiral</banned>
-			<banned block="Urza">Tolarian Academy</banned>
-			<banned block="Urza">Voltaic Key</banned>
-			<banned block="Urza">Windfall</banned>
-			<banned block="Tempest">Cursed Scroll</banned>
-			<banned block="Mirage">Squandered Resources</banned>
-			<banned block="Ice Age">Amulet of Quoz</banned>
-			<banned block="Ice Age">Thawing Glaciers</banned>
-			<banned block="Ice Age">Zuran Orb</banned>
-		</format>
-		<format name="Two-Headed Giant">
-			<banned>Erayo, Soratami Ascendant</banned>
-		</format>
+		</block>
+		<block name="Zendikar-Rise of the Eldrazi"><set>Zendikar</set><set>Worldwake</set><set>Rise of the Eldrazi</set></block>
+		<block name="Shards of Alara"><set>Shards of Alara</set><set>Conflux</set><set>Alara Reborn</set></block>
+		<block name="Lorwyn-Shadowmoor"><set>Lorwyn</set><set>Morningtide</set><set>Shadowmoor</set><set>Eventide</set></block>
+		<block name="Time Spiral"><set>Time Spiral</set><set>Planar Chaos</set><set>Future Sight</set></block>
+		<block name="Ravnica"><set>Ravnica: City of Guilds</set><set>Guildpact</set><set>Dissension</set></block>
+		<block name="Kamigawa"><set>Champions of Kamigawa</set><set>Betrayers of Kamigawa</set><set>Saviors of Kamigawa</set></block>
+		<block name="Mirrodin"><set>Mirrodin</set><set>Darksteel</set><set>Fifth Dawn</set></block>
+		<block name="Onslaught"><set>Onslaught</set><set>Legions</set><set>Scourge</set></block>
+		<block name="Odyssey"><set>Odyssey</set><set>Torment</set><set>Judgment</set></block>
+		<block name="Invasion"><set>Invasion</set><set>Planeshift</set><set>Apocalypse</set></block>
+		<block name="Masques"><set>Mercadian Masques</set><set>Nemesis</set><set>Prophecy</set>
+			<banned>Lin Sivvi, Defiant Hero</banned>
+			<banned>Rishadan Port</banned>
+		</block>
+		<block name="Urza"><set>Urza's Saga</set><set>Urza's Legacy</set><set>Urza's Destiny</set>
+			<banned>Gaea's Cradle</banned>
+			<banned>Memory Jar</banned>
+			<banned>Serra's Sanctum</banned>
+			<banned >Time Spiral</banned>
+			<banned>Tolarian Academy</banned>
+			<banned>Voltaic Key</banned>
+			<banned>Windfall</banned>
+		</block>
+		<block name="Tempest"><set>Tempest</set><set>Stronghold</set><set>Exodus</set>
+			<banned>Cursed Scroll</banned>
+		</block>
+		<block name="Mirage"><set>Mirage</set><set>Visions</set><set>Weatherlight</set>
+			<banned>Squandered Resources</banned>
+		</block>
+		<block name="Ice Age">
+			<set>Ice Age</set>
+			<set>Alliances</set>
+			<set>Coldsnap</set>
+			<banned>Amulet of Quoz</banned>
+			<banned>Thawing Glaciers</banned>
+			<banned>Zuran Orb</banned>
+		</block>
 	</group>
 	<group name="Eternal formats">
 		<format name="Vintage">
@@ -174,13 +184,13 @@
 			<restricted>Gifts Ungiven</restricted>
 			<restricted>Imperial Seal</restricted>
 			<restricted>Library of Alexandria</restricted>
-			<restricted>Lion’s Eye Diamond</restricted>
+			<restricted>Lion's Eye Diamond</restricted>
 			<restricted>Lotus Petal</restricted>
 			<restricted>Mana Crypt</restricted>
 			<restricted>Mana Vault</restricted>
 			<restricted>Memory Jar</restricted>
 			<restricted>Merchant Scroll</restricted>
-			<restricted>Mind’s Desire</restricted>
+			<restricted>Mind's Desire</restricted>
 			<restricted>Mox Emerald</restricted>
 			<restricted>Mox Jet</restricted>
 			<restricted>Mox Pearl</restricted>
@@ -202,8 +212,8 @@
 			<restricted>Vampiric Tutor</restricted>
 			<restricted>Wheel of Fortune</restricted>
 			<restricted>Windfall</restricted>
-			<restricted>Yawgmoth’s Bargain</restricted>
-			<restricted>Yawgmoth’s Will</restricted>
+			<restricted>Yawgmoth's Bargain</restricted>
+			<restricted>Yawgmoth's Will</restricted>
 		</format>
 		<format name="Legacy">
 			<banned>Amulet of Quoz</banned>
