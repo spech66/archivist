@@ -76,7 +76,6 @@ namespace Archivist
             this.tspViewAbout = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxCards = new System.Windows.Forms.GroupBox();
-            this.dgCards = new Archivist.CardDataGrid();
             this.cmCards = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxSearch = new System.Windows.Forms.GroupBox();
@@ -107,25 +106,26 @@ namespace Archivist
             this.label6 = new System.Windows.Forms.Label();
             this.comboBoxSearchFormat = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cardInfoCards = new Archivist.CardInfo();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpCardSearch = new System.Windows.Forms.TabPage();
             this.tpLibrary = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.dgLibrary = new Archivist.CardDataGrid();
             this.cmLibrary = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.cardInfoLibrary = new Archivist.CardInfo();
             this.tpDeckManager = new System.Windows.Forms.TabPage();
-            this.lbDeckManagerDeckList = new System.Windows.Forms.ListBox();
             this.bwUpdateCardList = new System.ComponentModel.BackgroundWorker();
             this.bwUpdateLibrary = new System.ComponentModel.BackgroundWorker();
+            this.tvDeckManagerDeckList = new System.Windows.Forms.TreeView();
+            this.dgCards = new Archivist.CardDataGrid();
+            this.cardInfoCards = new Archivist.CardInfo();
+            this.dgLibrary = new Archivist.CardDataGrid();
+            this.cardInfoLibrary = new Archivist.CardInfo();
+            this.imageListTree = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBoxCards.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
             this.cmCards.SuspendLayout();
             this.groupBoxSearch.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -138,9 +138,10 @@ namespace Archivist
             this.tpCardSearch.SuspendLayout();
             this.tpLibrary.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
             this.cmLibrary.SuspendLayout();
             this.tpDeckManager.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgCards)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -576,22 +577,6 @@ namespace Archivist
             this.groupBoxCards.TabStop = false;
             this.groupBoxCards.Text = "Cards";
             // 
-            // dgCards
-            // 
-            this.dgCards.AllowUserToAddRows = false;
-            this.dgCards.AllowUserToDeleteRows = false;
-            this.dgCards.AllowUserToResizeRows = false;
-            this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgCards.ContextMenuStrip = this.cmCards;
-            this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgCards.Location = new System.Drawing.Point(3, 16);
-            this.dgCards.Name = "dgCards";
-            this.dgCards.ReadOnly = true;
-            this.dgCards.Size = new System.Drawing.Size(258, 516);
-            this.dgCards.TabIndex = 0;
-            this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
-            // 
             // cmCards
             // 
             this.cmCards.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -945,14 +930,6 @@ namespace Archivist
             this.label7.TabIndex = 25;
             this.label7.Text = "Format:";
             // 
-            // cardInfoCards
-            // 
-            this.cardInfoCards.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardInfoCards.Location = new System.Drawing.Point(273, 3);
-            this.cardInfoCards.Name = "cardInfoCards";
-            this.cardInfoCards.Size = new System.Drawing.Size(244, 535);
-            this.cardInfoCards.TabIndex = 4;
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tpCardSearch);
@@ -1003,6 +980,77 @@ namespace Archivist
             this.tableLayoutPanel3.Size = new System.Drawing.Size(820, 541);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
+            // cmLibrary
+            // 
+            this.cmLibrary.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3});
+            this.cmLibrary.Name = "cmLibrary";
+            this.cmLibrary.Size = new System.Drawing.Size(118, 26);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(117, 22);
+            this.toolStripMenuItem3.Text = "Remove";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // tpDeckManager
+            // 
+            this.tpDeckManager.Controls.Add(this.tvDeckManagerDeckList);
+            this.tpDeckManager.Location = new System.Drawing.Point(4, 22);
+            this.tpDeckManager.Name = "tpDeckManager";
+            this.tpDeckManager.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDeckManager.Size = new System.Drawing.Size(826, 547);
+            this.tpDeckManager.TabIndex = 2;
+            this.tpDeckManager.Text = "Deck Manager";
+            this.tpDeckManager.UseVisualStyleBackColor = true;
+            // 
+            // bwUpdateCardList
+            // 
+            this.bwUpdateCardList.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateCardList_DoWork);
+            this.bwUpdateCardList.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUpdateCardList_RunWorkerCompleted);
+            // 
+            // bwUpdateLibrary
+            // 
+            this.bwUpdateLibrary.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateLibrary_DoWork);
+            this.bwUpdateLibrary.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUpdateLibrary_RunWorkerCompleted);
+            // 
+            // tvDeckManagerDeckList
+            // 
+            this.tvDeckManagerDeckList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvDeckManagerDeckList.ImageIndex = 0;
+            this.tvDeckManagerDeckList.ImageList = this.imageListTree;
+            this.tvDeckManagerDeckList.Location = new System.Drawing.Point(3, 3);
+            this.tvDeckManagerDeckList.Name = "tvDeckManagerDeckList";
+            this.tvDeckManagerDeckList.SelectedImageIndex = 0;
+            this.tvDeckManagerDeckList.Size = new System.Drawing.Size(820, 541);
+            this.tvDeckManagerDeckList.TabIndex = 0;
+            this.tvDeckManagerDeckList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvDeckManagerDeckList_AfterSelect);
+            // 
+            // dgCards
+            // 
+            this.dgCards.AllowUserToAddRows = false;
+            this.dgCards.AllowUserToDeleteRows = false;
+            this.dgCards.AllowUserToResizeRows = false;
+            this.dgCards.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dgCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgCards.ContextMenuStrip = this.cmCards;
+            this.dgCards.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgCards.Location = new System.Drawing.Point(3, 16);
+            this.dgCards.Name = "dgCards";
+            this.dgCards.ReadOnly = true;
+            this.dgCards.Size = new System.Drawing.Size(258, 516);
+            this.dgCards.TabIndex = 0;
+            this.dgCards.SelectionChanged += new System.EventHandler(this.dgCards_SelectionChanged);
+            // 
+            // cardInfoCards
+            // 
+            this.cardInfoCards.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardInfoCards.Location = new System.Drawing.Point(273, 3);
+            this.cardInfoCards.Name = "cardInfoCards";
+            this.cardInfoCards.Size = new System.Drawing.Size(244, 535);
+            this.cardInfoCards.TabIndex = 4;
+            // 
             // dgLibrary
             // 
             this.dgLibrary.AllowUserToAddRows = false;
@@ -1018,20 +1066,6 @@ namespace Archivist
             this.dgLibrary.TabIndex = 0;
             this.dgLibrary.SelectionChanged += new System.EventHandler(this.dgLibrary_SelectionChanged);
             // 
-            // cmLibrary
-            // 
-            this.cmLibrary.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem3});
-            this.cmLibrary.Name = "cmLibrary";
-            this.cmLibrary.Size = new System.Drawing.Size(118, 26);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(117, 22);
-            this.toolStripMenuItem3.Text = "Remove";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
             // cardInfoLibrary
             // 
             this.cardInfoLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1040,37 +1074,12 @@ namespace Archivist
             this.cardInfoLibrary.Size = new System.Drawing.Size(244, 535);
             this.cardInfoLibrary.TabIndex = 1;
             // 
-            // tpDeckManager
+            // imageListTree
             // 
-            this.tpDeckManager.Controls.Add(this.lbDeckManagerDeckList);
-            this.tpDeckManager.Location = new System.Drawing.Point(4, 22);
-            this.tpDeckManager.Name = "tpDeckManager";
-            this.tpDeckManager.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDeckManager.Size = new System.Drawing.Size(826, 547);
-            this.tpDeckManager.TabIndex = 2;
-            this.tpDeckManager.Text = "Deck Manager";
-            this.tpDeckManager.UseVisualStyleBackColor = true;
-            // 
-            // lbDeckManagerDeckList
-            // 
-            this.lbDeckManagerDeckList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbDeckManagerDeckList.FormattingEnabled = true;
-            this.lbDeckManagerDeckList.Location = new System.Drawing.Point(3, 3);
-            this.lbDeckManagerDeckList.Name = "lbDeckManagerDeckList";
-            this.lbDeckManagerDeckList.Size = new System.Drawing.Size(820, 541);
-            this.lbDeckManagerDeckList.Sorted = true;
-            this.lbDeckManagerDeckList.TabIndex = 1;
-            this.lbDeckManagerDeckList.DoubleClick += new System.EventHandler(this.lbDeckManagerDeckList_DoubleClick);
-            // 
-            // bwUpdateCardList
-            // 
-            this.bwUpdateCardList.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateCardList_DoWork);
-            this.bwUpdateCardList.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUpdateCardList_RunWorkerCompleted);
-            // 
-            // bwUpdateLibrary
-            // 
-            this.bwUpdateLibrary.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUpdateLibrary_DoWork);
-            this.bwUpdateLibrary.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUpdateLibrary_RunWorkerCompleted);
+            this.imageListTree.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTree.ImageStream")));
+            this.imageListTree.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTree.Images.SetKeyName(0, "folder.png");
+            this.imageListTree.Images.SetKeyName(1, "filenew.png");
             // 
             // ArchivistMain
             // 
@@ -1096,7 +1105,6 @@ namespace Archivist
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBoxCards.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
             this.cmCards.ResumeLayout(false);
             this.groupBoxSearch.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -1110,9 +1118,10 @@ namespace Archivist
             this.tpCardSearch.ResumeLayout(false);
             this.tpLibrary.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
             this.cmLibrary.ResumeLayout(false);
             this.tpDeckManager.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgCards)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLibrary)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1166,8 +1175,7 @@ namespace Archivist
 		private System.Windows.Forms.TabPage tpLibrary;
 		private System.Windows.Forms.ToolStripMenuItem cardSearchToolStripMenuItem;
 		private System.Windows.Forms.ToolStripButton tspViewCardSearch;
-		private System.Windows.Forms.TabPage tpDeckManager;
-		private System.Windows.Forms.ListBox lbDeckManagerDeckList;
+        private System.Windows.Forms.TabPage tpDeckManager;
 		private System.Windows.Forms.ToolStripMenuItem cardSearchToolStripMenuItem1;
 		private CardDataGrid dgLibrary;
 		private CardDataGrid dgCards;
@@ -1210,6 +1218,8 @@ namespace Archivist
 		private CardInfo cardInfoLibrary;
         private System.Windows.Forms.ComboBox comboBoxSearchFormat;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TreeView tvDeckManagerDeckList;
+        private System.Windows.Forms.ImageList imageListTree;
     }
 }
 
