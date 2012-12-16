@@ -55,6 +55,9 @@ namespace Archivist
 			{
 				LoadDeck(deckFilename);
 			}
+
+            comboBoxFormat.DataSource = TournamentFormats.Instance.Formats;
+            comboBoxFormat.DisplayMember = "GroupName";
 		}
 
 		private void LoadDeck(string path)
@@ -490,5 +493,102 @@ namespace Archivist
 				return String.Format("{0} Cards", cardAmount);
 			}
 		}
+
+        private void btnFormatCheck_Click(object sender, EventArgs e)
+        {
+            bool valid = true;
+            
+            pbFormat.BackColor = Color.Green;
+            lvFormatSummary.Items.Clear();
+
+            if (comboBoxFormat.SelectedIndex == 0)
+                return;
+
+            TournamentFormat format = comboBoxFormat.SelectedItem as TournamentFormat;
+            
+            string validSetList = "";
+            if (format.Set.Count() > 0)
+            {
+                foreach (string sel in format.Set)
+                {
+                    validSetList += sel + ", ";
+                }
+                validSetList = validSetList.Remove(validSetList.Length - 2, 2);
+            }
+
+            IDbConnection connection = DataBuider.database.CreateOpenConnection();
+            Database database = DataBuider.database;
+            foreach (Card c in cards)
+            {
+                bool cardValid = true;
+
+                // Set list
+                if (format.Set.Count() > 0)
+                {
+                    bool setFound = false;
+
+                    IDbCommand cmdEditon = database.CreateCommand();
+                    cmdEditon.CommandText = "SELECT EXTENSION FROM CARD WHERE NAME = ?";
+                    cmdEditon.Connection = connection;
+                    IDbDataParameter p1Editon = cmdEditon.CreateParameter();
+                    p1Editon.Value = c.Name;
+                    cmdEditon.Parameters.Add(p1Editon);
+			        IDataReader readerEditon = cmdEditon.ExecuteReader();
+                    while (readerEditon.Read())
+                    {
+                        if (format.Set.Contains(readerEditon.GetString(0)))
+                        {
+                            setFound = true;
+                        }
+                    }
+
+                    if (!setFound)
+                    {
+                        cardValid = false;
+                        ListViewItem item = new ListViewItem(c.Name + " was not found in the valid sets: " + validSetList);
+                        item.BackColor = Color.OrangeRed;
+                        lvFormatSummary.Items.Add(item);
+                    }
+                }
+
+                // Banned card list
+                if (format.Banned.Count() > 0)
+                {
+                    if (format.Banned.Contains(c.Name))
+                    {
+                        cardValid = false;
+                        ListViewItem item = new ListViewItem(c.Name + " is banned.");
+                        item.BackColor = Color.Red;
+                        lvFormatSummary.Items.Add(item);
+                    }
+                }
+
+                // Restricted card list
+                if (format.Restricted.Count() > 0)
+                {
+                    if (c.Amount > 1 && format.Restricted.Contains(c.Name))
+                    {
+                        cardValid = false;
+                        ListViewItem item = new ListViewItem(c.Name + " is restricted.");
+                        item.BackColor = Color.Orange;
+                        lvFormatSummary.Items.Add(item);
+                    }
+                }
+
+                if (cardValid)
+                {
+                    lvFormatSummary.Items.Add(c.Name + " is valid.");
+                }
+                else
+                {
+                    valid = false;
+                }
+            }
+
+            if (!valid)
+            {
+                pbFormat.BackColor = Color.Red;
+            }
+        }
     }
 }
