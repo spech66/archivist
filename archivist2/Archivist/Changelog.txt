@@ -7,8 +7,10 @@
 # Archivist Beta 4                                                            #
 ===============================================================================
 - Format selection in search
+- Deck validation for tournament format
 - Removed sideboard cards from draw simulation
 - Option labels changed
+- Extension removed from deck
 
 ===============================================================================
 # Archivist Beta 3                                                            #

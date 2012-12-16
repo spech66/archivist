@@ -170,6 +170,7 @@ namespace Archivist
                         break;
                     case CardDataGrid.GridType.Deck:
                         colLibImage.Visible = Properties.Settings.Default.ShowImagesDeck;
+                        colLibExtension.Visible = false;
                         break;
                     case CardDataGrid.GridType.Library:
                         colLibImage.Visible = Properties.Settings.Default.ShowImagesLibrary;
