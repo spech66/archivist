@@ -11,6 +11,7 @@
 - Removed sideboard cards from draw simulation
 - Option labels changed
 - Extension removed from deck
+- Deck manager displays decks folder as tree
 
 ===============================================================================
 # Archivist Beta 3                                                            #

@@ -17,6 +17,9 @@ namespace Archivist
 		private SortableBindingList<Archivist.MagicObjects.MagicCard> cardsLibrary = new SortableBindingList<Archivist.MagicObjects.MagicCard>();
 		private string libraryFile;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ArchivistMain()
         {
             InitializeComponent();
@@ -117,26 +120,61 @@ namespace Archivist
 		#endregion
 
 		#region UpdateLists
+        /// <summary>
+        /// Add files and directories to the tree
+        /// </summary>
 		private void UpdateDeckList()
 		{
+            tvDeckManagerDeckList.Nodes.Clear();
+
 			UpdateDeckListGetDeckTree(Helper.DecksDirectory);
+            
+            tvDeckManagerDeckList.ExpandAll();
 		}
 
-		private void UpdateDeckListGetDeckTree(string dir)
+        /// <summary>
+        /// Add files and directories to the tree
+        /// </summary>
+        /// <param name="dir">The path</param>
+        /// <param name="parent">Parent nod to add items</param>
+		private void UpdateDeckListGetDeckTree(string dir, TreeNode parent = null)
 		{
+            // Add directories
 			string[] subdirs = Directory.GetDirectories(dir);
 			foreach(string subdir in subdirs)
 			{
-				UpdateDeckListGetDeckTree(subdir);
+                TreeNode dirNode = new TreeNode(Path.GetFileName(subdir), 0, 0);
+                if (parent != null)
+                {
+                    parent.Nodes.Add(dirNode);
+                }
+                else
+                {
+                    tvDeckManagerDeckList.Nodes.Add(dirNode);
+                }
+				UpdateDeckListGetDeckTree(subdir, dirNode);
 			}
 
+            // Add files
 			string[] files = Directory.GetFiles(dir);
 			foreach (string file in files)
-			{
-				lbDeckManagerDeckList.Items.Add(file.Replace(Helper.DecksDirectory, "").Substring(1)); // Remove leading / to not confuse Path.Combine
+            {
+                TreeNode dirNode = new TreeNode(Path.GetFileNameWithoutExtension(file), 1, 1);
+                dirNode.Tag = file.Replace(Helper.DecksDirectory, "").Substring(1); // Remove leading / to not confuse Path.Combine
+                if (parent != null)
+                {
+                    parent.Nodes.Add(dirNode);
+                }
+                else
+                {
+                    tvDeckManagerDeckList.Nodes.Add(dirNode);
+                }
 			}
 		}
 		
+        /// <summary>
+        /// Load cards from library
+        /// </summary>
 		public void UpdateLibraryList()
 		{
 			libraryFile = Path.Combine(Helper.DataDirectory, "Library.dat");
@@ -218,13 +256,18 @@ namespace Archivist
 			cardInfoLibrary.DataSource = card;
 		}
 
-		private void lbDeckManagerDeckList_DoubleClick(object sender, EventArgs e)
-		{
-			if (lbDeckManagerDeckList.SelectedItem == null)
-				return;
+        /// <summary>
+        /// Select deck to open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tvDeckManagerDeckList_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Tag == null || !(e.Node.Tag is string))
+                return;
 
-			OpenDeck(Path.Combine(Helper.DecksDirectory, lbDeckManagerDeckList.SelectedItem.ToString()));
-		}
+            OpenDeck(Path.Combine(Helper.DecksDirectory, e.Node.Tag as string));
+        }
 
 		private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -365,7 +408,10 @@ namespace Archivist
             if (tabControl1.SelectedTab.Controls[0] is Deck)
             {
                 Deck deck = (Deck)tabControl1.SelectedTab.Controls[0];
-                deck.SaveDeck();
+                if (deck.SaveDeck())
+                {
+                    UpdateDeckList();
+                }
             }
         }
 
