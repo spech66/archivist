@@ -56,11 +56,11 @@ namespace Archivist
 				setList.Add("Limited Edition Alpha");
 				setList.Add("Magic 2011");*/
 				
-				UpdateExtensions(ref setList);
+                Dictionary<int, string> updateSetList = UpdateExtensions(setList);
 
-				DownloadSpoilerList(ref setList);
+                DownloadSpoilerList(ref updateSetList);
 
-				GenerateCards(ref setList);
+                GenerateCards(ref updateSetList);
 
 				// ------------------------------------------------------------
                 // We are done!
@@ -118,12 +118,12 @@ namespace Archivist
 		/// Download spoiler lists
 		/// </summary>
 		/// <param name="setList"></param>
-		private void DownloadSpoilerList(ref List<string> setList)
+        private void DownloadSpoilerList(ref Dictionary<int, string> setList)
 		{
 			using (WebClient client = new WebClient())
 			{
 				int i = 0;
-				foreach (string ext in setList)
+				foreach (string ext in setList.Values)
 				{
 					string downloadUrl = String.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&action=advanced&set=[%22{0}%22]&special=true",
 						ext.Replace(" ", "+").Replace("&quot;", "%22"));
@@ -154,30 +154,47 @@ namespace Archivist
 		/// <param name="setList"></param>
 		/// <param name="id"></param>
 		/// <param name="adb"></param>
-		private void UpdateExtensions(ref List<string> setList)
+        private Dictionary<int, string> UpdateExtensions(List<string> setList)
 		{
 			UpdateListText("Writing extensions to database...");
 
 			ArchivistDatabase adb = new ArchivistDatabase();
-			List<string> dbExtensions = adb.GetExtensions();
+            Dictionary<int, string> dbExtensions = adb.GetExtensions();
+            Dictionary<int, string> resultList = new Dictionary<int, string>();
 
-			foreach (string ext in dbExtensions)
+			foreach (KeyValuePair<int, string> ext in dbExtensions)
 			{
-				//string cleanext = ext.Replace("&quot;", "\"");
-				string uncleanext = ext.Replace("\"", "&quot;");
-				if (setList.Contains(uncleanext))
-				{
-					UpdateListText(String.Format("Extension {0} exists in database. Skipping.", ext));
-					setList.Remove(uncleanext);
-				}
+                //string cleanext = ext.Value.Replace("&quot;", "\"");
+				string uncleanext = ext.Value.Replace("\"", "&quot;");
+                if (setList.Contains(uncleanext))
+                {
+                    setList.Remove(uncleanext);
+                    UpdateListText(String.Format("Extension {0} exists in database. Skipping.", uncleanext));
+                }
+                else
+                {
+                    resultList.Add(ext.Key, ext.Value);
+                }
 			}
+
+            int newId = dbExtensions.Max(sel => sel.Key) + 1;
+            foreach (string ext in setList)
+            {
+                adb.InsertExtension(newId, "", ext.Replace("&quot;", "\""));
+                resultList.Add(newId, ext);
+                UpdateListText(String.Format("Added extension {0} to database.", ext));
+
+                newId++;
+            }
+
+            return resultList;
 		}
 
 		/// <summary>
 		/// Generate card data from files
 		/// </summary>
 		/// <param name="setList"></param>
-		private void GenerateCards(ref List<string> setList)
+        private void GenerateCards(ref Dictionary<int, string> setList)
 		{
 			ArchivistDatabase adb = new ArchivistDatabase();
 			
@@ -188,10 +205,10 @@ namespace Archivist
 			int id = 1;
 			int extId = setList.Count + 1;
 
-			foreach (string ext in setList)
+			foreach (KeyValuePair<int, string> ext in setList)
 			{
-				string extoutfile = String.Format("{0}\\{1}.dat", tempDirectory, System.Web.HttpUtility.UrlEncode(ext));
-				UpdateListText(String.Format("Analyzing extension file for {0}...", ext));
+				string extoutfile = String.Format("{0}\\{1}.dat", tempDirectory, System.Web.HttpUtility.UrlEncode(ext.Value));
+                UpdateListText(String.Format("Analyzing extension file for {0}...", ext.Value));
 
 				if (!System.IO.File.Exists(extoutfile))
 				{
@@ -233,10 +250,10 @@ namespace Archivist
 							string cid = string.Empty;
 							foreach (string setr in setrlist)
 							{
-								if (setr.Contains(ext))
+								if (setr.Contains(ext.Value))
 								{
-									string set = ext.Replace("&quot;", "\"").Trim();
-									string rarity = setr.Replace(ext, "").Trim(); // Might be Common/Uncomm/Rare/Mythic Rare
+                                    string set = ext.Value.Replace("&quot;", "\"").Trim();
+                                    string rarity = setr.Replace(ext.Value, "").Trim(); // Might be Common/Uncomm/Rare/Mythic Rare
 
 									Card card = MagicCardFactory.BuildCard(paraCardName, paraCost, paraPowTgh, paraRulesText, paraType, rarity, set, paraMultiverseid);
 									cid = adb.InsertCard(card);
@@ -258,11 +275,7 @@ namespace Archivist
 					}
 
 				}
-
-				// Insert extension to mark it completed
-				adb.InsertExtension(extId, "", ext.Replace("&quot;", "\""));
-				UpdateListText(String.Format("Added extension {0} to database.", ext));
-
+                
 				UpdateTotalStatus(setList.Count + id + 1, 2 * setList.Count + 2);
 				id++;
 			}
