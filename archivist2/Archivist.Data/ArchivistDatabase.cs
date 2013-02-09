@@ -20,11 +20,11 @@ namespace Archivist.Data
             }
         }
 
-		public List<string> GetExtensions()
+        public Dictionary<int, string> GetExtensions()
 		{
-			List<string> extensions = new List<string>();
+            Dictionary<int, string> extensions = new Dictionary<int, string>();
 
-			string sqlcmd = "SELECT NAME FROM EXTENSION";
+			string sqlcmd = "SELECT ID, NAME FROM EXTENSION";
 
 			using (IDbConnection connection = database.CreateOpenConnection())
 			{
@@ -33,7 +33,7 @@ namespace Archivist.Data
 					IDataReader reader = command.ExecuteReader();
 					while (reader.Read())
 					{
-						extensions.Add(reader["name"].ToString());
+						extensions.Add(Convert.ToInt32(reader["id"].ToString()), reader["name"].ToString());
 					}
 				}
 			}
