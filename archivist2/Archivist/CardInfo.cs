@@ -85,7 +85,10 @@ namespace Archivist
 			cmdEditon.Connection = DataBuider.database.CreateOpenConnection();
 			IDbDataParameter p1Editon = cmdEditon.CreateParameter();
 			cmdEditon.Parameters.Add(p1Editon);
-			p1Editon.Value = card.Name;
+
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(card.Name);
+            p1Editon.Value = System.Text.Encoding.Default.GetString(bytes);
+
 			cmdEditon.CommandText = "SELECT RARITY, EXTENSION, ID FROM CARD WHERE NAME = ?";
 			
 			IDataReader readerEditon = cmdEditon.ExecuteReader();

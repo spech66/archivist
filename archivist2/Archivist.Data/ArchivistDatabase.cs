@@ -33,7 +33,7 @@ namespace Archivist.Data
 					IDataReader reader = command.ExecuteReader();
 					while (reader.Read())
 					{
-						extensions.Add(Convert.ToInt32(reader["id"].ToString()), reader["name"].ToString());
+						extensions.Add(Convert.ToInt32(reader["id"].ToString()), ReadCleanString(reader["name"]));
 					}
 				}
 			}
@@ -77,11 +77,11 @@ namespace Archivist.Data
 							return null;
 
 						MagicCard card = new MagicCard(true);
-						card.Name = reader["name"].ToString();
+						card.Name = ReadCleanString(reader["name"]);
 						card.ManaCost = reader["cost"].ToString();
 						card.PowTgh = reader["PowTgh"].ToString();
 						card.Multiverseid = Convert.ToInt32(reader["Id"].ToString());
-						card.Rule = reader["Rule"].ToString();
+						card.Rule = ReadCleanString(reader["Rule"]);
 						card.Type = reader["Type"].ToString();
 						card.Extension = reader["Extension"].ToString();
 						card.Rarity = reader["Rarity"].ToString();
@@ -101,18 +101,21 @@ namespace Archivist.Data
                 using (IDbCommand command = database.CreateCommand(sqlcmd + " " + whereclause, connection))
                 {
                     IDbDataParameter p1 = command.CreateParameter(); command.Parameters.Add(p1);
-                    p1.Value = paramNAME;
+
+                    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(paramNAME);
+                    p1.Value = System.Text.Encoding.Default.GetString(bytes);
+
                     using (IDataReader reader = command.ExecuteReader())
                     {
 						if (!reader.Read())
 							return null;
 
                         MagicCard card = new MagicCard(true);
-                        card.Name= reader["name"].ToString();
+                        card.Name= ReadCleanString(reader["name"]);
                         card.ManaCost = reader["cost"].ToString();
                         card.PowTgh = reader["PowTgh"].ToString();
 						card.Multiverseid = Convert.ToInt32(reader["Id"].ToString());
-						card.Rule = reader["Rule"].ToString();
+						card.Rule = ReadCleanString(reader["Rule"]);
 						card.Type = reader["Type"].ToString();
 						card.Extension = reader["Extension"].ToString();
 						card.Rarity = reader["Rarity"].ToString();
@@ -144,11 +147,11 @@ namespace Archivist.Data
 					while (reader.Read())
 					{
 						MagicCard card = new MagicCard(true);
-                        card.Name = reader["name"].ToString();
-						card.ManaCost = reader["cost"].ToString();
+                        card.Name = ReadCleanString(reader["name"]);
+                        card.ManaCost = reader["cost"].ToString();
 						card.PowTgh = reader["PowTgh"].ToString();
 						card.Multiverseid = Convert.ToInt32(reader["Id"].ToString());
-						card.Rule = reader["Rule"].ToString();
+						card.Rule = ReadCleanString(reader["Rule"]);
 						card.Type = reader["Type"].ToString();
 						card.Extension = reader["Extension"].ToString();
 						card.Rarity = reader["Rarity"].ToString();
@@ -199,6 +202,12 @@ namespace Archivist.Data
                     //return cid;
                 }
             }
+        }
+
+        private string ReadCleanString(object p)
+        {
+            byte[] bytes = System.Text.Encoding.Default.GetBytes(p.ToString());
+            return System.Text.Encoding.UTF8.GetString(bytes);
         }
 	}
 }
