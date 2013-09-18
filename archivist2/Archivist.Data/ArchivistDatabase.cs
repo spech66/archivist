@@ -144,7 +144,7 @@ namespace Archivist.Data
 					while (reader.Read())
 					{
 						MagicCard card = new MagicCard(true);
-						card.Name = reader["name"].ToString();
+                        card.Name = reader["name"].ToString();
 						card.ManaCost = reader["cost"].ToString();
 						card.PowTgh = reader["PowTgh"].ToString();
 						card.Multiverseid = Convert.ToInt32(reader["Id"].ToString());
