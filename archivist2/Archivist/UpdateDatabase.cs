@@ -46,6 +46,7 @@ namespace Archivist
 			UpdateListText("Please select one of the update options below!", true);
         }
 
+        #region Gatherer update
         public void UpdateDB()
         {
             try
@@ -280,9 +281,71 @@ namespace Archivist
 				id++;
 			}
 		}
+        #endregion
 
+        #region Check sourceforge
+        /// <summary>
+        /// Check for new version.
+        /// </summary>
+        public void CheckSourceforge()
+        {
+            UpdateListText("Checking version...");
 
-		/// <summary>
+            bool needsUpdate = true;
+
+            try
+            {
+                string versionLatest;
+
+                // Check for latest version
+                string downloadUrl = "https://sourceforge.net/projects/archivist/files/archivist2/";
+                UpdateTotalStatus(10, 100);
+
+                HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
+                HtmlAgilityPack.HtmlDocument doc = web.Load(downloadUrl);
+                UpdateTotalStatus(90, 100);
+                HtmlAgilityPack.HtmlNode textspoilerNode = doc.DocumentNode.SelectSingleNode("//div[@class=\"download-bar\"]/strong/a/span");
+                if (textspoilerNode != null)
+                {
+                    versionLatest = textspoilerNode.InnerText.Substring(textspoilerNode.InnerText.IndexOf("_") + 1);
+                    int lastPos = -1;
+                    if ((lastPos = versionLatest.LastIndexOf(".rar")) > 0) versionLatest = versionLatest.Substring(0, lastPos);
+                    if ((lastPos = versionLatest.LastIndexOf(".exe")) > 0) versionLatest = versionLatest.Substring(0, lastPos);
+                }
+                else
+                {
+                    throw new Exception("Error reading file list.");
+                }
+                UpdateTotalStatus(95, 100);
+                
+                string versionCurrent = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                UpdateListText("Current Version: " + versionCurrent);
+                UpdateListText("Latest Version: " + versionLatest);
+
+                needsUpdate = versionCurrent != versionLatest;
+                UpdateTotalStatus(100, 100);
+            }
+            catch (Exception e)
+            {
+                UpdateTotalStatus(0, 100);
+                UpdateListText(e.ToString(), true);
+            }
+            
+            if (needsUpdate)
+            {
+                UpdateListText("There is a new version available.");
+                UpdateListText("Opening https://sourceforge.net/projects/archivist/", true);
+                System.Diagnostics.Process.Start("https://sourceforge.net/projects/archivist/");
+            }
+            else
+            {
+                UpdateListText("You have the latest version installed.", true);
+            }
+        }
+        #endregion
+
+        #region Update controls
+        /// <summary>
 		/// Add info text
 		/// </summary>
 		/// <param name="text"></param>
@@ -330,15 +393,18 @@ namespace Archivist
 				this.progressBarStatus.Value = Convert.ToInt32(value);
 			}
 		}
+        #endregion
 
-		private void button1_Click(object sender, EventArgs e)
+        #region Buttons
+        private void button1_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
 
 		private void btnSoftware_Click(object sender, EventArgs e)
 		{
-			UpdateListText("Sorry not yet implemented. Please check https://sourceforge.net/projects/archivist/");
+            System.Threading.Thread updThrad = new System.Threading.Thread(new System.Threading.ThreadStart(CheckSourceforge));
+            updThrad.Start();
 		}
 
 		private void btnGatherer_Click(object sender, EventArgs e)
@@ -350,6 +416,7 @@ namespace Archivist
 				System.Threading.Thread updThrad = new System.Threading.Thread(new System.Threading.ThreadStart(UpdateDB));
 				updThrad.Start();
 			}
-		}
+        }
+        #endregion
     }
 }

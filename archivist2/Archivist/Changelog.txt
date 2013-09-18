@@ -4,7 +4,15 @@
 (__)(__)(_)\_) \___)(_) (_)(____)  \/  (____)(___/ (__)   (____)
 
 ===============================================================================
-# Archivist Beta 5                                                            #
+# Archivist 2.1.0                                                             #
+===============================================================================
+- Archivist is out of beta!
+- Version check
+- Focus deck manager after closing deck tab
+- Fixed selection of sets containing quotes (e.g. Timeshifted)
+
+===============================================================================
+# Archivist Beta 5 (2.0.6)                                                    #
 ===============================================================================
 - Added Theros cards
 - Fixed selection of sets containing an apostrophe

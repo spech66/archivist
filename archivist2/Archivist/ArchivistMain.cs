@@ -102,7 +102,14 @@ namespace Archivist
                     string list = "";
                     foreach (string sel in format.Set)
                     {
-                        list += "'" + sel + "', ";
+                        if (sel.Contains("\""))
+                        {
+                            list += "'" + sel + "', ";
+                        }
+                        else
+                        {
+                            list += "\"" + sel + "\", ";
+                        }
                     }
                     list = list.Remove(list.Length - 2, 2);
 
@@ -622,7 +629,12 @@ namespace Archivist
 				string list = "";
 				foreach (string sel in listBoxSearchExpansion.SelectedItems)
 				{
-                    list += "\"" + sel + "\", ";
+                    if(sel.Contains("\""))
+                    {
+                        list += "'" + sel+ "', ";
+                    } else {
+                        list += "\"" + sel+ "\", ";
+                    }
 				}
 				list = list.Remove(list.Length - 2, 2);
 
@@ -690,7 +702,9 @@ namespace Archivist
 			if (menuItem != null)
 			{
 				cmCards.Items.Remove(menuItem);
-			}
+            }
+
+            tabControl1.SelectedTab = tpDeckManager;
 		}
 
 		internal void SetDeckTitle(TabPage tabPage, string name)
