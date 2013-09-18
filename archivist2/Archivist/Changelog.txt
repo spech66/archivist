@@ -11,6 +11,7 @@
 - Focus deck manager after closing deck tab
 - Fixed selection of sets containing quotes (e.g. Timeshifted)
 - Fixed display of special unicode characters
+- Show icons (Mana, Tap, ...) in rule text
 
 ===============================================================================
 # Archivist Beta 5 (2.0.6)                                                    #

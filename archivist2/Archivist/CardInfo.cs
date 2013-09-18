@@ -73,7 +73,7 @@ namespace Archivist
 			textBoxCardName.Text = card.Name;
 			//textBoxCostType.Text = reader.GetString(1);
 			textBoxCardPowtgh.Text = card.PowTgh;
-			textBoxCardText.Text = card.Rule;
+            ShowHtml(card);
 			textBoxCardType.Text = card.Type;
 
 			ShowImage(card.Multiverseid.ToString());
@@ -106,6 +106,29 @@ namespace Archivist
 				}
 			}
 		}
+
+        private void ShowHtml(Card card)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("<style>body { margin: 0; font-family:'Microsoft Sans Serif', 'Arial',Times; font-size: 8pt; }</style>");
+            builder.AppendLine(card.Rule);
+
+            if (Archivist.Properties.Settings.Default.ShowIconsInRule)
+            {
+                string imgPath = Helper.ImageDirectory;
+                string[] tokenList = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+                                     "13", "14", "16", "T", "X", "W", "U", "R", "B", "G" };
+                foreach (string token in tokenList)
+                {
+                    builder = builder.Replace("{" + token + "}", "<img src=\"file://" + System.IO.Path.Combine(imgPath, token + ".gif") + "\" height=\"15\" width=\"15\">");
+                }
+            }
+
+            textBoxCardText.Navigate("about:blank");
+            textBoxCardText.Document.OpenNew(false);
+            textBoxCardText.Document.Write(builder.ToString());
+            textBoxCardText.Refresh();
+        }
 
 		private void ShowImage(string id)
 		{

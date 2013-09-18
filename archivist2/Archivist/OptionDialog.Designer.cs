@@ -34,6 +34,7 @@
             this.cbDownload = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cbShowIconsInRule = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -106,11 +107,24 @@
             this.textBox1.Text = "Checking download images and show images in deck/library causes download of all i" +
                 "mages of the whole deck!";
             // 
+            // cbShowIconsInRule
+            // 
+            this.cbShowIconsInRule.AutoSize = true;
+            this.cbShowIconsInRule.Checked = global::Archivist.Properties.Settings.Default.ShowIconsInRule;
+            this.cbShowIconsInRule.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Archivist.Properties.Settings.Default, "ShowIconsInRule", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.cbShowIconsInRule.Location = new System.Drawing.Point(12, 81);
+            this.cbShowIconsInRule.Name = "cbShowIconsInRule";
+            this.cbShowIconsInRule.Size = new System.Drawing.Size(208, 17);
+            this.cbShowIconsInRule.TabIndex = 7;
+            this.cbShowIconsInRule.Text = "Show icons (Mana, Tap, ...) in rule text";
+            this.cbShowIconsInRule.UseVisualStyleBackColor = true;
+            // 
             // OptionDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(352, 262);
+            this.Controls.Add(this.cbShowIconsInRule);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbShowImagesLibrary);
@@ -136,5 +150,6 @@
 		private System.Windows.Forms.CheckBox cbShowImagesLibrary;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox cbShowIconsInRule;
 	}
 }
