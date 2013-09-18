@@ -1,4 +1,4 @@
-<formats update="20 September 2012">
+<formats update="30 July 2013">
 	<group name="Constructed">
 		<format name="Standard">
 			<set>Innistrad</set>
@@ -7,6 +7,9 @@
 			<set>Magic 2013</set>
 			<set>Return to Ravnica</set>
 			<set>Gatecrash</set>
+			<set>Dragon's Maze</set>
+			<set>Magic 2014</set>
+			<set>Theros</set>
 		</format>
 		<format name="Modern">
 			<set>Eighth Edition</set>
@@ -47,10 +50,14 @@
 			<set>Magic 2013</set>
 			<set>Return to Ravnica</set>
 			<set>Gatecrash</set>
+			<set>Dragon's Maze</set>
+			<set>Magic 2014</set>
+			<set>Theros</set>
 			<banned>Ancestral Vision</banned>
 			<banned>Ancient Den</banned>
 			<banned>Bitterblossom</banned>
 			<banned>Blazing Shoal</banned>
+			<banned>Bloodbraid Elf</banned>
 			<banned>Chrome Mox</banned>
 			<banned>Cloudpost</banned>
 			<banned>Dark Depths</banned>
@@ -67,13 +74,14 @@
 			<banned>Punishing Fire</banned>
 			<banned>Rite of Flame</banned>
 			<banned>Seat of the Synod</banned>
+			<banned>Second Sunrise</banned>
+			<banned>Seething Song</banned>
 			<banned>Sensei's Divining Top</banned>
 			<banned>Stoneforge Mystic</banned>
 			<banned>Skullclamp</banned>
 			<banned>Sword of the Meek</banned>
 			<banned>Tree of Tales</banned>
 			<banned>Umezawa's Jitte</banned>
-			<banned>Valakut, the Molten Pinnacle</banned>
 			<banned>Vault of Whispers</banned>
 			<banned>Wild Nacatl</banned>
 		</format>
@@ -92,6 +100,9 @@
 			<set>Magic 2013</set>
 			<set>Return to Ravnica</set>
 			<set>Gatecrash</set>
+			<set>Dragon's Maze</set>
+			<set>Magic 2014</set>
+			<set>Theros</set>
 			<banned>Jace, the Mind Sculptor</banned>
 			<banned>Mental Misstep</banned>
 			<banned>Ponder</banned>
@@ -103,7 +114,8 @@
 		</format>
 	</group>
 	<group name="Block Constructed">
-		<block name="Return to Ravnica"><set>Return to Ravnica</set><set>Gatecrash</set></block>
+		<block name="Theros"><set>Theros</set></block>
+		<block name="Return to Ravnica"><set>Return to Ravnica</set><set>Gatecrash</set><set>Dragon's Maze</set></block>
 		<block name="Innistrad-Avacyn Restored"><set>Innistrad</set><set>Dark Ascension</set><set>Avacyn Restored</set>			
 			<banned block="Innistrad-Avacyn Restored">Intangible Virtue</banned>
 			<banned block="Innistrad-Avacyn Restored">Lingering Souls</banned>
@@ -199,7 +211,6 @@
 			<restricted>Mystical Tutor</restricted>
 			<restricted>Necropotence</restricted>
 			<restricted>Ponder</restricted>
-			<restricted>Regrowth</restricted>
 			<restricted>Sol Ring</restricted>
 			<restricted>Strip Mine</restricted>
 			<restricted>Thirst for Knowledge</restricted>

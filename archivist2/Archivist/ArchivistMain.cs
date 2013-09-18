@@ -568,14 +568,14 @@ namespace Archivist
 			if (textBoxSearchName.Text != "")
 			{
 				whereclause += " AND NAME LIKE ?";
-				data.Add("%" + textBoxSearchName.Text + "%");
+                data.Add("%" + textBoxSearchName.Text + "%");
 			}
 
 			// Rule text
 			if (textBoxSearchText.Text != "")
 			{
 				whereclause += " AND RULE LIKE ?";
-				data.Add("%" + textBoxSearchText.Text + "%");
+                data.Add("%" + textBoxSearchText.Text + "%");
 			}
 
 			// Card cost
@@ -602,7 +602,7 @@ namespace Archivist
 				string list = "";
 				foreach (string sel in listBoxSearchType.SelectedItems)
 				{
-					list += "'" + sel + "', ";
+                    list += "\"" + sel + "\", ";
 				}
 				list = list.Remove(list.Length - 2, 2);
 
@@ -622,7 +622,7 @@ namespace Archivist
 				string list = "";
 				foreach (string sel in listBoxSearchExpansion.SelectedItems)
 				{
-					list += "'" + sel + "', ";
+                    list += "\"" + sel + "\", ";
 				}
 				list = list.Remove(list.Length - 2, 2);
 
@@ -642,7 +642,7 @@ namespace Archivist
                     string list = "";
                     foreach (string sel in format.Set)
                     {
-                        list += "'" + sel + "', ";
+                        list += "\"" + sel + "\", ";
                     }
                     list = list.Remove(list.Length - 2, 2);
 
@@ -655,7 +655,7 @@ namespace Archivist
                     string list = "";
                     foreach (string sel in format.Banned)
                     {
-                        list += "'" + sel + "', ";
+                        list += "\"" + sel + "\", ";
                     }
                     list = list.Remove(list.Length - 2, 2);
 
