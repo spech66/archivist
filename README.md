@@ -7,7 +7,7 @@ Archivist 2 is the latest version build for Windows Systems using the .NET Frame
 
 Download as archive or self extracting archive. No installation required!
 
-[Archivist Web Site](http://www.spech.de/project/archivist2)
+[Archivist Developer Web Site](https://www.spech.de/)
 
 ## Features
 - Card information of all sets and update functionality
@@ -20,4 +20,13 @@ Download as archive or self extracting archive. No installation required!
 ## Download
 [SourceForge.Net Project Website](https://sourceforge.net/projects/archivist/)
 
-![Archivist](https://a.fsdn.com/con/app/proj/archivist/screenshots/001_asdasd.PNG)
+![Archivist 1](https://github.com/spech66/archivist/blob/master/_Screenshots/001_0.png)
+![Archivist 2](https://github.com/spech66/archivist/blob/master/_Screenshots/002_0.png)
+![Archivist 3](https://github.com/spech66/archivist/blob/master/_Screenshots/003_0.png)
+![Archivist 4](https://github.com/spech66/archivist/blob/master/_Screenshots/004.png)
+![Archivist 5](https://github.com/spech66/archivist/blob/master/_Screenshots/005.png)
+![Archivist 6](https://github.com/spech66/archivist/blob/master/_Screenshots/006.png)
+![Archivist 7](https://github.com/spech66/archivist/blob/master/_Screenshots/007.png)
+![Archivist 8](https://github.com/spech66/archivist/blob/master/_Screenshots/008.png)
+![Archivist 9](https://github.com/spech66/archivist/blob/master/_Screenshots/009.png)
+![Archivist 10](https://github.com/spech66/archivist/blob/master/_Screenshots/010.png)
