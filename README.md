@@ -27,6 +27,5 @@ Download as archive or self extracting archive. No installation required!
 ![Archivist 5](https://github.com/spech66/archivist/blob/master/_Screenshots/005.png)
 ![Archivist 6](https://github.com/spech66/archivist/blob/master/_Screenshots/006.png)
 ![Archivist 7](https://github.com/spech66/archivist/blob/master/_Screenshots/007.png)
-![Archivist 8](https://github.com/spech66/archivist/blob/master/_Screenshots/008.png)
 ![Archivist 9](https://github.com/spech66/archivist/blob/master/_Screenshots/009.png)
 ![Archivist 10](https://github.com/spech66/archivist/blob/master/_Screenshots/010.png)
